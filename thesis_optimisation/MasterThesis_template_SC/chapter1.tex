@@ -29,21 +29,35 @@ where $f(x)$ is the objective or cost function, and $g(x) = 0$ and $h(x)  \geq  
 \end{equation}
 where $p^0$ is a fixed value in the feasible uncertainty set $\mathbb{P}$, where the parameter $p$ can take value from.
 
-In the paper \cite{MatSch22}, multiple methods of solving the parameterized optimization problem have been discussed, and the main idea (of solving the  Cerebral Palsy problem) in this paper is the "Worst-Case Treatment Planning by Bilevel Optimal Control". Assuming that $\tilde{p}$ lies in an uncertainty set $\mathbb{P}$, our objective is to identify a worst possible solution with respect to $\tilde{p}$, and based on the result of this level, we continue to find the best solution with respect to $x$. Mathematically, the "Worst-Case Treatment Planning by Bilevel Optimal Control" can be formulated as following
+In the paper \cite{MatSch22}, multiple methods of solving the parameterized optimization problem have been discussed, and the main focus (of solving the  Cerebral Palsy problem) in that paper is the "worst-case treatment planning by bilevel optimal control". Assuming that $\tilde{p}$ lies in an uncertainty set $\mathbb{P}$, our objective is to identify a worst possible solution with respect to $\tilde{p}$, i.e. solving a lower level problem. Based on the result of lower level, we continue to find the best solution with respect to $x$, i.e. solving a upper level problem. The "worst-case treatment planning by bilevel optimal control", i.e. a  bilevel optmization problem, is an optmization problem in which an optimization problems enters the constraints. 
+Mathematically, the problem can be formulated as following
 
 
 \begin{equation}
 	\begin{aligned}
-		\  \  \ & min_{x} \  \tilde f(x) \\
-		s.t.  \  \  \ & g(x, p) = 0, \\ 
-		&  h(x,p)  \geq  0  \\ 
-		& x = x(p) \\
-		& x = x(p^0) \  if \  p = p^0 \\
-		& p \in \mathbb{P}		
+		\  \  \ &  \underset{x}{min} \  \tilde f(x) \\
+		where  \  \  \ & \tilde f(x) =    \begin{cases}
+		  	\underset{p \in \mathbb{P}}{max} & \ f(x,p) \\
+			s.t.   & \  g(x, p) = 0, \  h(x,p)  \geq  0 \\
+		\end{cases}  
+	%	&  h(x,p)  \geq  0  \\ 
+	%	& x = x(p) \\
+%		& x = x(p^0) \  if \  p = p^0 \\
+%		& p \in \mathbb{P}		
 	\end{aligned}
 \end{equation}
 
+In a simplified notation, the problem can be written as 
 
+\begin{equation}
+	\begin{aligned}
+		\underset{x}{min} \   \underset{p \in \mathbb{P}}{max} & \  f(x,p) \\ 
+		s.t.  & \  g(x, p) = 0, \  h(x,p)  \geq  0 \\
+	\end{aligned}
+\end{equation}
+% \underset{\theta \in \mathscr{T}_{t,T}}{\sup} 
+
+% c =  \underset{x \in \mathbf{P}-x^\ast}{inf}\frac{w'(x^\ast -x)}{|x^\ast -x|}$$
 
 
 
