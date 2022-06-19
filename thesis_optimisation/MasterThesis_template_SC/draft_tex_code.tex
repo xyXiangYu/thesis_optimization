@@ -1,0 +1,66 @@
+
+
+\chapter{Draft code }
+
+Draft code 
+ reach a final feasible position and velocity in a minimum time: 
+
+
+\begin{equation}
+	\begin{aligned}
+		\underset{T, \mu(\cdot), x(:,p)}{min} \   & \  T \\ 
+		s.t.  & \ \ x = (x_1, x_2)  \\ 
+		& \ \  x = T  \begin{pmatrix}  x_2(t;p) \\ u(t-p)   \end{pmatrix}, \ t \in [0,1]   \\
+		& \ \ x(0,p) = 0,\\
+		& \ \ x_2(4;p) \leq 4, t \in [0,1] \\	
+	 \end{aligned}
+\end{equation}
+
+
+
+\begin{subequations}
+	%  \begin{aligned}
+		\begin{align}
+		\underset{T, \mu(\cdot), x(:,p)}{min} \   & \  T \\ 
+	%	\begin{subequations}
+	%			\begin{alignat}{2}
+		s.t.  & \ \ x = (x_1, x_2)   \label{sub-1:1} \\ 
+		      & \ \  x = T  \begin{pmatrix}  x_2(t;p) \\ u(t-p)   \end{pmatrix}, \ t \in [0,1]  \label{sub-2:1} \\
+		      & \ \ x(0,p) = 0, \label{sub-2:3}\\
+		      & \ \ x_2(4;p) \leq 4, t \in [0,1] \label{sub-2:4}
+	%\end{alignat}
+    % \end{subequations}	
+	 % \end{aligned}
+	 	\end{align}
+\end{subequations}
+
+
+\begin{subequations}
+	\begin{align}
+		y & = d \\
+		y & = cx + d \\
+		y & = bx ^{2}+ cx + d \\
+		y & = ax ^{3}+ bx ^{2}+ cx + d
+	\end{align}
+\end{subequations}
+
+
+%\begin{equation}
+%		IP : \  \  \  max \sum_{e \in E} w_ex_e, \label{eq:1} \\
+%	\begin{aligned}
+%		s.t.  \  \  \  &\sum_{e \in E_i} x_e \leq 1 \  for \ all \ i \in V,  \\
+%		& x_e \in \{0, 1\} \ for \ all \ e \in E\\
+%	\end{aligned}
+%\end{equation}
+
+
+\begin{subequations}\label{eq:1}
+	\begin{alignat}{2}
+		m_{i}' &=0   & m_{ij} &= m_{i} \label{sub-eq-1:1}\\
+		mx_{j}' &=0  & m_{ij} &= -\frac{1}{\lambda_j\cos\alpha_j}\cdot mx_j \label{sub-eq-2:1} \\
+		my_{j}' &= 0 & m_{ij} &= -\frac{1}{\lambda_j\sin\alpha_j}\cdot my_j \label{sub-eq-3:1} \\
+		J_{j}' &= 0  & m_{ij} &= -\frac{1}{\lambda_j^2} \cdot J_j \label{sub-eq-4:1} \\
+		m_{j}' &= 0  &\quad\Longrightarrow\quad m_{ij} &= -m_j \tag{2}\label{eq:2}
+	\end{alignat}
+\end{subequations}
+
