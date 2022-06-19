@@ -2,7 +2,7 @@
 
 \chapter{Introduction}
 
-Many real life problems, can be modeled as parameterized optimization problems, such as the therapy design of Cerebral Palsy problem described in \cite{MatSch22}. In this paper, we focus on the using gradient method to solve parameterized optimization problems, with a case study in state constrained rocket car. 
+Many real life problems, can be modeled as parameterized optimization problems, such as the therapy design of Cerebral Palsy problem described in \cite{MatSch22}. In this paper, we focus on using gradient method to solve parameterized optimization problems, with a case study in state constrained rocket car. 
 
 Without giving a rigorous condition and definition\footnote{We do not give a rigorous definition on purpose so that the problem we have described here can be applied to more general cases when such condition and definition are more clearly defined.},  a general optimization problem is typically of the form
 \begin{equation}
@@ -29,21 +29,25 @@ where $f(x)$ is the objective or cost function, $g(x) = 0$ and $h(x)  \geq  0$ a
 \end{equation}
 where $p^0$ is a fixed value in the feasible uncertainty set $\mathbb{P}$, where the parameter $p$ can take value from.
 
-In the paper \cite{MatSch22}, multiple methods of solving the parameterized optimization problem have been discussed, and the main focus (of solving the  Cerebral Palsy problem) in that paper is the "worst-case treatment planning by bilevel optimal control". Assuming that $\tilde{p}$ lies in an uncertainty set $\mathbb{P}$, the objective is to identify a worst possible solution with respect to $\tilde{p}$, i.e. solving a lower level problem. Based on the result of lower level, the author continues to find the best solution with respect to $x$, i.e. solving a upper level problem. The "worst-case treatment planning by bilevel optimal control", i.e. a  bilevel optimization problem, is an optimization problem in which another optimization problem enters the constraints. Mathematically, the problem can be formulated as following
+Parameterized optimization problems are very difficult to solve due to the uncertainty in the parameter $p$. In the paper \cite{MatSch22}, multiple methods of solving the parameterized optimization problem have been discussed. The main focus (of solving the Cerebral Palsy problem) of the paper \cite{MatSch22}, is the "worst-case treatment planning by bilevel optimal control", i.e. a bilevel optimization problem. The bilevel optimisation method in paper \cite{MatSch22} solves the parameterized optimization problems, e.g. the Cerebral Palsy problem, in a conservative way.
 
 
-\begin{equation}
-	\begin{aligned}
-		\  \  \ &  \underset{x}{min} \  \tilde f(x) \\
-		where  \  \  \ & \tilde f(x) =    \begin{cases}
-		  	\underset{p \in \mathbb{P}}{max} & \ f(x,p) \\
-			s.t.   & \  g(x, p) = 0, \  h(x,p)  \geq  0 \\
-		\end{cases}  	
-	\end{aligned}
-\end{equation}
+Assuming that the parameter $\tilde{p}$ lies in an uncertainty set $\mathbb{P}$, the objective is to identify a worst possible solution with respect to $\tilde{p}$, i.e. solving a lower level problem. Based on the result of lower level, the author continues to find the best solution with respect to $x$, i.e. solving a upper level problem. The "worst-case treatment planning by bilevel optimal control", i.e. a  bilevel optimization problem, is an optimization problem in which another optimization problem enters the constraints. Mathematically, the problem can be formulated in a simplified form, as following
 
 
-In a simplified notation, the problem can be written as 
+%\begin{equation}
+%	\begin{aligned}
+%		\  \  \ &  \underset{x}{min} \  \tilde f(x) \\
+%		where  \  \  \ & \tilde f(x) =    \begin{cases}
+%		  	\underset{p \in \mathbb{P}}{max} & \ f(x,p) \\
+%			s.t.   & \  g(x, p) = 0, \  h(x,p)  \geq  0 \\
+%		\end{cases}  	
+%	\end{aligned}
+%    \label{Bilevel}
+%\end{equation}
+
+
+%In a simplified notation, the problem can be written as 
 \begin{equation}
 	\begin{aligned}
 		\underset{x}{min} \   \underset{p \in \mathbb{P}}{max} & \  f(x,p) \\ 
@@ -54,11 +58,9 @@ In a simplified notation, the problem can be written as
 
 Due to the $min \ max$ notation, this approach of solving the bilevel problem can also be called $min max$ approach. 
 
-Please notice 
+As stated in \cite{MatSch22}, many different methods can be used to solve a bilevel problem, three approaches have been discussed in detail, i.e. a transformation of the bilevel problem to a single level problem, a classical approach and a training approach. A intuitive approach is to transfer the bilevel problem into a single level problem, however, in general the resulting single level problem is not equivalent to the original bilevel problem and this approach is also out of the focus of the paper \cite{MatSch22} as well as this paper at hand. A classical approach, aka a robust optimization appraoch, is consistent with the $minmax$ appoach, which will be discussed in more detail in Chapter 2.
 
-As stated in \cite{MatSch22}, many different methods can be used to solve a bilevel problem, mainly transformation of the bilevel problem to a single level problem, a classical approach and a training approach. A common approach is to transfer the bilevel problem into a single level problem, however, in general the resulting single level problem is not equivalent to the original bilevel problem and this approach is also out of the focus of the paper \cite{MatSch22} as well as this paper at hand. A classical approach is consistent with the $minmax$ appoach. 
-
-The paper \cite{MatSch22} introduces the "Training approach".  It is based on the idea that in the real world, during the training period, an intervention is introduce and a certain, but a priori unknown, parameter $p \in \mathbb{P}$ is realized. What follows the training period (during which the parameter $p$ is realized), the patient is able to react to it in an optimal manner, i.e. an optimal value $f(x,p)$ will be obtained given the  realized parameter $p$. The paper \cite{MatSch22} call this approach "worst case modelling Training Approach", and it can be written as 
+The paper \cite{MatSch22} introduces the "Training Approach".  It is based on the idea that in the real world, during the training period, an intervention is introduced and a certain, but a priori unknown, parameter $p \in \mathbb{P}$ is realized. What follows the training period (during which the parameter $p$ is realized), the patient is able to react to it in an optimal manner, i.e. an optimal value $f(x,p)$ will be obtained given the  realized parameter $p$. The paper \cite{MatSch22} call this approach "worst case modeling Training Approach", and it can be written as 
 
 \begin{equation}
 	\begin{aligned}
@@ -69,11 +71,11 @@ The paper \cite{MatSch22} introduces the "Training approach".  It is based on th
 
 Due to the $max \ mix$ notation, this approach of solving the bilevel problem can also be called $max min$ approach. 
 
-The paper \cite{MatSch22} use a derivative free method in the Training Approach. This paper at hand will focus on a gradient method to solve the $maxmin$ problem.  In particular, we are interested in how to compute the derivatives theoretically and numerically.  We would like to apply the quasi-Newton and multiple shooting method when solving the problem numerically. The whole approach will be demonstrated with a case study in state constrained rocket car. 
+The paper \cite{MatSch22} use a derivative free method in the Training Approach. This paper at hand will focus on a gradient method to solve the $maxmin$ problem.  In particular, we are interested in how to compute the derivatives theoretically and numerically.  We would like to apply the quasi-Newton and multiple shooting method when solving the problem numerically. The approaches discussed in this paper at hand will be demonstrated with a case study in state constrained rocket car. 
 
-We choose this case for two reasons: firstly, the case is relatively easy to understand yet is quite representaive of the general usage in real life; secondly, the case has theoretical solution and we can compare the numerical results with the theoretical value so that we can check whether our gradient method can find the optimal solution and how fast it converges. 
+We choose this rocket car case for two reasons: firstly, the case is relatively easy to understand and is quite representative of the general usage in real life; secondly, the case has theoretical solution and we can compare the numerical results with the theoretical value so that we can check whether our gradient method can find the optimal solution and how fast it converges. 
  
-The structure of this paper is as follows: in Chapter 1, i.e. this chapter,  we give an introduction on what problems this paper intends to address. In the Chapter 2, we introduce the case of the state constrained rocket car. In the Chapter 3, we show the theoretical value of the chosen case. In Chapter 4, we give the mathematical background of the quasi-Newton and multiple shooting method. In Chapter 5, we show how we can solve the case numerically using the methods described in Chapter 4. In Chapter 6, we compare our theoretical and numerical results and conclude the paper. 
+The structure of this paper is as follows: in Chapter 1, i.e. this chapter,  we give an introduction on what problems this paper intends to address. In the Chapter 2, we introduce the case of the state constrained rocket car. In the Chapter 3, we discuss the classical approach and training approach, and show the theoretical value of the chosen case. In Chapter 4, we give the mathematical background of the quasi-Newton and multiple shooting method. In Chapter 5, we show how we can solve the case numerically using the methods described in Chapter 4. In Chapter 6, we compare our theoretical and numerical results and conclude the paper. 
 
 
 
