@@ -23,23 +23,23 @@ where $f(x)$ is the objective or cost function, $g(x) = 0$ and $h(x)  \geq  0$ a
 		&  h(x,p)  \geq  0  \\ 
 		& x = x(p) \\
 		& x = x(p^0) \  if \  p = p^0 \\
-		& p \in \mathbb{P}		
+		& p \in \Omega_P		
 	\end{aligned}
     \label{ParaMin}
 \end{equation}
-where $p^0$ is a fixed value in the feasible uncertainty set $\mathbb{P}$, where the parameter $p$ can take value from.
+where $p^0$ is a fixed value in the feasible uncertainty set $\Omega_P$, where the parameter $p$ can take value from.
 
 Parameterized optimization problems are very difficult to solve due to the uncertainty in the parameter $p$. In the paper \cite{MatSch22}, multiple methods of solving the parameterized optimization problem have been discussed. The main focus (of solving the Cerebral Palsy problem) of the paper \cite{MatSch22}, is the "worst-case treatment planning by bilevel optimal control", i.e. a bilevel optimization problem. The bilevel optimisation method in paper \cite{MatSch22} solves the parameterized optimization problems, e.g. the Cerebral Palsy problem, in a conservative way.
 
 
-Assuming that the parameter $\tilde{p}$ lies in an uncertainty set $\mathbb{P}$, the objective is to identify a worst possible solution with respect to $\tilde{p}$, i.e. solving a lower level problem. Based on the result of lower level, the author continues to find the best solution with respect to $x$, i.e. solving a upper level problem. The "worst-case treatment planning by bilevel optimal control", i.e. a  bilevel optimization problem, is an optimization problem in which another optimization problem enters the constraints. Mathematically, the problem can be formulated in a simplified form, as following
+Assuming that the parameter $\tilde{p}$ lies in an uncertainty set $\Omega_P$, the objective is to identify a worst possible solution with respect to $\tilde{p}$, i.e. solving a lower level problem. Based on the result of lower level, the author continues to find the best solution with respect to $x$, i.e. solving a upper level problem. The "worst-case treatment planning by bilevel optimal control", i.e. a  bilevel optimization problem, is an optimization problem in which another optimization problem enters the constraints. Mathematically, the problem can be formulated in a simplified form, as following
 
 
 %\begin{equation}
 %	\begin{aligned}
 %		\  \  \ &  \underset{x}{min} \  \tilde f(x) \\
 %		where  \  \  \ & \tilde f(x) =    \begin{cases}
-%		  	\underset{p \in \mathbb{P}}{max} & \ f(x,p) \\
+%		  	\underset{p \in \Omega_P}{max} & \ f(x,p) \\
 %			s.t.   & \  g(x, p) = 0, \  h(x,p)  \geq  0 \\
 %		\end{cases}  	
 %	\end{aligned}
@@ -50,7 +50,7 @@ Assuming that the parameter $\tilde{p}$ lies in an uncertainty set $\mathbb{P}$,
 %In a simplified notation, the problem can be written as 
 \begin{equation}
 	\begin{aligned}
-		\underset{x}{min} \   \underset{p \in \mathbb{P}}{max} & \  f(x,p) \\ 
+		\underset{x}{min} \   \underset{p \in \Omega_P}{max} & \  f(x,p) \\ 
 		s.t.  & \  g(x, p) = 0, \  h(x,p)  \geq  0 \\
 	\end{aligned}
 \end{equation}
@@ -60,11 +60,11 @@ Due to the $min \ max$ notation, this approach of solving the bilevel problem ca
 
 As stated in \cite{MatSch22}, many different methods can be used to solve a bilevel problem, three approaches have been discussed in detail, i.e. a transformation of the bilevel problem to a single level problem, a classical approach and a training approach. A intuitive approach is to transfer the bilevel problem into a single level problem, however, in general the resulting single level problem is not equivalent to the original bilevel problem and this approach is also out of the focus of the paper \cite{MatSch22} as well as this paper at hand. A classical approach, aka a robust optimization appraoch, is consistent with the $minmax$ appoach, which will be discussed in more detail in Chapter 2.
 
-The paper \cite{MatSch22} introduces the "Training Approach".  It is based on the idea that in the real world, during the training period, an intervention is introduced and a certain, but a priori unknown, parameter $p \in \mathbb{P}$ is realized. What follows the training period (during which the parameter $p$ is realized), the patient is able to react to it in an optimal manner, i.e. an optimal value $f(x,p)$ will be obtained given the  realized parameter $p$. The paper \cite{MatSch22} call this approach "worst case modeling Training Approach", and it can be written as 
+The paper \cite{MatSch22} introduces the "Training Approach".  It is based on the idea that in the real world, during the training period, an intervention is introduced and a certain, but a priori unknown, parameter $p \in \Omega_P$ is realized. What follows the training period (during which the parameter $p$ is realized), the patient is able to react to it in an optimal manner, i.e. an optimal value $f(x,p)$ will be obtained given the  realized parameter $p$. The paper \cite{MatSch22} call this approach "worst case modeling Training Approach", and it can be written as 
 
 \begin{equation}
 	\begin{aligned}
-		\underset{p \in \mathbb{P}}{max} \ \underset{x}{min} & \  f(x,p) \\ 
+		\underset{p \in \Omega_P}{max} \ \underset{x}{min} & \  f(x,p) \\ 
 		s.t.  & \  g(x, p) = 0, \  h(x,p)  \geq  0 \\
 	\end{aligned}
 \end{equation}
@@ -87,5 +87,5 @@ The structure of this paper is as follows: in Chapter 1, i.e. this chapter,  we 
 	%	&  h(x,p)  \geq  0  \\ 
 %	& x = x(p) \\
 %		& x = x(p^0) \  if \  p = p^0 \\
-%		& p \in \mathbb{P}	
+%		& p \in \Omega_P	
 

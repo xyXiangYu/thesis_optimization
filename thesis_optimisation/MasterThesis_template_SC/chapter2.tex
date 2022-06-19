@@ -1,10 +1,54 @@
 
 
 \chapter{Rocket car case}
-Since the approaches we are going to use in this paper will be demonstrated with the case of rocket car. We decide to describe the rocket car first. So that, when we discuss our approaches, we can directly describe how they can be used in solving the rocket car case. The description of the rocket car case is mostly coming from the paper \cite{MatSch22}, with content either  verbatim or in a modified form. 
+Since the approaches we are going to use in this paper will be demonstrated with the case of rocket car, we decide to describe the rocket car case first. So that, when we are discussing our approaches, we can directly describe how they can be used in solving the rocket car case. The description of the rocket car case is mostly coming from the paper \cite{MatSch22}, with content either verbatim or in a modified form. 
 
-We consider the rocket car case with state constraints- the one-dimensional movement of a mass point under the influence of some constant declaration, e.g. modeling head-wind or sliding friction, which can accelerate and decelerate in order to reach a desired position. The mass of the car is normalized to 1 and the constant deceleration enters the model in form of an unknown parameter $p \in \omega_P \in \mathbb{R}$ suffering from uncertainty, 
+We consider the rocket car case with state constraints, i.e. the one-dimensional movement of a mass point under the influence of some constant acceleration/deceleration, e.g. modeling head-wind or sliding friction, which can accelerate and decelerate in order to reach a desired position. The mass of the car is normalized to 1 unit and the constant acceleration/deceleration enters the model in form of an unknown parameter $p \in \Omega_P \subset \mathbb{R}$ suffering from uncertainty, with the uncertainty set $\Omega_P$ convex and compact. We consider a problem in which the rocket car shall reach a final feasible position and velocity in a minimum time: 
+
+
+\begin{equation}
+	\begin{aligned}
+		\underset{T, \mu(\cdot), x(:,p)}{min} \   & \  T \\ 
+		s.t.  & \ \ x = (x_1, x_2)  \\ 
+		& \ \  x = T  \begin{pmatrix}  x_2(t;p) \\ u(t-p)   \end{pmatrix}, \ t \in [0,1]   \\
+		& \ \ x(0,p) = 0,\\
+		& \ \ x_2(4;p) \leq 4, t \in [0,1] \\	
+	 \end{aligned}
+\end{equation}
 
 
 
+\begin{equation}
+	% \begin{aligned}
+		\underset{T, \mu(\cdot), x(:,p)}{min} \   & \  T \\ 
+		\begin{subequations}
+				\begin{alignat}{2}
+		s.t.  & \ \ x = (x_1, x_2)   \label{sub-1:1} \\ 
+		      & \ \  x = T  \begin{pmatrix}  x_2(t;p) \\ u(t-p)   \end{pmatrix}, \ t \in [0,1]  \label{sub-2:1} \\
+		      & \ \ x(0,p) = 0, \label{sub-2:3}\\
+		      & \ \ x_2(4;p) \leq 4, t \in [0,1] \label{sub-2:4}
+	\end{alignat}
+     \end{subequations}	
+	% \end{aligned}
+\end{equation}
+
+
+%\begin{equation}
+%		IP : \  \  \  max \sum_{e \in E} w_ex_e, \label{eq:1} \\
+%	\begin{aligned}
+%		s.t.  \  \  \  &\sum_{e \in E_i} x_e \leq 1 \  for \ all \ i \in V,  \\
+%		& x_e \in \{0, 1\} \ for \ all \ e \in E\\
+%	\end{aligned}
+%\end{equation}
+
+
+\begin{subequations}\label{eq:1}
+	\begin{alignat}{2}
+		m_{i}' &=0   & m_{ij} &= m_{i} \label{sub-eq-1:1}\\
+		mx_{j}' &=0  & m_{ij} &= -\frac{1}{\lambda_j\cos\alpha_j}\cdot mx_j \label{sub-eq-2:1} \\
+		my_{j}' &= 0 & m_{ij} &= -\frac{1}{\lambda_j\sin\alpha_j}\cdot my_j \label{sub-eq-3:1} \\
+		J_{j}' &= 0  & m_{ij} &= -\frac{1}{\lambda_j^2} \cdot J_j \label{sub-eq-4:1} \\
+		m_{j}' &= 0  &\quad\Longrightarrow\quad m_{ij} &= -m_j \tag{2}\label{eq:2}
+	\end{alignat}
+\end{subequations}
 
