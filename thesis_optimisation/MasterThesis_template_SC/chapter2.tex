@@ -24,9 +24,31 @@ We consider the rocket car case with state constraints, i.e. the one-dimensional
 
 where $x$ represents the variables of the rocket car, and it has two components $ x = (x_1, x_2)$. The first component $x_1$ is the (time-transformed) position of the rocket car. The second component $x_2$ is (time-transformed) velocity of the rocket car. The condition \ref{rc_t0}, i.e. $x(0,p) = 0$, indicates that at $t=0$, both the position and velocity of the car is $0$. The condition \ref{rc_x1_t1}, i.e. $x_1(1;p) \geq 10$, indicates that the position of the car at $t=1$ must be greater or equal to $10$. The condition \ref{rc_x2_t1}, i.e. $x_2(t;p) \leq 4$, indicates that the velocity of the car is always smaller or equal to 4 across the whole period. The condition \ref{rc_x2_t1}, i.e. $x_2(1;p) \leq 0$, indicates that the velocity of the car at $t=1$ is always smaller or equal to $0$. Here, a negative velocity means that the car is moving in a direction that decreases the position. 
 
-The decision variable in the problem \ref{rc} is the controllable parameter T, which encodes the process duration of the corresponding problem with free end time. The control function $ u: [0,1] \rightarrow \mathbb{R}$ represents the acceleration/deceleration value, and is dependent on the unknown parameter $p$, as shown in the condition \ref{rc_partial}. The second component of the condition \ref{rc_partial}, i.e. $\dot{x_2} = T (u(t)-p)$, indicates the change in the velocity of the car at time $t$ is subject to the value of $T, u(t)$ and $p$. The first component of the condition \ref{rc_partial}, i.e. $\dot{x_1} = Tx_2(t;p)$, indicates the position of the car at time $t$ is related to the value of $T$ and the velocity $x_2(t;p)$ at time $t$. $x(t:p)$ is a dependent variable, and is uniquely determined by $T, u(\cdot)$ and $p$. The goal is to minimize $T$ such that the variable $x(t:p)$ satisfies all the conditions in \ref{rc}. 
+The decision variable in the problem \ref{rc} is the controllable parameter T, which encodes the process duration of the corresponding problem with free end time. The control function $ u: [0,1] \rightarrow \mathbb{R}$ represents the acceleration/deceleration value, and is dependent on the unknown parameter $p$, as shown in the condition \ref{rc_partial}. The second component of the condition \ref{rc_partial}, i.e. $\dot{x_2} = T (u(t)-p)$, indicates the change in the velocity of the car at time $t$ is subject to the value of $T, u(t)$ and $p$. The first component of the condition \ref{rc_partial}, i.e. $\dot{x_1} = Tx_2(t;p)$, indicates the position of the car at time $t$ is subject to the value of $T$ and the velocity $x_2(t;p)$ at time $t$. $x(t:p)$ is a dependent variable, and is uniquely determined by $T, u(\cdot)$ and $p$. The goal is to minimize $T$ such that the variable $x(t:p)$ satisfies all the conditions in \ref{rc}. 
 
+\section{Theoretical solution to rocket car case}
+As explained in Chapter \ref{Chapter1}, we choose the rocket car case for two main reasons, i.e. the easyness of understanding and the existence of theoretical solution, which will be shown in this section. 
 
+There are three optimization variables in the optimization problem \ref{rc}, i.e. $T, u$ and $x$, and they belong to the following normed space
+\begin{equation}
+	(T, u(\cdot), x(:,p)) \in \mathbb{R} \times \mathbb{L}^\infty([0,1], \mathbb{R}) \times  \mathbb{W}^{1,\infty}([0,1], \mathbb{R}^2)
+\end{equation}
+And the optimization problem \ref{rc} has a unique global solution, and no further local solution exists. The optimal controllable parameter is given by 
+\begin{equation}
+   T^\star = T^\star(p) = 2.5 + \frac{40}{100-p^2},
+\end{equation}
+and the optimal control function $u^\star(\cdot) (= u^\star(\cdot; p))$ by 
+\begin{equation}
+	u^\star(\cdot) =     \left\{
+	\begin{array}{ll}
+		  10, & for \  0 \leq t <  \frac{4}{(10-p)T^\star}\\
+	      p  &  for \ \frac{4}{(10-p)T^\star} \leq < 1- \frac{4}{(10+p)T^\star} \\
+		-10  & for \  1- \frac{4}{(10+p)T^\star} \leq t \leq 1 
+	\end{array}
+	\right.
+\end{equation}
+
+In words, we accelerate as strongly as possible (the acceleration value $u^\star(t)=10$) until $x^\star_2(t;p)=4$, and then keep $x^\star_2(t;p)$ constant for a certain periof of time, and eventually decelerate as as strongly as possible. 
 
 
 
