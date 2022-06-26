@@ -1,5 +1,7 @@
 
 
+
+
 \chapter{Rocket car case}
 Since the approaches we are going to use in this paper will be demonstrated with the case of rocket car, we decide to describe the rocket car case first. So that, when we are discussing our approaches, we can directly describe how they can be used in solving the rocket car case. The description of the rocket car case is mostly coming from the paper \cite{MatSch22}, with content either verbatim or in a modified form. 
 
@@ -19,7 +21,7 @@ We consider the rocket car case with state constraints, i.e. the one-dimensional
 		& \ \ T \geq 0, \\
 		& \ \ u(t) \in [-10, 10], & t \in [0,1]. 
 	\end{align}
-\label{rc}
+	\label{rc}
 \end{subequations}
 
 where $x$ represents the variables of the rocket car, and it has two components $ x = (x_1, x_2)$. The first component $x_1$ is the (time-transformed) position of the rocket car. The second component $x_2$ is (time-transformed) velocity of the rocket car. The condition \ref{rc_t0}, i.e. $x(0,p) = 0$, indicates that at $t=0$, both the position and velocity of the car is $0$. The condition \ref{rc_x1_t1}, i.e. $x_1(1;p) \geq 10$, indicates that the position of the car at $t=1$ must be greater or equal to $10$. The condition \ref{rc_x2_t1}, i.e. $x_2(t;p) \leq 4$, indicates that the velocity of the car is always smaller or equal to 4 across the whole period. The condition \ref{rc_x2_t1}, i.e. $x_2(1;p) \leq 0$, indicates that the velocity of the car at $t=1$ is always smaller or equal to $0$. Here, a negative velocity means that the car is moving in a direction that decreases the position. 
@@ -35,14 +37,14 @@ There are three optimization variables in the optimization problem \ref{rc}, i.e
 \end{equation}
 And the optimization problem \ref{rc} has a unique global solution, and no further local solution exists. The optimal controllable parameter is given by 
 \begin{equation}
-   T^\star = T^\star(p) = 2.5 + \frac{40}{100-p^2},
+	T^\star = T^\star(p) = 2.5 + \frac{40}{100-p^2},
 \end{equation}
 and the optimal control function $u^\star(\cdot) (= u^\star(\cdot; p))$ by 
 \begin{equation}
 	u^\star(\cdot) =     \left\{
 	\begin{array}{ll}
-		  10, & for \  0 \leq t <  \frac{4}{(10-p)T^\star}\\
-	      p  &  for \ \frac{4}{(10-p)T^\star} \leq t < 1- \frac{4}{(10+p)T^\star} \\
+		10, & for \  0 \leq t <  \frac{4}{(10-p)T^\star}\\
+		p  &  for \ \frac{4}{(10-p)T^\star} \leq t < 1- \frac{4}{(10+p)T^\star} \\
 		-10  & for \  1- \frac{4}{(10+p)T^\star} \leq t \leq 1 
 	\end{array}
 	\right.
@@ -52,9 +54,6 @@ In words, we accelerate as strongly as possible (the acceleration value $u^\star
 
 The proof of the theoretical solution is given in Appendix B of \cite{MatSch22}. Because of the simplicity nature of the rocket car case, we can find the theoretical solution of the nominal/original problem for our case \ref{rc}. But for many real life problems, it is very difficult to find a direct solution to the original problem, and for some cases not feasible, due to the uncertainty in the parameter $p$. That is why in the paper \cite{MatSch22}, a classical (in the form $minmax$) approach and a training (in the form $maxmin$) approach have been discussed, and both approaches will lead to a conservative solution to the original problem. A conservative solution to the CP problem is a acceptable (or desired) result since less risk should be taken regarding the therapy design of CP problem. In the next chapter, we discuss, in details, the classical approaches and training approach for the rocket car problem. After that, we focus on the quasi-Newton and multi shooting approach to the same problem.  
 
-
-
- 
 
 
 

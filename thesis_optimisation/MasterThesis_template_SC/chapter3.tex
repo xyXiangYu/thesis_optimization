@@ -1,0 +1,43 @@
+
+
+\chapter{The Classical and Training Approach}
+
+The paper on hand focuses on using quasi-Newton and multi-shooting method for the Training Approach. In this chapter, we shortly introduce the Classical Approach first and then we discuss the Training Approach in greater detail. In the next chapter, we can introduce the quasi-Newton and multi-shooting method, and elaborate in detail how they can be used for the Training Approach. 
+
+
+
+\section{The classical approach}
+
+As stated in the introduction part, the classical approach is consistent with the $minmax$ approach, during which, two level optimization problems are solved. 
+
+In the lower level, we solve a optimization problem ($max f(x,p)$) with respect to $p$, and in the upper level, we continue to find the best solution with respect to $x$, as shown in \ref{minmax}. In the case of the rocket car, the classical approach will be expressed in the following form
+
+
+\begin{subequations}
+	\begin{align}
+		\underset{T, u(\cdot)}{min} \  \underset{ p \in \Omega_P, x(\cdot,p)}{max}  \ \   & \  T \\ 
+		s.t.  & \ \ x = (x_1, x_2)   \label{ca_rc_x} \\ 
+		& \ \  \dot{x} = T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix}, & \ t \in [0,1],  \label{ca_rc_partial} \\
+		& \ \ x(0,p) = 0, \label{ca_rc_t0}\\
+		& \ \ x_1(1;p) \geq 10, & \ for \ all \ p \in \Omega_P, \label{ca_rc_x1_t1} \\
+		& \ \ x_2(t;p) \leq 4, & t \in [0,1], \ for \ all \ p \in \Omega_P,  \label{ca_rc_x2_tc} \\
+		& \ \ x_2(1;p) \leq 0, & \ for \ all \ p \in \Omega_P, \label{ca_rc_x2_t1}  \\
+		& \ \ T \geq 0, \\
+		& \ \ u(t) \in [-10, 10], & t \in [0,1]. 
+	\end{align}
+	\label{ca_rc}
+\end{subequations}
+
+
+
+
+
+
+
+
+%can assume that $p^0$ is a fixed value in the feasible uncertainty set $\Omega_P$
+
+%The classical approach, aka, the robust optimization  is concerned with optimization problems which involes uncertainy parameters whose value is a priori unknown. 
+
+
+% approach and the

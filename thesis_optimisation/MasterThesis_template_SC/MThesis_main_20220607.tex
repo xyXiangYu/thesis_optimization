@@ -26,6 +26,12 @@
 \usepackage                             {hyperref}
 
 
+%\usepackage{etoolbox}
+%\makeatletter
+%\patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
+%\makeatother
+
+
 \usepackage                             {mathrsfs}
 \usepackage{dsfont}
 
@@ -90,9 +96,16 @@
   %% title pages similar to providet template instead of maketitle
   \include{titlepages} 
     \tableofcontents
+    
+    \let\clearpage\relax
+    \newpage
   %\include{abstracts}
-  \include{chapter1}
+   \include{chapter1}
+   
+   %{\let\clearpage\relax \chapter{bar}}
    \include{chapter2}
+   \include{chapter3}
+   \newpage
 
 
   %% Put your contents here

@@ -32,7 +32,7 @@ where $p^0$ is a fixed value in the feasible uncertainty set $\Omega_P$, where t
 Parameterized optimization problems are very difficult to solve due to the uncertainty in the parameter $p$. In the paper \cite{MatSch22}, multiple methods of solving the parameterized optimization problem have been discussed. The main focus (of solving the Cerebral Palsy problem) of the paper \cite{MatSch22}, is the "worst-case treatment planning by bilevel optimal control", i.e. a bilevel optimization problem. The bilevel optimisation method in paper \cite{MatSch22} solves the parameterized optimization problems, e.g. the Cerebral Palsy problem, in a conservative way.
 
 
-Assuming that the parameter $\tilde{p}$ lies in an uncertainty set $\Omega_P$, the objective is to identify a worst possible solution with respect to $\tilde{p}$, i.e. solving a lower level problem. Based on the result of lower level, the author continues to find the best solution with respect to $x$, i.e. solving a upper level problem. The "worst-case treatment planning by bilevel optimal control", i.e. a  bilevel optimization problem, is an optimization problem in which another optimization problem enters the constraints. Mathematically, the problem can be formulated in a simplified form, as following
+One method of solving the original CP problem in a conservative way is to transform the problem \ref{ParaMin} into another form. Assuming that the parameter $\tilde{p}$ lies in an uncertainty set $\Omega_P$, we can firstly reach one objective, i.e. identifying a worst possible solution with respect to $\tilde{p}$, i.e. solving a lower level problem. Based on the result of lower level, we can continue to find the best solution with respect to $x$, i.e. solving a upper level problem. The "worst-case treatment planning by bilevel optimal control", i.e. a  bilevel optimization problem, is an optimization problem in which another optimization problem enters the constraints. Mathematically, the problem \ref{ParaMin} is transformed into another form, and can be formulated in a simplified notation, as following
 
 
 %\begin{equation}
@@ -53,10 +53,11 @@ Assuming that the parameter $\tilde{p}$ lies in an uncertainty set $\Omega_P$, t
 		\underset{x}{min} \   \underset{p \in \Omega_P}{max} & \  f(x,p) \\ 
 		s.t.  & \  g(x, p) = 0, \  h(x,p)  \geq  0 \\
 	\end{aligned}
+ \label{minmax}
 \end{equation}
 
 
-Due to the $min \ max$ notation, this approach of solving the bilevel problem can also be called $min max$ approach. 
+Due to the $min \ max$ notation, this classical approach of solving the bilevel problem can also be called $min max$ approach. 
 
 As stated in \cite{MatSch22}, many different methods can be used to solve a bilevel problem, three approaches have been discussed in detail, i.e. a transformation of the bilevel problem to a single level problem, a classical approach and a training approach. A intuitive approach is to transfer the bilevel problem into a single level problem, however, in general the resulting single level problem is not equivalent to the original bilevel problem and this approach is also out of the focus of the paper \cite{MatSch22} as well as this paper at hand. A classical approach, aka a robust optimization appraoch, is consistent with the $minmax$ appoach, which will be discussed in more detail in Chapter 2.
 
@@ -67,6 +68,7 @@ The paper \cite{MatSch22} introduces the "Training Approach".  It is based on th
 		\underset{p \in \Omega_P}{max} \ \underset{x}{min} & \  f(x,p) \\ 
 		s.t.  & \  g(x, p) = 0, \  h(x,p)  \geq  0 \\
 	\end{aligned}
+      \label{maxmin}
 \end{equation}
 
 Due to the $max \ mix$ notation, this approach of solving the bilevel problem can also be called $max min$ approach. 
@@ -78,6 +80,12 @@ We choose this rocket car case for two reasons: firstly, the case is relatively 
 The structure of this paper is as follows: in Chapter 1, i.e. this chapter,  we give an introduction on what problems this paper intends to address. In the Chapter 2, we introduce the case of the state constrained rocket car. In the Chapter 3, we discuss the classical approach and training approach, and show the theoretical value of the chosen case. In Chapter 4, we give the mathematical background of the quasi-Newton and multiple shooting method. In Chapter 5, we show how we can solve the case numerically using the methods described in Chapter 4. In Chapter 6, we compare our theoretical and numerical results and conclude the paper. 
 
 \label{Chapter1}
+
+
+
+
+
+
 
 
 
