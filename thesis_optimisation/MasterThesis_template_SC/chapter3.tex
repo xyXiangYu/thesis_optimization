@@ -6,12 +6,11 @@ The paper on hand focuses on using quasi-Newton and multi-shooting method for th
 
 
 
-\section{The classical approach}
+\section{The Classical Approach}
 
 As stated in the introduction part, the classical approach is consistent with the $minmax$ approach, during which, two level optimization problems are solved. 
 
-In the lower level, we solve a optimization problem ($max f(x,p)$) with respect to $p$, and in the upper level, we continue to find the best solution with respect to $x$, as shown in \ref{minmax}. In the case of the rocket car, the classical approach will be expressed in the following form
-
+In the lower level, we solve a optimization problem ($max \  f(x,p)$) with respect to $p$, and in the upper level, we continue to find the best solution with respect to $x$, as shown in \ref{minmax}. In the case of the rocket car, the classical approach will be expressed in the following form
 
 \begin{subequations}
 	\begin{align}
@@ -27,6 +26,31 @@ In the lower level, we solve a optimization problem ($max f(x,p)$) with respect 
 	\end{align}
 	\label{ca_rc}
 \end{subequations}
+
+In the Classical Approach, the set of feasible controllable parameters and control functions are given by those $T$ and $u(\cdot)$, which yield feasible trajectories $x(\cdot, p)$ for all $p \in \Omega_P$. The value of the objective function in the lower level does not depend on $p$ and $x(\cdot, p)$. In other words, in this approach, the driver has no prior knowledge about the value of the parameter $p$ and gets no feedback during the process and has to set up the driving strategy in advance. 
+
+
+
+\section{The Training Approach}
+
+Contrast to the Classical Approach, in the Training Approach it is assumed that the driver of the rocket car is able to perform optmially for every $p$ because of a preceding training period. Thus the worst possible optimal performance is given by a solution of the problem
+
+\begin{subequations}
+	\begin{align}
+	   \underset{p \in \Omega_P, T, u(\cdot), x(\cdot,p)}{max}  \ 	\underset{}{min} \   & \  T \\ 
+		s.t.  & \ \ x = (x_1, x_2)   \label{rc_x} \\ 
+             & \ \  \dot{x} = T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix}, & \ t \in [0,1],  \label{rc_partial} \\
+& \ \ x(0,p) = 0, \label{rc_t0}\\
+& \ \ x_1(1;p) \geq 10, \label{rc_x1_t1} \\
+& \ \ x_2(t;p) \leq 4, & t \in [0,1], \label{rc_x2_tc} \\
+& \ \ x_2(1;p) \leq 0, \label{rc_x2_t1}  \\
+& \ \ T \geq 0, \\
+& \ \ u(t) \in [-10, 10], & t \in [0,1]. 
+	\end{align}
+	\label{ca_rc}
+\end{subequations}
+
+
 
 
 
