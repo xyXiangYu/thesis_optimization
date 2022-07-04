@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2022.5.25)  28 JUN 2022 00:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2022.5.25)  29 JUN 2022 00:15
 entering extended mode
 **./MThesis_main_20220607.tex
 (MThesis_main_20220607.tex
@@ -784,18 +784,18 @@ chapter 3.
 [8]) [9
 \@writefile{toc}{\contentsline {section}{\numberline {3.2}The Training Approach
 }{9}{section.3.2}\protected@file@percent }
-\newlabel{rc_x}{{3.2b}{9}{The Training Approach}{equation.3.2.2b}{}}
-\newlabel{rc_partial}{{3.2c}{9}{The Training Approach}{equation.3.2.2c}{}}
-\newlabel{rc_t0}{{3.2d}{9}{The Training Approach}{equation.3.2.2d}{}}
-\newlabel{rc_x1_t1}{{3.2e}{9}{The Training Approach}{equation.3.2.2e}{}}
-\newlabel{rc_x2_tc}{{3.2f}{9}{The Training Approach}{equation.3.2.2f}{}}
-\newlabel{rc_x2_t1}{{3.2g}{9}{The Training Approach}{equation.3.2.2g}{}}
+\newlabel{ta_rc_x}{{3.2b}{9}{The Training Approach}{equation.3.2.2b}{}}
+\newlabel{ta_rc_partial}{{3.2c}{9}{The Training Approach}{equation.3.2.2c}{}}
+\newlabel{ta_rc_t0}{{3.2d}{9}{The Training Approach}{equation.3.2.2d}{}}
+\newlabel{ta_rc_x1_t1}{{3.2e}{9}{The Training Approach}{equation.3.2.2e}{}}
+\newlabel{ta_rc_x2_tc}{{3.2f}{9}{The Training Approach}{equation.3.2.2f}{}}
+\newlabel{ta_rc_x2_t1}{{3.2g}{9}{The Training Approach}{equation.3.2.2g}{}}
 \newlabel{ca_rc}{{3.2}{9}{The Training Approach}{equation.3.2.2i}{}}
 ]
 part I.
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `partprefix' that is an alias of element `partnumber'
-(scrkbase)              on input line 113.
+(scrkbase)              on input line 112.
 [10]
 
 Class scrreprt Warning: You are using `\begin{appendix}...\end{appendix}'.
@@ -809,7 +809,7 @@ Class scrreprt Warning: You are using `\begin{appendix}...\end{appendix}'.
 (scrreprt)              inconsistent.
 (scrreprt)              Because of this, you should remove `\end{appendix}'
 (scrreprt)              and replace `\begin{appendix}' by command
-(scrreprt)              `\appendix' on input line 114.
+(scrreprt)              `\appendix' on input line 113.
 
 chapter A.
 (MThesis_main_20220607.lof)
@@ -879,9 +879,9 @@ er/sfss1728.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfsx12
  Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfsx2074.pfb><C:/Program Files/Mi
 KTeX 2.9/fonts/type1/public/cm-super/sfsx2488.pfb><C:/Program Files/MiKTeX 2.9/
 fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on MThesis_main_20220607.pdf (11 pages, 301135 bytes).
+Output written on MThesis_main_20220607.pdf (11 pages, 301702 bytes).
 PDF statistics:
- 295 PDF objects out of 1000 (max. 8388607)
+ 297 PDF objects out of 1000 (max. 8388607)
  67 named destinations out of 1000 (max. 500000)
  89 words of extra memory for PDF output out of 10000 (max. 10000000)
 
