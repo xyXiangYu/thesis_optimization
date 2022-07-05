@@ -46,10 +46,19 @@ Contrast to the Classical Approach, in the Training Approach it is assumed that 
 & \ \ T \geq 0, \\
 & \ \ u(t) \in [-10, 10], & t \in [0,1]. 
 	\end{align}
-	\label{ca_rc}
+	\label{TA_rc}
 \end{subequations}
 
-The solution of the Training Approach in paper \cite{MatSch22} is given by a gradient-free method, which we are going to explain in the following.
+The solution of the Training Approach in paper \cite{MatSch22} is given by a gradient-free method, more precisely, a so-called model-based DFO approach for box-constrained optimization problems is used. Such approach can be used for the problems of the form as 
+\begin{equation}
+	\begin{aligned}
+		\underset{x \in \mathcal{R}^n}{min} & \  f(x)  \\ 
+		s.t.  & \ a_i \leq x_i \leq b_i, i = 1, ..., n \\
+	\end{aligned}
+	\label{DFO_bc}
+\end{equation}
+
+More specifically, the BOBYQA algorithm is used to solve upper level problem \ref{TA_rc}. In the general DFO method, the objective function $f(\cdot)$ is considered a black box. For a given $p$, we solve the parametric lower level OCP with a direct approach and view the resulting (finite dimensional) solution as dependent variable. Furthermore, the uncentainty set $\Omega_P$ is box-shaped, and hence the BOBYQA algorithm is applicable to our problem class.
 
 
 
