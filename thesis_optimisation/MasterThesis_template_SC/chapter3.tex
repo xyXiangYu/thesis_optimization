@@ -58,7 +58,18 @@ The solution of the Training Approach in paper \cite{MatSch22} is given by a gra
 	\label{DFO_bc}
 \end{equation}
 
-More specifically, the BOBYQA algorithm is used to solve upper level problem \ref{TA_rc}. In the general DFO method, the objective function $f(\cdot)$ is considered a black box. For a given $p$, we solve the parametric lower level OCP with a direct approach and view the resulting (finite dimensional) solution as dependent variable. Furthermore, the uncentainty set $\Omega_P$ is box-shaped, and hence the BOBYQA algorithm is applicable to our problem class.
+More specifically, the BOBYQA algorithm is used to solve upper level problem \ref{TA_rc}. In the general DFO method, the objective function $f(\cdot)$ is considered a black box. For a given $p$, the parametric lower level OCP is solved with a direct approach and the resulting (finite dimensional) solution is viewed as dependent variable. Furthermore, the uncentainty set $\Omega_P$ is box-shaped, and hence the BOBYQA algorithm is applicable to the problem in the Training Approach.
+
+In the method of BOBYQA algorithm, in each iteration $k$ the objective function is approximated by a sequence of quadratic function $Q_k(\cdot)$, such that 
+\begin{equation}
+	\begin{aligned}
+Q_k(z^{k,i}) = F(z{k,i}), \   i = 1, ..., m,
+	\end{aligned}
+	\label{BOBYQA}
+\end{equation}
+for interpolation points $z^{k,i} \in \mathcal{R}$. The number of interpolation points $m$ is constant. Let $x_k \in \ argmin \ \{Q_k(z^{k,i}) | i=1, ...,m\}$. In every iteration $k$, by means of quadrative model, one computes a feasible step $d_k$, which is inside a "trust-region radius" $\Delta_k$, i.e. $\l d_k \leq \Delta_k$. Subsequently, the function $F(\cdot)$ is evaluated at $x_k + d_k$, one interpolation point $z^{k,i}$ is replaced by $x_k + d_k$, and the quadrative model is updated. The sequence $x_k$ is expected to approach a solution of Problem \ref{DFO_bc}.
+
+ 
 
 
 
