@@ -55,7 +55,7 @@ The solution of the Training Approach in paper \cite{MatSch22} is given by a gra
 	\label{DFO_bc}
 \end{equation}
 
-The name BOBYQA is an acronym for "Bound Optimization BY Quadratic Approximation", and is used to solve lower level problem of \ref{TA_rc}. In the general DFO method, the objective function $F(\cdot)$ is considered a black box. For a given $p$, the parametric lower level OCP is solved with a direct approach and the resulting (finite dimensional) solution is viewed as dependent variable. Furthermore, the uncentainty set $\Omega_P$ is box-shaped, and hence the BOBYQA algorithm is applicable to the problem in the Training Approach.The BOBYQA algorithm has been introduced in details in the paper \cite{MicPow22}, and we reiterate the main idea in the text that follows.  
+The name BOBYQA is an acronym for "Bound Optimization BY Quadratic Approximation", and is used to solve lower level problem of \ref{TA_rc}. In the general DFO method, the objective function $F(\cdot)$ is considered a black box. For a given $p$, the parametric lower level OCP of the Training Approach \ref{TA_rc} is solved with a direct approach and the resulting (finite dimensional) solution is viewed as dependent variable. Furthermore, the uncentainty set $\Omega_P$ is box-shaped, and hence the BOBYQA algorithm is applicable to the problem in the Training Approach. The BOBYQA algorithm has been introduced in details in the paper \cite{MicPow09}, and we reiterate the main idea in the text that follows.  
 
 The method of BOBYQA is iterative, $k$ and $n$ being reserved for the iteration number and the number of variables, respectively. Further, $m$ is reserved for the number of interpolation conditions that are imposed on a quadratic approximation $Q_k(x), x \in \mathcal{R}$, to $F(x), \mathcal{R}$, with $m$ is a chosen constant  integer from the interval $[n+2, \frac{1}{2}(n+1)(n+2)]$. The approximation is available at the beginning of the $k$-th iteration, the interpolation equations have the form
 \begin{equation}
@@ -65,7 +65,7 @@ We let $x_k$ be the point in the set $\{y_j : j = 1, 2, ... , m\}$ that has the 
 \begin{equation}
 	F(x_k)= min\ \{F(y_j), \  j = 1, 2, ..., m\}, 
 \end{equation}
-with any ties being broken by giving priority to an earlier evaluation of the least function value $F(x_k)$. A positive number $\Delta_k$, called the “trust region radius”, is also available at the beginning of the $k$-th iteration. If a termination conditions is satisfied, then the iteration stops. Otherwise, a step $d_k$ from $x_k$ is constructed such 
+with any ties being broken by giving priority to an earlier evaluation of the least function value $F(x_k)$. A positive number $\Delta_k$, called the “trust region radius”, is also available at the beginning of the $k$-th iteration. If a termination condition\footnote{Typically, a termination condition is satified when the objective value can not be improved further after some iterations, for the case of BOBYQA algorithm, please refer the the paper \cite{MicPow09} for more details.} is satisfied, then the iteration stops. Otherwise, a step $d_k$ from $x_k$ is constructed such 
 that $ \Vert d_k \Vert \leq \Delta_k $ holds, such that $x = x_k+d_k$ is within the bounds \ref{DFO_bc}, and such that $x_k+d_k$ is not one of the interpolation points $y_j : j = 1, 2, ... , m$. Then the new function value $F(x_k+d_k)$ is calculated, and one of the interpolation points, $y_t$ say, is replaced by $x_k+d_k$, where $y_t$ is different from $x_k$. It follows that $x_{k+1}$ is defined by the formula
 \begin{equation}
 	x_{k+1}
@@ -87,6 +87,29 @@ at the new interpolation points
 		x_k+d_k  , & j =t 
 	\end{cases},  \  j = 1, 2, ..., m.
 \end{equation}
+
+The operations of BOBYQA algorithm requires the user to provide an initial vector of variables $x_0 \in \mathcal{R}^n$, the initial trust region $\Delta_1$, in additional to the bounds of problem \ref{DFO_bc},  and the number $m$ of interpolation conditions where $n+2 \leq m \leq \frac{1}{2}(n+1)(n+2)$. Two different ways have been proposed for constructing the step $d_k$ from $x_k$ and updating procedures from the $k$-th iteration to the $k+1$-th iteration in the paper \cite{MicPow09}, with both methods having utilized the "quadratic" nature of the approximation function $Q(\cdot)$.
+
+The lower level OCP of the Training Approach \ref{TA_rc} can be solved with the BOBYQA algorithm for a given $p$, since the lower level problem can be re-written into the form of \ref{DFO_bc} and the constraints are box-shaped. With the BOBYQA algorithm computing local extrema, the upper level problem still needs to be solved globally. In our rocket car case, this is straight-forward, i.e. maximizing over all $p$. 
+
+Nevertheless, the BOBYQA algorithm has limitations with several strong assumptions being made. Firstly, it has been assumed the uncertainty set is of moderate size and is box-shaped. Secondly, it has been assumed that there is only one local extrema, i.e. the lower level problem has only one solution for each $p \in \Omega_P$. In general, we cannot expect the second assumption to be valid. Though the BOBYQA algorithm is a gradient-free method with repect to the objective function $F(\cdot)$, it still utilizes the gradient of the approximation function $Q(\cdot)$ while updating the iterations. Therefore, this BOBYQA algorithm, or a general DFO approach, is still subject to the numerical errors and computational costs while calculating the gradients of the approximation function $Q(\cdot)$.  
+
+The paper at hand, instead, is utilizing the gradient of the objective function $F(\cdot)$ directly, and we have used the multiple shooting and quasi-Newton method for solving the lower level problem of the Training Approach \ref{TA_rc}. In the chapter that follows, we give the introduction to the multiple shooting and quasi-Newton method. 
+
+
+
+
+ 
+
+
+
+
+
+
+%However, we have made several assumptions, for example the uncertainty set is of moderate size and only one local extrema exists. We remark that BOBYQA computes local extrema while in our application, the upper
+%level problem needs to be solved globally. However, we assume that our model behaves benign in the sense that if the uncertainty set is of moderate size, then solely
+%one local maximum exists. Alternatives are the provision of a good initial guess forthe global optimum or the use of global optimization routines on the upper level. For the latter, however, increasing computational costs have to be expected
+
 
 
 %In the method of BOBYQA algorithm, in each iteration $k$ the objective function is approximated by a sequence of quadratic function $Q_k(\cdot)$, such that 

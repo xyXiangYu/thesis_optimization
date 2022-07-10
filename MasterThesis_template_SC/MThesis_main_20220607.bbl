@@ -5,7 +5,7 @@
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem[Powell(2009)]{MicPow22}
+\bibitem[Powell(2009)]{MicPow09}
 Michael J.~D. Powell.
 \newblock The bobyqa algorithm for bound constrained optimization without
   derivatives.
