@@ -1,0 +1,118 @@
+
+
+\chapter{The Classical and Training Approach}
+
+The paper on hand focuses on using quasi-Newton and multi-shooting method for the Training Approach. In this chapter, we shortly introduce the Classical Approach first and then we discuss the Training Approach in greater detail. In the next chapter, we can introduce the quasi-Newton and multi-shooting method, and elaborate in detail how they can be used for the Training Approach. 
+
+
+
+\section{The Classical Approach}
+
+As stated in the introduction part, the classical approach is consistent with the $minmax$ approach, during which, two level optimization problems are solved. 
+
+In the lower level, we solve an optimization problem ($max \  f(x,p)$) with respect to $p$, and in the upper level, we continue to find the best solution with respect to $x$, as shown in \ref{minmax}. In the case of the rocket car, the classical approach will be expressed in the following form
+
+\begin{subequations}
+	\begin{align}
+		\underset{T, u(\cdot)}{min} \  \underset{ p \in \Omega_P, x(\cdot,p)}{max}  \ \   & \  T \\ 
+		s.t.  & \ \ x = (x_1, x_2)   \label{ca_rc_x} \\ 
+		& \ \  \dot{x} = T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix}, & \ t \in [0,1],  \label{ca_rc_partial} \\
+		& \ \ x(0,p) = 0, \label{ca_rc_t0}\\
+		& \ \ x_1(1;p) \geq 10, & \ for \ all \ p \in \Omega_P, \label{ca_rc_x1_t1} \\
+		& \ \ x_2(t;p) \leq 4, & t \in [0,1], \ for \ all \ p \in \Omega_P,  \label{ca_rc_x2_tc} \\
+		& \ \ x_2(1;p) \leq 0, & \ for \ all \ p \in \Omega_P, \label{ca_rc_x2_t1}  \\
+		& \ \ T \geq 0, \\
+		& \ \ u(t) \in [-10, 10], & t \in [0,1]. 
+	\end{align}
+	\label{ca_rc}
+\end{subequations}
+
+In the Classical Approach, the set of feasible controllable parameters and control functions are given by those $T$ and $u(\cdot)$, which yield feasible trajectories $x(\cdot, p)$ for all $p \in \Omega_P$. The value of the objective function in the lower level does not depend on $p$ and $x(\cdot, p)$. In other words, in this approach, the driver has no prior knowledge about the value of the parameter $p$ and gets no feedback during the process and has to set up the driving strategy in advance. 
+
+\section{The Training Approach}
+Contrast to the Classical Approach, in the Training Approach it is assumed that the driver of the rocket car is able to perform optmially for every $p$ because of a preceding training period. Thus the worst possible optimal performance is given by a solution of the problem
+\begin{subequations}
+	\begin{align}
+	   \underset{p \in \Omega_P, T, u(\cdot), x(\cdot,p)}{max}  \ 	\underset{}{min} \   & \  T \\ 
+		s.t.  & \ \ x = (x_1, x_2)   \label{ta_rc_x} \\ 
+             & \ \  \dot{x} = T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix}, & \ t \in [0,1],  \label{ta_rc_partial} \\
+& \ \ x(0,p) = 0, \label{ta_rc_t0}\\
+& \ \ x_1(1;p) \geq 10, \label{ta_rc_x1_t1} \\
+& \ \ x_2(t;p) \leq 4, & t \in [0,1], \label{ta_rc_x2_tc} \\
+& \ \ x_2(1;p) \leq 0, \label{ta_rc_x2_t1}  \\
+& \ \ T \geq 0, \\
+& \ \ u(t) \in [-10, 10], & t \in [0,1]. 
+	\end{align}
+	\label{TA_rc}
+\end{subequations}
+
+The solution of the Training Approach in paper \cite{MatSch22} is given by a gradient-free method, more precisely, a so-called model-based DFO approach for box-constrained optimization problems is used. The BOBYQA algorithm is chosen for such approach to solve problems of the form
+\begin{equation}
+	\begin{aligned}
+		\underset{x \in \mathcal{R}^n}{min} & \  F(x)  \\ 
+		s.t.  & \ a_i \leq x_i \leq b_i, i = 1, ..., n \\
+	\end{aligned}
+	\label{DFO_bc}
+\end{equation}
+
+The name BOBYQA is an acronym for "Bound Optimization BY Quadratic Approximation", and is used to solve lower level problem of \ref{TA_rc}. In the general DFO method, the objective function $F(\cdot)$ is considered a black box. For a given $p$, the parametric lower level OCP is solved with a direct approach and the resulting (finite dimensional) solution is viewed as dependent variable. Furthermore, the uncentainty set $\Omega_P$ is box-shaped, and hence the BOBYQA algorithm is applicable to the problem in the Training Approach.The BOBYQA algorithm has been introduced in details in the paper \cite{MicPow22}, and we reiterate the main idea in the text that follows.  
+
+The method of BOBYQA is iterative, $k$ and $n$ being reserved for the iteration number and the number of variables, respectively. Further, $m$ is reserved for the number of interpolation conditions that are imposed on a quadratic approximation $Q_k(x), x \in \mathcal{R}$, to $F(x), \mathcal{R}$, with $m$ is a chosen constant  integer from the interval $[n+2, \frac{1}{2}(n+1)(n+2)]$. The approximation is available at the beginning of the $k$-th iteration, the interpolation equations have the form
+\begin{equation}
+  Q_k(y_j)= F(y_j),\   j = 1, 2, ..., m, 
+\end{equation}
+We let $x_k$ be the point in the set $\{y_j : j = 1, 2, ... , m\}$ that has the property
+\begin{equation}
+	F(x_k)= min\ \{F(y_j), \  j = 1, 2, ..., m\}, 
+\end{equation}
+with any ties being broken by giving priority to an earlier evaluation of the least function value $F(x_k)$. A positive number $\Delta_k$, called the “trust region radius”, is also available at the beginning of the $k$-th iteration. If a termination conditions is satisfied, then the iteration stops. Otherwise, a step $d_k$ from $x_k$ is constructed such 
+that $ \Vert d_k \Vert \leq \Delta_k $ holds, such that $x = x_k+d_k$ is within the bounds \ref{DFO_bc}, and such that $x_k+d_k$ is not one of the interpolation points $y_j : j = 1, 2, ... , m$. Then the new function value $F(x_k+d_k)$ is calculated, and one of the interpolation points, $y_t$ say, is replaced by $x_k+d_k$, where $y_t$ is different from $x_k$. It follows that $x_{k+1}$ is defined by the formula
+\begin{equation}
+	x_{k+1}
+	\begin{cases}
+		 x_k, & F(x_k+d_k) \geq F(x_k) \\
+		x_k+d_k  , & F(x_k+d_k) < F(x_k) 
+	\end{cases}
+\end{equation}
+
+Further, $\Delta_{k+1}$ and $Q_{k+1}$ are generated for the next iteration, $Q_{k+1}$ being subject to the constraints 
+\begin{equation}
+	Q_{k+1}(\hat{y}_j)= F(\hat{y}_j), \  j = 1, 2, ..., m, 
+\end{equation}
+at the new interpolation points
+\begin{equation}
+	\hat{y}_j =
+	\begin{cases}
+		y_j, & j \neq t, \\
+		x_k+d_k  , & j =t 
+	\end{cases},  \  j = 1, 2, ..., m.
+\end{equation}
+
+
+%In the method of BOBYQA algorithm, in each iteration $k$ the objective function is approximated by a sequence of quadratic function $Q_k(\cdot)$, such that 
+%\begin{equation}
+%	\begin{aligned}
+%Q_k(z^{k,i}) = F(z{k,i}), \   i = 1, ..., m,
+%	\end{aligned}
+%	\label{BOBYQA}
+%\end{equation}
+%for interpolation points $z^{k,i} \in \mathcal{R}$. The number of interpolation points $m$ is constant. Let $x_k \in \ argmin \ \{Q_k(z^{k,i}) | i=1, ...,m\}$. In every iteration $k$, by means of quadrative model, one computes a feasible step $d_k$, which is inside a "trust-region radius" $\Delta_k$, i.e. $\l d_k \leq \Delta_k$. Subsequently, the function $F(\cdot)$ is evaluated at $x_k + d_k$, one interpolation point $z^{k,i}$ is replaced by $x_k + d_k$, and the quadrative model is updated. The sequence $x_k$ is expected to approach a solution of Problem \ref{DFO_bc}.
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+%can assume that $p^0$ is a fixed value in the feasible uncertainty set $\Omega_P$
+
+%The classical approach, aka, the robust optimization  is concerned with optimization problems which involes uncertainy parameters whose value is a priori unknown. 
+
+
+% approach and the
