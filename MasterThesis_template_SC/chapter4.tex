@@ -1,0 +1,66 @@
+
+
+\chapter{The Introduction to Multiple Shooting and Quasi-Newton Method}
+
+In this chapter, we first introduce the basics of solutions to nonlinear problems and the focus on the quasi-Newton and multiple shooting method. 
+
+As stated in the introduction chapter \ref{Chapter1}, a general optimization problem is typically of the form 
+\begin{equation}
+	\begin{aligned}
+		\  \  \ & min \  f(x) \\
+		s.t.\ \  & x \in \Omega
+	\end{aligned}
+	\label{GeneralOpt}
+\end{equation}
+
+Here $x \in \Omega$ represents the constraints for which $x$ must satisfy, it may be in the form of $ g(x) = 0,  h(x)  \geq  0$ as in the problem \ref{GeneralMin} in the Introduction chapter, i.e. the feasible set $\Omega = \underset{x}{arg} \ \{ g(x) = 0,  h(x)  \geq  0 \}$. 
+
+Such problem can be solved via Newton's method, which attempts to solve this problem by constructing a sequence $\{x_K\}$ from an initial guess (starting point) $x_0 \in \Omega$ that converges towards a minimizer $x^\star$ of $f(x)$  by using a sequence of first and/or second order Taylor approximations of $f(x)$ around the iterates. The second-order Taylor expansion of $f(x)$ around $x_k$ is
+%\begin{multline*}
+\begin{align*}
+f(x_k + \delta_x) \approx f(x_k) + f'(x_k)\delta x +\frac{1}{2}f''(x_k)\delta_x^2
+\end{align*}
+where $\delta_x$ represents a small change (with respect to $x$), and $f', f''$ are the first and second order derivatives of the original function $f(x)$. 
+%\end{multline*}
+
+
+
+
+%{\displaystyle f(x_{k}+t)\approx f(x_{k})+f'(x_{k})t+{\frac {1}{2}}f''(x_{k})t^{2}.}{\displaystyle f(x_{k}+t)\approx f(x_{k})+f'(x_{k})t+{\frac {1}{2}}f''(x_{k})t^{2}.}
+%The next iterate {\displaystyle x_{k+1}}x_{k+1} is defined so as to minimize this quadratic approximation in {\displaystyle t}t, and setting {\displaystyle x_{k+1}=x_{k}+t}{\displaystyle x_{k+1}=x_{k}+t}. If the second derivative is positive, the quadratic approximation is a convex function of {\displaystyle t}t, and its minimum can be found by setting the derivative to zero. Since
+
+%{\displaystyle \displaystyle 0={\frac {\rm {d}}{{\rm {d}}t}}\left(f(x_{k})+f'(x_{k})t+{\frac {1}{2}}f''(x_{k})t^{2}\right)=f'(x_{k})+f''(x_{k})t,}{\displaystyle \displaystyle 0={\frac {\rm {d}}{{\rm {d}}t}}\left(f(x_{k})+f'(x_{k})t+{\frac {1}{2}}f''(x_{k})t^{2}\right)=f'(x_{k})+f''(x_{k})t,}
+%the minimum is achieved for
+
+%{\displaystyle t=-{\frac {f'(x_{k})}{f''(x_{k})}}.}{\displaystyle t=-{\frac {f'(x_{k})}{f''(x_{k})}}.}
+%Putting everything together, Newton's method performs the iteration
+
+%{\displaystyle x_{k+1}=x_{k}+t=x_{k}-{\frac {f'(x_{k})}{f''(x_{k})}}.}{\displaystyle x_{k+1}=x_{k}+t=x_{k}-{\frac {f'(x_{k})}{f''(x_{k})}}.}
+
+%Here, the function $f(x)$ is typically a non-linear function. 
+
+
+
+
+%Without attempting completeness, we pr
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%can assume that $p^0$ is a fixed value in the feasible uncertainty set $\Omega_P$
+
+%The classical approach, aka, the robust optimization  is concerned with optimization problems which involes uncertainy parameters whose value is a priori unknown. 
+
+
+% approach and the
