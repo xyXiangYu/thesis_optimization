@@ -5,7 +5,8 @@
 \contentsline {chapter}{\numberline {3}The Classical and Training Approach}{8}{chapter.3}%
 \contentsline {section}{\numberline {3.1}The Classical Approach}{8}{section.3.1}%
 \contentsline {section}{\numberline {3.2}The Training Approach}{9}{section.3.2}%
-\contentsline {chapter}{\numberline {4}The Introduction to Multiple Shooting and Quasi-Newton Method}{11}{chapter.4}%
+\contentsline {chapter}{\numberline {4}Quasi-Newton and Multiple Shooting Method}{11}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Newton method}{11}{section.4.1}%
-\contentsline {part}{\numberline {I}Appendix}{13}{part.1}%
+\contentsline {section}{\numberline {4.2}Quasi-Newton method}{12}{section.4.2}%
+\contentsline {part}{\numberline {I}Appendix}{14}{part.1}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

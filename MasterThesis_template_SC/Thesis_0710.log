@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2022.5.25)  11 JUL 2022 17:57
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2022.5.25)  11 JUL 2022 23:12
 entering extended mode
 **./Thesis_0710.tex
 (Thesis_0710.tex
@@ -785,15 +785,18 @@ chapter 3.
 
  (chapter4.tex
 chapter 4.
-[10] [11]) [12
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Quasi-Newton method}{
-12}{section.4.2}\protected@file@percent }
+[10] [11] [12]
+
+LaTeX Warning: Reference `BFGS_updateB' on page 13 undefined on input line 72.
+
+) [13
+\newlabel{BFGS_updateB}{{4.4}{13}{Quasi-Newton method}{equation.4.2.4}{}}
 ]
 part I.
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `partprefix' that is an alias of element `partnumber'
 (scrkbase)              on input line 112.
-[13]
+[14]
 
 Class scrreprt Warning: You are using `\begin{appendix}...\end{appendix}'.
 (scrreprt)              You should note, that `\appendix' is a mostly globally
@@ -815,27 +818,27 @@ chapter A.
  (deposition.tex) (Thesis_0710.aux (titlepages.aux)
 (chapter1.aux) (chapter2.aux) (chapter3.aux) (chapter4.aux) (deposition.aux))
 
+LaTeX Warning: There were undefined references.
+
+
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `Thesis_0710.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [14
-\@writefile{toc}{\contentsline {chapter}{\numberline {A}Lists}{14}{appendix.A}\
+[15
+\@writefile{toc}{\contentsline {chapter}{\numberline {A}Lists}{15}{appendix.A}\
 protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {chapter}{Bibliography}{14}{chapter*.2}\protecte
+\@writefile{toc}{\contentsline {chapter}{Bibliography}{15}{chapter*.2}\protecte
 d@file@percent }
 ] ) 
 Here is how much of TeX's memory you used:
- 14984 strings out of 479300
- 244809 string characters out of 2863761
- 723619 words of memory out of 3000000
- 32060 multiletter control sequences out of 15000+200000
- 423509 words of font info for 77 fonts, out of 3000000 for 9000
+ 15004 strings out of 479300
+ 245076 string characters out of 2863761
+ 723778 words of memory out of 3000000
+ 32073 multiletter control sequences out of 15000+200000
+ 424285 words of font info for 78 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  111i,14n,116p,10608b,455s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/cm-super/cm-super-t1.enc}{C:/Pr
@@ -847,25 +850,26 @@ e1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
 /amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts
 /cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10
 .pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/
-Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Fi
-les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKT
-eX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program Files/MiKTeX 2.9/fo
-nts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
-/public/amsfonts/symbols/msbm10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
-blic/cm-super/sfrm0700.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-s
-uper/sfrm0800.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfrm
-1000.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfrm1200.pfb>
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfrm1440.pfb><C:/Progr
-am Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfss1440.pfb><C:/Program Files/
-MiKTeX 2.9/fonts/type1/public/cm-super/sfss1728.pfb><C:/Program Files/MiKTeX 2.
-9/fonts/type1/public/cm-super/sfsx1200.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
-ype1/public/cm-super/sfsx1440.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
-ic/cm-super/sfsx1728.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-sup
-er/sfsx2074.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfsx24
-88.pfb>
-Output written on Thesis_0710.pdf (14 pages, 345548 bytes).
+Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Fi
+les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
+public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/am
+sfonts/symbols/msbm10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-su
+per/sfbx1200.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfrm0
+700.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfrm0800.pfb><
+C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfrm1000.pfb><C:/Progra
+m Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfrm1200.pfb><C:/Program Files/M
+iKTeX 2.9/fonts/type1/public/cm-super/sfrm1440.pfb><C:/Program Files/MiKTeX 2.9
+/fonts/type1/public/cm-super/sfss1440.pfb><C:/Program Files/MiKTeX 2.9/fonts/ty
+pe1/public/cm-super/sfss1728.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
+c/cm-super/sfsx1200.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-supe
+r/sfsx1440.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfsx172
+8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfsx2074.pfb><C:
+/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfsx2488.pfb>
+Output written on Thesis_0710.pdf (15 pages, 364145 bytes).
 PDF statistics:
- 361 PDF objects out of 1000 (max. 8388607)
- 80 named destinations out of 1000 (max. 500000)
+ 387 PDF objects out of 1000 (max. 8388607)
+ 86 named destinations out of 1000 (max. 500000)
  97 words of extra memory for PDF output out of 10000 (max. 10000000)
 

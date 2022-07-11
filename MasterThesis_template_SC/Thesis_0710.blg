@@ -17,47 +17,50 @@ The style file: plainnat.bst
 Reallocating 'name_of_file' (item size: 1) to 15 items.
 A level-1 auxiliary file: deposition.aux
 Database file #1: references.bib
+Warning--empty journal in ANP91
+Warning--empty journal in WilDav59
+Warning--empty journal in FlePow63
 Warning--empty journal in MicPow09
 Warning--empty journal in MatSch22
-You've used 2 entries,
+You've used 5 entries,
             2773 wiz_defined-function locations,
-            608 strings with 5204 characters,
-and the built_in function-call counts, 627 in all, are:
-= -- 50
-> -- 20
-< -- 2
-+ -- 8
-- -- 6
-* -- 32
-:= -- 106
-add.period$ -- 6
-call.type$ -- 2
-change.case$ -- 8
-chr.to.int$ -- 2
-cite$ -- 6
-duplicate$ -- 38
-empty$ -- 61
-format.name$ -- 8
-if$ -- 123
+            623 strings with 5509 characters,
+and the built_in function-call counts, 1518 in all, are:
+= -- 125
+> -- 50
+< -- 5
++ -- 20
+- -- 15
+* -- 77
+:= -- 250
+add.period$ -- 15
+call.type$ -- 5
+change.case$ -- 20
+chr.to.int$ -- 5
+cite$ -- 15
+duplicate$ -- 95
+empty$ -- 151
+format.name$ -- 20
+if$ -- 306
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 2
-newline$ -- 18
-num.names$ -- 8
-pop$ -- 22
+missing$ -- 5
+newline$ -- 33
+num.names$ -- 20
+pop$ -- 55
 preamble$ -- 1
-purify$ -- 6
+purify$ -- 15
 quote$ -- 0
-skip$ -- 27
+skip$ -- 66
 stack$ -- 0
-substring$ -- 4
+substring$ -- 10
 swap$ -- 0
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 22
-warning$ -- 2
-while$ -- 6
+type$ -- 55
+warning$ -- 5
+while$ -- 15
 width$ -- 0
-write$ -- 29
-(There were 2 warnings)
+write$ -- 62
+(There were 5 warnings)
