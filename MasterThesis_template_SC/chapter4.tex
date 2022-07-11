@@ -1,26 +1,38 @@
-
-
 \chapter{The Introduction to Multiple Shooting and Quasi-Newton Method}
-
-In this chapter, we first introduce the basics of solutions to nonlinear problems and the focus on the quasi-Newton and multiple shooting method. 
-
+In this chapter, we first introduce the basics of solutions to optimization problems and the focus on the quasi-Newton and multiple shooting method. 
 As stated in the introduction chapter \ref{Chapter1}, a general optimization problem is typically of the form 
 \begin{equation}
 	\begin{aligned}
 		\  \  \ & min \  f(x) \\
 		s.t.\ \  & x \in \Omega
 	\end{aligned}
-	\label{GeneralOpt}
+	\label{OptGen}
 \end{equation}
+Here $x \in \Omega$ represents the constraints for which $x$ must satisfy, it may be in the form of $ g(x) = 0,  h(x)  \geq  0$ as in the problem \ref{GeneralMin} in the introduction chapter \ref{Chapter1}, i.e. the feasible set $\Omega = \underset{x}{arg} \ \{ g(x) = 0,  h(x)  \geq  0 \}$. 
 
-Here $x \in \Omega$ represents the constraints for which $x$ must satisfy, it may be in the form of $ g(x) = 0,  h(x)  \geq  0$ as in the problem \ref{GeneralMin} in the Introduction chapter, i.e. the feasible set $\Omega = \underset{x}{arg} \ \{ g(x) = 0,  h(x)  \geq  0 \}$. 
-
-Such problem can be solved via Newton's method, which attempts to solve this problem by constructing a sequence $\{x_K\}$ from an initial guess (starting point) $x_0 \in \Omega$ that converges towards a minimizer $x^\star$ of $f(x)$  by using a sequence of first and/or second order Taylor approximations of $f(x)$ around the iterates. The second-order Taylor expansion of $f(x)$ around $x_k$ is
+\section{Newton method}
+Such problem \ref{OptGen} can be solved via Newton's method, which attempts to solve this problem by constructing a sequence $\{x_k\}$ from an initial guess (starting point) $x_0 \in \Omega$ that converges towards a minimizer $x^\star$ of $f(x)$  by using a sequence of second-order Taylor approximations of $f(x)$ around the iterates. The second-order Taylor expansion of $f(x)$ around $x_k$ is
 %\begin{multline*}
 \begin{align*}
-f(x_k + \delta_x) \approx f(x_k) + f'(x_k)\delta x +\frac{1}{2}f''(x_k)\delta_x^2
+f(x_k + \delta_x) \approx h(x) : = f(x_k) + f'(x_k)\delta x +\frac{1}{2}f''(x_k)\delta_x^2 
 \end{align*}
-where $\delta_x$ represents a small change (with respect to $x$), and $f', f''$ are the first and second order derivatives of the original function $f(x)$. 
+where $\delta_x$ represents a small change (with respect to $x$), and $f', f''$ are the first and second order derivatives of the original function $f(x)$. The next iterate $x_{k+1}$ is defined so as to minimize this quadratic approximation $h(x)$. Since $h(x)$ is a quadratic function, and is minimized by solving $h'(x) = 0$. Since the gradient of $h(x)$ is at point $x_k$ is :
+\begin{align*}
+h'(x_k) = f'(x_k) +f''(x_k)\delta_x 
+\end{align*}
+Therefore, we are motivated to solve $\nabla  h(x_k) =0$, which yields
+\begin{align*}
+	\delta_x  = - \frac{ f'(x_k)}{f''(x_k)}
+\end{align*}
+Therefore, for the next iteration point $x_{k+1}$, we can just add the small change $\delta_x$ to the current iterate, i.e. 
+\begin{align*}
+	x_{k+1}  = x_k + \delta_x = x_k - \frac{ f'(x_k)}{f''(x_k)}
+\end{align*}
+
+The Newton's method performs the iteration until the convergence, i.e. $x_k$ and $f(x_k)$ converge to $x^\star$ and $f(x^\star)$, respectively \footnote{In another word, the Newton mehtod has converged when the small change $\delta_x =0$ or $\delta_x$ is small enough that the change in the objective function is below a pre-defined tolerance level}.   
+
+The algorithm of the new 
+
 %\end{multline*}
 
 
