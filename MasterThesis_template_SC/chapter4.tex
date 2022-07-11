@@ -16,7 +16,7 @@ Such problem \ref{OptGen} can be solved via Newton's method, which attempts to s
 \begin{align*}
 f(x_k + \delta_x) \approx h(x) : = f(x_k) + f'(x_k)\delta x +\frac{1}{2}f''(x_k)\delta_x^2 
 \end{align*}
-where $\delta_x$ represents a small change (with respect to $x$), and $f', f''$ are the first and second order derivatives of the original function $f(x)$. The next iterate $x_{k+1}$ is defined so as to minimize this quadratic approximation $h(x)$. Since $h(x)$ is a quadratic function, and is minimized by solving $h'(x) = 0$. Since the gradient of $h(x)$ is at point $x_k$ is :
+where $\delta_x$ represents a small change (with respect to $x$), and $f', f''$ are the first and second order derivatives of the original function $f(x)$. $f''$ is also called Hessian matrix of $f(x)$ when $x$ is a vector, i.e. having multiple variables. The next iterate $x_{k+1}$ is defined so as to minimize this quadratic approximation $h(x)$. Since $h(x)$ is a quadratic function, and is minimized by solving $h'(x) = 0$. Since the gradient of $h(x)$ is at point $x_k$ is :
 \begin{align*}
 h'(x_k) = f'(x_k) +f''(x_k)\delta_x 
 \end{align*}
@@ -29,50 +29,33 @@ Therefore, for the next iteration point $x_{k+1}$, we can just add the small cha
 	x_{k+1}  = x_k + \delta_x = x_k - \frac{ f'(x_k)}{f''(x_k)}
 \end{align*}
 
-The Newton's method performs the iteration until the convergence, i.e. $x_k$ and $f(x_k)$ converge to $x^\star$ and $f(x^\star)$, respectively \footnote{In another word, the Newton mehtod has converged when the small change $\delta_x =0$ or $\delta_x$ is small enough that the change in the objective function is below a pre-defined tolerance level}.   
+The Newton's method performs the iteration until the convergence, i.e. $x_k$ and $f(x_k)$ converge to $x^\star$ and $f(x^\star)$, respectively \footnote{In another word, the Newton mehtod has converged when the small change $\delta_x =0$ or $\delta_x$ is small enough that the change in the objective function is below a pre-defined tolerance level.}. The details of the Newton method is as follows: 
+\begin{description}
+	\item[Newton method steps]\ 
+	\begin{itemize}
+		\item Step 0, $k=0$, choose an initial value $x_0 \in \Omega$ 
+		\item Step 1, $\delta_x  = - \frac{ f'(x_k)}{f''(x_k)}$, if $\delta_x =0$, then stop
+		\item Step 2, choose a step-size $\alpha_k$ (typically $\alpha_k =1$
+		\item Step 3, set $x_{k+1}  = x_k + \alpha_k \delta_x $, let $k= k+1$. Go to Step 1
+	\end{itemize}
+\end{description}
 
-The algorithm of the new 
+The parameter $\alpha_k$ is introduced to augment the Newton method such that a line-search of $f(x_k + \alpha_k \delta_x)$ is applied to find an optimal value of the step size parameter $\alpha_k$. 
 
-%\end{multline*}
+Though the Netwon method is straightforward and easy to understand, it has two main limitations. Firstly, it is sensitive to initial conditions. This is especially apparent if our objective function is non-convex. Depending on the choice of the starting point $x_0$, the Newton method may converge to a saddle point, a local minimum or may not converge at all. In these cases, the Newton method can not find the global solution. Secondly, the Newton method can be computationally expensive, with the second-order derivatives $f''(x)$, aka, the Hessian matrix very expensive to compute. It may also happen that the Hessian matrix is not positive definite, therefore, Newton method can not be used at all for solving the optimization problem. Due to these limitations of the Newton method, we have chosen the quasi-Netwon method instead for our problem in the rocket car case. 
 
-
-
-
-%{\displaystyle f(x_{k}+t)\approx f(x_{k})+f'(x_{k})t+{\frac {1}{2}}f''(x_{k})t^{2}.}{\displaystyle f(x_{k}+t)\approx f(x_{k})+f'(x_{k})t+{\frac {1}{2}}f''(x_{k})t^{2}.}
-%The next iterate {\displaystyle x_{k+1}}x_{k+1} is defined so as to minimize this quadratic approximation in {\displaystyle t}t, and setting {\displaystyle x_{k+1}=x_{k}+t}{\displaystyle x_{k+1}=x_{k}+t}. If the second derivative is positive, the quadratic approximation is a convex function of {\displaystyle t}t, and its minimum can be found by setting the derivative to zero. Since
-
-%{\displaystyle \displaystyle 0={\frac {\rm {d}}{{\rm {d}}t}}\left(f(x_{k})+f'(x_{k})t+{\frac {1}{2}}f''(x_{k})t^{2}\right)=f'(x_{k})+f''(x_{k})t,}{\displaystyle \displaystyle 0={\frac {\rm {d}}{{\rm {d}}t}}\left(f(x_{k})+f'(x_{k})t+{\frac {1}{2}}f''(x_{k})t^{2}\right)=f'(x_{k})+f''(x_{k})t,}
-%the minimum is achieved for
-
-%{\displaystyle t=-{\frac {f'(x_{k})}{f''(x_{k})}}.}{\displaystyle t=-{\frac {f'(x_{k})}{f''(x_{k})}}.}
-%Putting everything together, Newton's method performs the iteration
-
-%{\displaystyle x_{k+1}=x_{k}+t=x_{k}-{\frac {f'(x_{k})}{f''(x_{k})}}.}{\displaystyle x_{k+1}=x_{k}+t=x_{k}-{\frac {f'(x_{k})}{f''(x_{k})}}.}
-
-%Here, the function $f(x)$ is typically a non-linear function. 
+\section{Quasi-Newton method}
+We have stated that one limitation or the downside of the Newton method, is that Newton method can be computationally expensive when calculating the Hessian (i.e. second-order derivatives)  matrix and its invere, especially when dimensions get large. Quasi-Newton methods are a class of optimization methods that attempt to address this issue. More specifically, Quasi-Newton methods are used to find the global minimum of a function $f(x)$ that is twice-differentiable. 
 
 
 
+\begin{equation} 
+	A = 
+	\begin{pmatrix}
+		1+2\lambda \theta  & -\lambda \theta  & \cdots & 0 \\
+		-\lambda \theta  & 1+2\lambda \theta & \cdots & 0\\
+		\vdots  & \vdots  & \ddots & \vdots  \\
+		0 & 0 & \cdots & 1+2\lambda \theta
+	\end{pmatrix}
+\end{equation}
 
-%Without attempting completeness, we pr
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-%can assume that $p^0$ is a fixed value in the feasible uncertainty set $\Omega_P$
-
-%The classical approach, aka, the robust optimization  is concerned with optimization problems which involes uncertainy parameters whose value is a priori unknown. 
-
-
-% approach and the
