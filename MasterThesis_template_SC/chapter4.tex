@@ -16,85 +16,97 @@ Here $x \in \Omega$ represents the constraints for which $x$ must satisfy, it ma
 The problem \ref{OptGen} without constraints, i.e. $min \  f(x)$  can be solved via Newton's method, which attempts to solve this problem by constructing a sequence $\{x_k\}$ from an initial guess (starting point) $x_0$ that converges towards a minimizer $x^\star$ of $f(x)$  by using a sequence of second-order Taylor approximations of $f(x)$ around the iterates. The second-order Taylor expansion of $f(x)$ around $x_k$ is
 %\begin{multline*}
 \begin{align*}
-f(x_k + \delta_x) \approx h(x) : = f(x_k) + f'(x_k)\delta x +\frac{1}{2}f''(x_k)\delta_x^2 
+f(x_k + \delta_x) \approx h(x_k) : = f(x_k) + f'(x_k)\delta(x_k) +\frac{1}{2}f''(x_k)\delta(x_k)^2 
 \end{align*}
-where $\delta_x$ represents a small change (with respect to $x$), and $f', f''$ are the first and second order derivatives of the original function $f(x)$. $f''$ is also called the Hessian matrix $H$ of $f(x)$ when $x$ is a vector of multiple variables. The next iterate $x_{k+1}$ is defined so as to minimize this quadratic approximation $h(\cdot)$. $h(\cdot)$ is a quadratic function of $\delta_x$, and is minimized by solving $h'(\cdot) = 0$. The gradient of $h(x)$ with respect to $\delta_x$ at point $x_k$ is
+where $\delta$ represents a small change (with respect to $x$), and $f', f''$ are the first and second order derivatives of the original function $f(x)$, and are usually denoted as $\nabla f$ and the Hessian matrix $H$ of $f(x)$ respectively when $x$ is a vector of multiple variables. In the text that follows, we will use the symbol $\nabla f$ and $H$ directly, therefore, the Talyor expansion can be written as 
 \begin{align*}
-h'(x_k) = f'(x_k) +f''(x_k)\delta_x = f'(x_k) +H(x_k)\delta_x
+	f(x_k + \delta_x) \approx h(x_k) : = f(x_k) + \nabla f(x_k)^T\delta(x_k) +\frac{1}{2}H(x_k)\delta(x_k)^2 
 \end{align*}
-We are motivated to solve $h'(x_k) =0$, which leads to solve a linear system
+ The next iterate $x_{k+1}$ is defined so as to minimize this quadratic approximation $h(\cdot)$. The function $h(\cdot)$ is a quadratic function of $\delta(x)$, and is minimized by solving $\nabla h(\cdot) = 0$. The gradient of $h(\cdot)$ with respect to $\delta(x_k)$ at point $x_k$ is
+\begin{align*}
+\nabla h(x_k) = \nabla f(x_k) + H(x_k) \delta(x_k) 
+\end{align*}
+We are motivated to solve $\nabla h(x_k) =0$, which leads to solve a linear system
 %\begin{align*}
 \begin{equation}
-	f'(x_k) +H(x_k)\delta_x =0
+\nabla f(x_k) + H(x_k) \delta(x_k) =0
 	\label{HessianEq}
 \end{equation}
 %\end{align*}
-Therefore, for the next iteration point $x_{k+1}$, we can just add the small change $\delta_x$ to the current iterate, i.e. 
+Therefore, for the next iteration point $x_{k+1}$, we can just add the small change $\delta(x_k)$ to the current iterate, i.e. 
 \begin{align*}
-	x_{k+1}  = x_k + \delta_x = x_k - H^{-1}(x_k)f'(x_k), 
+	x_{k+1}  = x_k + \delta(x_k) = x_k - H^{-1}(x_k)\nabla f(x_k), 
 \end{align*}
-here $ H^{-1}(\cdot)$ represents the inverse of the Hessian matrix $H(\cdot)$. The Newton's method performs the iteration until the convergence, i.e. $x_k$ and $f(x_k)$ converge to $x^\star$ and $f(x^\star)$, respectively \footnote{In another word, the Newton mehtod has converged when the small change $\delta_x =0$ or $\delta_x$ is small enough that the change in the objective function is below a pre-defined tolerance level.}. The details of the Newton method is as follows: 
+here $ H^{-1}(\cdot)$ represents the inverse of the Hessian matrix $H(\cdot)$. The Newton's method performs the iteration until the convergence, i.e. $x_k$ and $f(x_k)$ converge to $x^\star$ and $f(x^\star)$, respectively \footnote{In another word, the Newton mehtod has converged when the small change $\delta(x_k) =0$ or $\delta(x_k)$ is small enough that the change in the objective function is below a pre-defined tolerance level.}. The details of the Newton method is as follows: 
 \begin{description}
 	\item[Newton method steps]\ 
 	\begin{itemize}
-		\item Step 0, $k=0$, choose an initial value $x_0 \in \Omega$ 
-		\item Step 1, $\delta_x  = - \frac{ f'(x_k)}{f''(x_k)}$, if $\delta_x =0$, then stop
+		\item Step 0, $k=0$, choose an initial value $x_0$ 
+		\item Step 1, $\delta(x_k)  =- H^{-1}(x_k)\nabla f(x_k)$, if $\delta(x_k) =0$, then stop
 		\item Step 2, choose a step-size $\alpha_k$ (typically $\alpha_k =1$)
-		\item Step 3, set $x_{k+1}  = x_k + \alpha_k \delta_x $, let $k= k+1$. Go to Step 1
+		\item Step 3, set $x_{k+1}  = x_k + \alpha_k \delta(x_k) $, let $k= k+1$. Go to Step 1
 	\end{itemize}
 \end{description}
 
-The parameter $\alpha_k$ is introduced to augment the Newton method such that a line-search of $f(x_k + \alpha_k \delta_x)$ is applied to find an optimal value of the step size parameter $\alpha_k$. 
+The parameter $\alpha_k$ is introduced to augment the Newton method such that a line-search of $f(x_k + \alpha_k \delta(x_k))$ is applied to find an optimal value of the step size parameter $\alpha_k$. 
 
-Though the Newton method is straightforward and easy to understand, it has two main limitations. Firstly, it is sensitive to initial conditions. This is especially apparent if the objective function is non-convex. Depending on the choice of the starting point $x_0$, the Newton method may converge to a saddle point, a local minimum or may not converge at all. In another word, due to the sensitivity with respect to the initialization, the Newton method may be not able to find the global solution. Secondly, the Newton method can be computationally expensive, with the second-order derivatives $f''(x)$, aka, the Hessian matrix $H(\cdot)$ and its inverse very expensive to compute. It may also happen that the Hessian matrix is not positive definite, therefore, Newton method can not be used at all for solving the optimization problem. Due to these limitations of the Newton method, we have chosen the quasi-Netwon method instead for solving our problem in the rocket car case. 
+Though the Newton method is straightforward and easy to understand, it has two main limitations. Firstly, it is sensitive to initial conditions. This is especially apparent if the objective function is non-convex. Depending on the choice of the starting point $x_0$, the Newton method may converge to a global minimum, a saddle point, a local minimum or may not converge at all. In another word, due to the sensitivity with respect to the initialization, the Newton method may be not able to find the global solution. Secondly, the Newton method can be computationally expensive, with the second-order derivatives, aka, the Hessian matrix $H(\cdot)$ and its inverse very expensive to compute. It may also happen that the Hessian matrix is not positive definite, therefore, Newton method can not be used at all for solving the optimization problem. Due to these limitations of the Newton method, we have chosen the quasi-Netwon method instead for solving our problem in the rocket car case. 
 
 \section{quasi-Newton method}
-We have stated that one limitation or the downside of the Newton method, is that Newton method can be computationally expensive when calculating the Hessian (i.e. second-order derivatives)  matrix and its inverse, especially when the dimensions get large. quasi-Newton methods are a class of optimization methods that attempt to address this issue. More specifically, any modification of the Newton methods employing an approximation matrix $B$ to the original Hessian matrix $H$, can be classified into a quasi-Newton method. 
+We have stated that one limitation or the downside of the Newton method, is that Newton method can be computationally expensive when calculating the Hessian (i.e. second-order derivatives)  matrix and its inverse, especially when the dimensions get large. The quasi-Newton methods are a class of optimization methods that attempt to address this issue. More specifically, any modification of the Newton methods employing an approximation matrix $B$ to the original Hessian matrix $H$, can be classified into a quasi-Newton method. 
 
-The first quasi-Newton algorithm, i.e. the Davidon–Fletcher–Powell (DFP) method, was proposed by William C. Davidon in 1959 \cite{WilDav59}, which was later popularized by Fletcher and Powell in 1963 \cite{FlePow63}. Some of the most common used quasi-Newton algorithms currently are the symmetric rank-one (SR1) method \cite{ANP91} and Broyden–Fletcher–Goldfarb–Shanno(BFGS) method. The family of the quasi-Newton algorithms are similar in nature, with most of the difference arising in the part how the approximation Hessian matrix is decided and the updating distance $\delta_x $ is calculated. One of the chief advantages of quasi-Newton methods over Newton's method is that the approximation Hessian matrix $B$ can be chosen in a way that no matrix needs to be inverted. The Hessian approximation $B$ is chosen to satisfy the equation \ref{HessianEq}, with the approximation matrix $B$ replacing the original Hessian matrix $H$, i.e. 
+The first quasi-Newton algorithm, i.e. the Davidon–Fletcher–Powell (DFP) method, was proposed by William C. Davidon in 1959 \cite{WilDav59}, which was later popularized by Fletcher and Powell in 1963 \cite{FlePow63}. Some of the most common used quasi-Newton algorithms currently are the symmetric rank-one (SR1) method \cite{ANP91} and Broyden–Fletcher–Goldfarb–Shanno(BFGS) method. The family of the quasi-Newton algorithms are similar in nature, with most of the difference arising in the part how the approximation Hessian matrix is decided and the updating distance $\delta(x_k) $ is calculated. One of the chief advantages of the quasi-Newton methods over Newton's method is that the approximation Hessian matrix $B$ can be chosen in a way that no matrix needs to be directly inverted. The Hessian approximation $B$ is chosen to satisfy the equation \ref{HessianEq}, with the approximation matrix $B$ replacing the original Hessian matrix $H$, i.e. 
 \begin{equation}
-	f'(x_k) +B_k\delta_x =0
+	\nabla f(x_k) +B_k\delta(x_k) =0
 	\label{HessianAppro}
 \end{equation}
 
-In the text that follows, we explain how the iteration is performed in the BFGS method, as an example illustrating the quasi-Newton method. In the BFGS method, instead of computing $B_k$ afresh at every iteration, it has been proposed to update it in a simple manner to account for the curvature measured during the most recent step. To determine an update scheme for $B$, we will need to impose additional constraints. One such constraint is the symmetry and positive-definiteness of $B$, which is to be preserved in each update for $k = 1,2, 3, ...$. Another desirable property we want is for $B_{k+1}$ to be sufficiently close to $B_k$ at each update $k+1$, and such closeness can be measure by the matrix norm, i.e. the quantity $\Vert B_{k+1} - B_{k} \Vert$. We can, therefore, formulate our problem during the $k+1$ update as 
-
+In the text that follows, we explain how the iteration is performed in the BFGS method, as an example illustrating the quasi-Newton method. In the BFGS method, instead of computing $B_k$ afresh at every iteration, it has been proposed to update it in a simple manner to account for the curvature measured during the most recent step. To determine an update scheme for $B$, we will need to impose additional constraints. One such constraint is the symmetry and positive-definiteness of $B$, which is to be preserved in each update for $k = 1,2, 3, ...$. Another desirable property we want is for $B_{k+1}$ to be sufficiently close to $B_k$ at each update $k+1$, and such closeness can be measured by the matrix norm, i.e. the quantity $\Vert B_{k+1} - B_{k} \Vert$. We can, therefore, formulate our problem during the $k+1$ update as 
 \begin{equation}
 	\begin{aligned}
 		 \underset{B_{k+1}}{min} \  &  \Vert B_{k+1} - B_{k} \Vert\\
-		s.t.\ \  & B_{k+1}= B_{k+1}^T, \ B_{k+1}\delta_x  = y_k \\
+		s.t.\ \  & B_{k+1}= B_{k+1}^T, \ B_{k+1}\delta(x_k)  = y_k \\
 	\end{aligned}
 	\label{BFGSB}
 \end{equation}
-
-
-where $\delta_x = x_{k+1} -x_k$ and $y_k = f'(x_{k+1}) - f'(x_k)$. Since $B$ is positive definite for all $k = 1,2, 3, ...$, we can actually minimize the change in the inverse $B^{-1}$ at each iteration, subject to the (inverted) quasi-Newton condition and the requirement that it be symmetric. In the BFGS method, the norm is chosen to be the Frobenius norm:
+where $\delta(x_k) = x_{k+1} -x_k$ and $y_k = \nabla f(x_{k+1}) - \nabla f(x_k)$. In the BFGS method, the norm is chosen to be the Frobenius norm:
 \begin{align*}
 \Vert B \Vert_F = \sqrt{\sum_{i}^{m} \sum_{j}^{n} |b_{ij}|^2} 
 \end{align*}
-Solving the problem 4.4 directly is not trivial, but we can prove that problem ends up being equivalent to updating our approximate Hessian $B$ at each iteration by adding two symmetric, rank-one matrices $U$ and $V$:
+Solving the problem \ref{BFGSB} directly is not trivial, but we can prove that problem ends up being equivalent to updating our approximate Hessian $B$ at each iteration by adding two symmetric, rank-one matrices $U$ and $V$:
 %Solving the problem \ref{BFGSBUp} directly is not trivial, but we can prove that problem ends up being equivalent to updating our approximate Hessian $B$ at each iteration by adding two symmetric, rank-one matrices $U$ and $V$:
 \begin{align*}
  B_{k+1} = B_k + U_k + V_k
 \end{align*}
 where the update matrices can then be chosen to be of the form $U = a u u^T$ and $V = b v v^T$, where $u$ and $v$ are linearly independent non-zero vectors, and $a$ and $b$ are constants.  The outer product of any two non-zero vectors is always rank one, i.e. $U_k$ and $V_k$ are rank-one. Since $u$ and $v$ are linearly independent, the sum of $U_k$ and $V_k$ is rank-two, and an update of this form is known as a rank-two update. The rank-two condition guarantees the “closeness” of $B_k$ and $B_{k+1}$ at each iteration. 
 
-Besides, the condition $B_{k+1}\delta_x = y_k$ has to be imposed.
+Besides, the condition $B_{k+1}\delta(x_k) = y_k$ has to be imposed.
 \begin{align*}
-	B_{k+1}\delta_x = B_k\delta_x  + a u u^T\delta_x + b v v^T\delta_x = y_k
+	B_{k+1}\delta(x_k) = B_k\delta(x_k)  + a u u^T\delta(x_k) + b v v^T\delta(x_k) = y_k
 \end{align*}
 
-Then, a natural choice of $u$ and $v$ would be $u=y_k$ and $v=B_k\delta_x$, we then have
+Then, a natural choice of $u$ and $v$ would be $u=y_k$ and $v=B_k\delta(x_k)$, we then have
 
 \begin{align*}
-	B_k\delta_x + a y_ky^T_k\delta_x + bB_k\delta_x \delta^T_xB_k^T\delta_x = y_k  \\
-	y_k(1-ay_k^T\delta_x ) = B_k\delta_x(1+ b \delta^T_xB_k^T\delta_x) \\
-	\Rightarrow a = \frac{1}{y_k^T\delta_x}, \  b= - \frac{1}{\delta^T_xB_k\delta_x}
+	B_k\delta(x_k) + a y_ky^T_k\delta(x_k) + bB_k\delta(x_k) \delta(x_k)^TB_k^T\delta(x_k) = y_k  \\
+	y_k(1-ay_k^T\delta(x_k) ) = B_k\delta(x_k)(1+ b \delta(x_k)^TB_k^T\delta(x_k)) \\
+	\Rightarrow a = \frac{1}{y_k^T\delta(x_k)}, \  b= - \frac{1}{\delta(x_k)^TB_k\delta(x_k)}
 \end{align*}
 Finally, we get the update formula as follows: 
 \begin{align*}
-	B_{k+1} = B_k +  \frac{y_ky_k^T}{y_k^T\delta_x}  - \frac{B_k\delta_x\delta_x^TB_k}{\delta^T_xB_k\delta_x}
+	B_{k+1} = B_k +  \frac{y_ky_k^T}{y_k^T\delta(x_k)}  - \frac{B_k\delta(x_k)\delta(x_k)^TB_k}{\delta(x_k)^TB_k\delta(x_k)}
 \end{align*}
+
+Since $B$ is positive definite for all $k = 1,2, 3, ...$, we can actually minimize the change in the inverse $B^{-1}$ at each iteration, subject to the (inverted) quasi-Newton condition and the requirement that it be symmetric. Applying the Woodbury formula , we can show (see the Appendix for more details) that the updating formula of inverse $B^{-1}$ is as follows
+
+\begin{align*}
+	B_{k+1}^{-1} = (I - \frac{\delta(x_k)y_k^T}{y_k^T\delta(x_k)})B_k^{-1}(I - \frac{y_k\delta(x_k)^T}{y_k^T\delta(x_k)}) +  \frac{\delta(x_k)\delta(x_k)^T}{y_k^T\delta(x_k)} 
+\end{align*}
+As shown in the formula above, at each iteration, we update the value of $B^{-1}$ using only the values of $\delta(x_k) = x_{k+1} -x_k$ and $y_k = \nabla f(x_{k+1}) - \nabla f(x_k)$. Since an update of $B^{-1}$ depends on the previous value, we need to initialize $B^{-1}$, either as an identity matrix or as the true Hessian matrix $H(x_0)$, calculated based on the starting point $x_0$.
+
+The problem \ref{TA_rc} involves constraints in the partial differential equation form. Therefore, we can transform the original problem and discretize, apply multiple shooting and quasi-Newton method to get the optimal solution. In the text the follows, we explain the multilpe shooting method first and then focus on how it, together with quasi-Newton method, can be used for solving the rocket car problem.  
+
+\section{Multiple Shooting Method}
 
 
 
