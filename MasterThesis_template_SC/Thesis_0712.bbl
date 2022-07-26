@@ -1,4 +1,4 @@
-\begin{thebibliography}{5}
+\begin{thebibliography}{6}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -26,6 +26,11 @@ Michael J.~D. Powell.
 \newblock The bobyqa algorithm for bound constrained optimization without
   derivatives.
 \newblock 2009.
+
+\bibitem[Said~Munzir and Marwan(2012)]{SVM12}
+Vera~Halfiani Said~Munzir and Marwan.
+\newblock An optimal control solution using multiple shooting method.
+\newblock 2012.
 
 \bibitem[Schlöder(2022)]{MatSch22}
 Matthias Schlöder.

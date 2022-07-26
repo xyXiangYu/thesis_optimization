@@ -8,5 +8,8 @@
 \contentsline {chapter}{\numberline {4}quasi-Newton and Multiple Shooting Method}{11}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Newton method}{11}{section.4.1}%
 \contentsline {section}{\numberline {4.2}quasi-Newton method}{12}{section.4.2}%
-\contentsline {part}{\numberline {I}Appendix}{15}{part.1}%
+\contentsline {section}{\numberline {4.3}Multiple Shooting Method}{14}{section.4.3}%
+\contentsline {part}{\numberline {I}Appendix}{17}{part.1}%
+\contentsline {chapter}{\numberline {A}Lists}{18}{appendix.A}%
+\contentsline {chapter}{Bibliography}{18}{chapter*.2}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

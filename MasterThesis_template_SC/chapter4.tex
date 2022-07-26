@@ -107,9 +107,92 @@ As shown in the formula above, at each iteration, we update the value of $B^{-1}
 The problem \ref{TA_rc} involves constraints in the partial differential equation form. Therefore, we can transform the original problem and discretize, apply multiple shooting and quasi-Newton method to get the optimal solution. In the text the follows, we explain the multilpe shooting method first and then focus on how it, together with quasi-Newton method, can be used for solving the rocket car problem.  
 
 \section{Multiple Shooting Method}
+Essentially, multiple shooting method is used to solve boundary value problem in differential equation scope \cite{SVM12}. This method, therefore, is well suited for solving optimal control problem which consists of differential equations system and often formulated in boundary value problem, for example solving the rocket car case \ref{TA_rc}.
+
+Shooting method is a method to solve a boundary value problem in differential equations problem. To ilustrate the concept of this method, we use the the following example.
+\begin{align*}
+	\dot{x} = x(t), t_i\leq t \leq t_f	
+\end{align*}
+The analytical solution of above equation is 
+\begin{align*}
+x(t) = x(t_i)e^{t - t_i}
+\end{align*}
+where $e$ is the exponential number. Then $x(t_i) = x_i$ will be determined such that it will satisfy
+$x(t_f)=b$ for given value $b$. Therefore, the equation $x(t_f)-b = 0$ or $x_ie^{t - t_i}-b =0$ is obtained. This derivation is called as shooting method. Generally, the shooting method can be summarized as follow
+\begin{description}
+	\item[shooting method] \
+	\begin{itemize}
+		\item Step 1, choose an initial value $x_i = x(t_i)$ 
+		\item Step 1, form a solution of the differential equation from $t_i$ to $t_f$
+		\item Step 2, evaluate an error of the boundary condition, if $x(t_f) - b = 0$, stops 
+		\item Step 3, update $x$ based on some updating schema, go to Step 1
+	\end{itemize}
+\end{description}
+
+
+In multiple shooting method, the "shoot" interval is partitioned into some short intervals. We define a general differential-algebraic equations(DAE) of the following form
+\begin{equation}\label{eqn:ori_dae}
+	\begin{aligned}
+		\dot{y} &= f(t, y, z, p) \\ 
+		0 &= g(t, y, z, p)
+	\end{aligned}
+\end{equation}
+where $y$ denotes the differential variables, $z$ the algebraic variables, $t \in [a, b]$, i.e. $t$ is in some time interval, and $\frac{\partial g}{\partial z}$ is non-singular for all $t \in [a, b]$. With multiple shooting method, one chooses a suitable grid of multiple shooting nodes $\tau_j \in [a,b] $, where $a = \tau_0 < \tau_1 < ... < \tau_m = b$,  i.e. $m$ subintervals covering the whole interval. On each subinterval, $[\tau_k, \tau_{k+1}], k = 0, 1, ..., m-1$,  we have: 
+%$$ \dot{y} &= f(t, y, z, p), t \in [\tau_k, \tau_{k+1}] \\ 
+%\ s_k &= (y(\tau_k), z(\tau_k)) 
+%$$
+\begin{equation}\label{eqn:msh}
+	\begin{aligned}
+		\dot{y} &= f(t, y, z, p),\  t \in [\tau_k, \tau_{k+1}],\  k = 0, 1, ..., m-1 \\ 
+		and \ with \ state \ variable:  \ s_k &= (y(\tau_k), z(\tau_k))   
+	\end{aligned}
+\end{equation}
+
+The state variable $s_k, k = 0, 1, ..., m-1$ are newly introduced unknown parameters, thus the original DAE problem \ref{eqn:ori_dae} becomes $m$ relaxed DAE initial value problems (IVPs). With some initial guess of $s_k$ in their corresponding subinterval, we could solve the DAE IVP in that subinterval. The initial value problem solutions thus generated are neither continuous at $t_k$, nor do they satisfy the algebraic equations. This has to be enforced by additional matching conditions. 
+
+E.g. in subinterval $ [\tau_k, \tau_{k+1}]$ and $ [\tau_{k+1}, \tau_{k+2}]$, we have some intial values for $s_k$ and $s_{k+1}$ for each subinterval, and we have the solution  $y_k^*, z_k^*$ and $y_{k+1}^*, z_{k+1}^*$ for each subinterval as well. In order to have all the solutions in the subintervals matching with the real solution of $y, z$ in the whole domain of $[a, b]$, we must have that the solutions in the subintervals to be continuous at the boundaries of these subintervals. That is: 
+\begin{align*} 
+	y_k^*(\tau_{k+1}) &=  y_{k+1}^*(\tau_{k+1}) = s_{k+1}^y, \  k = 0, 1, ..., m-2  \\
+	z_k^*(\tau_{k+1}) &=  z_{k+1}^*(\tau_{k+1}) = s_{k+1}^z,\  k = 0, 1, ..., m-2  
+\end{align*}
+Where $s_{k+1} = (s_{k+1}^y,  s_{k+1}^z) $ are the initial values of $y, z$ at the subinterval $ [\tau_{k+1}, \tau_{k+2}]$, $y_k^*, y_{k+1}^*$ are the solution of $y$ at subinterval  $ [\tau_{k}, \tau_{k+1}], [\tau_{k+1}, \tau_{k+2}]$. Notice, we have $m$ subintervals, therefore $m$ initial values points but only $m-1$ matching conditions. The solution of $y$ at the end of subinterval $ [\tau_{k}, \tau_{k+1}]$ should be equal to the initial value of $y$ of the next subinterval, i.e. $y_k^*(\tau_{k+1}) =  s_{k+1}^y$, the same explanation applies to $z$.  
+
+The above continuity equations constraints apply to all the subintervals, for simpilicity, we write the solution of $y_k^*, z_k^*$ in interval $ [\tau_{k}, \tau_{k+1}]$ as $s_k^*$, then we have: 
+$$s_k^*(\tau_{k+1}) = s_{k+1} (:= s_{k+1}^*(\tau_{k+1})), k = 0, 1, ..., m-2$$
+
+The matching condition, together with the IVPs in all the subintervals induce a very specific boundary value problem(BVP) structure. One obvious advantage of multiple shooting is the possibility to bring in a priori information about the state variables, e.g. from the measurements, by a proper choice of initial guesses for the additional variables $s_k$. Thus, it can be shown that the initial values $c(t_i, s_j, p) $ remain close to the measured data. It can also be shown that this damps the influence of the poor parameter guesses on the convergence of (quasi-)Newton methods. Another advantage is the stability of the scheme, which inhibits error propagation and allows to solve parameter estimation problems for unstable and chaotic systems. 
+
+For our rocket car case, we can apply the multiple shooting method to discretize into subintervals, and enforce the matching condition and the boundary value constraints. This leads to a finite-dimensional, nonlinear equality and/or inequality constrained optimization problems, which can be solved via quasi-Netwon method. In the next chapter, we focus on explain the system structure of the rocket car case employing quasi-Newton and multiple-shooting method.
 
 
 
+
+
+
+
+%There are some other methods which could be used for solving the original problem, e.g. collocation method, which approximates the solution to the original problem in each subinterval by finite linear combination of basis functions(usually polynomials). In each subinterval, the solution of collocation method could be regarded as a local approximation of the original problem solution in the corresponding interval. The matching condition should also be satisfied at each collocation point. 
+
+%Both multiple shooting and collocation methods discretize the original problems into subintervals and have initial guess $s_k, k = 0, 1, ..., m-1$ at discrete time points. In the following part we focus on multiple shooting method and the parallel implementation of such method to solve the original problem. 
+
+
+
+% It is given the system of differential equations below
+%%\begin{align*}
+%\begin{equation}	
+%	\dot{x} = f(x(t),t), t_i < t < t_f	
+%	\label{shoot_pde}
+%\end{equation}
+%%\end{align*}
+%The initial values $x_i = x(t_i)$ are then determined such that the boundary value $\Phi(x(t_f),t_f)=0$ will give values that satisfy \ref{shoot_pde}. The idea of multiple shooting method is splitting the time domain $t$ into some shorter intervals.
+
+
+%let $x_k$ for $k = 0, 1, 2, ..., m−1$ be the initial value for the dynamic variables at starting  point of every short interval segment $k + 1$. 
+
+%At each segment $k + 1$, the solution of the differential equations from $t_k$ to $t_{k+1}$ is established, and let the solution be xbk. 
+
+
+
+%$x(t_f)-b = 0$ or $x_i e^{t−t_i}-b =0$
 
 
 %\begin{equation}
