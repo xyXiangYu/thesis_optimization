@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2022.5.25)  22 AUG 2022 23:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2022.5.25)  24 AUG 2022 00:00
 entering extended mode
-**./Thesis_0712.tex
-(Thesis_0712.tex
+**./Thesis_0822.tex
+(Thesis_0822.tex
 LaTeX2e <2020-10-01> patch level 4
 L3 programming layer <2021-02-18> xparse <2020-03-03>
 (C:\Program Files\MiKTeX 2.9\tex/latex/koma-script\scrreprt.cls
@@ -604,12 +604,12 @@ Package tocbibind Note: Using chapter style headings, unless overridden.
 \c@lemma=\count290
 \c@exercise=\count291
 Package hyperref Info: Option `colorlinks' set `true' on input line 93.
- (Thesis_0712.aux (titlepages.aux) (chapter1.aux) (chapter2.aux
+ (Thesis_0822.aux (titlepages.aux) (chapter1.aux) (chapter2.aux
 
 LaTeX Warning: Label `rc_x2_t1' multiply defined.
 
 ) (chapter3.aux) (chapter4.aux) (deposition.aux))
-\openout1 = `Thesis_0712.aux'.
+\openout1 = `Thesis_0822.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 95.
 LaTeX Font Info:    ... okay on input line 95.
@@ -677,9 +677,9 @@ LaTeX Info: Redefining \ref on input line 95.
 LaTeX Info: Redefining \pageref on input line 95.
 LaTeX Info: Redefining \nameref on input line 95.
 
-(Thesis_0712.out) (Thesis_0712.out)
+(Thesis_0822.out) (Thesis_0822.out)
 \@outlinefile=\write3
-\openout3 = `Thesis_0712.out'.
+\openout3 = `Thesis_0822.out'.
 
 Class scrreprt Info: loading recommended package `bookmark'.
 (scrreprt)           Using `bookmark' together with `hyperref' is recommended,
@@ -742,7 +742,7 @@ File: t1cmss.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 
 
 {C:/Users/DELL/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]) [2]
-(Thesis_0712.toc
+(Thesis_0822.toc
 LaTeX Font Info:    Trying to load font information for U+rsfs on input line 4.
 
  (C:\Program Files\MiKTeX 2.9\tex/latex/jknappen\ursfs.fd
@@ -759,7 +759,7 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 4.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ))
 \tf@toc=\write4
-\openout4 = `Thesis_0712.toc'.
+\openout4 = `Thesis_0822.toc'.
 
  [3
 
@@ -785,7 +785,21 @@ chapter 3.
 
  (chapter4.tex
 chapter 4.
-[10] [11] [12] [13] [14] [15]) [16]
+[10] [11] [12] [13] [14]
+Overfull \hbox (12.72382pt too wide) in paragraph at lines 160--161
+[]\T1/cmr/m/n/12 Step 3, form so-lu-tions of the dif-fer-en-tial equa-tion in e
+ach subin-ter-val $\OT1/cmr/m/n/12 [\OML/cmm/m/it/12 []; []\OT1/cmr/m/n/12 ]\
+OML/cmm/m/it/12 ; k \OT1/cmr/m/n/12 =
+ []
+
+
+Overfull \hbox (17.71176pt too wide) in paragraph at lines 161--162
+[]\T1/cmr/m/n/12 Step 4, eval-u-ate the er-ror at the bound-ary of each in-ter-
+val con-di-tion, if $\OML/cmm/m/it/12 y\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 []\OT
+1/cmr/m/n/12 ; []) \OMS/cmsy/m/n/12  
+ []
+
+[15]) [16]
 part I.
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `partprefix' that is an alias of element `partnumber'
@@ -806,22 +820,22 @@ Class scrreprt Warning: You are using `\begin{appendix}...\end{appendix}'.
 (scrreprt)              `\appendix' on input line 113.
 
 chapter A.
-(Thesis_0712.bbl)
+(Thesis_0822.bbl)
 \openout2 = `deposition.aux'.
 
- (deposition.tex [18]) (Thesis_0712.aux (titlepages.aux)
+ (deposition.tex [18]) (Thesis_0822.aux (titlepages.aux)
 (chapter1.aux) (chapter2.aux) (chapter3.aux) (chapter4.aux) (deposition.aux))
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package rerunfilecheck Info: File `Thesis_0712.out' has not changed.
+Package rerunfilecheck Info: File `Thesis_0822.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 15015 strings out of 479300
- 245184 string characters out of 2863761
- 724971 words of memory out of 3000000
- 32078 multiletter control sequences out of 15000+200000
+ 15017 strings out of 479300
+ 245206 string characters out of 2863761
+ 725026 words of memory out of 3000000
+ 32079 multiletter control sequences out of 15000+200000
  423509 words of font info for 77 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  111i,14n,116p,10608b,456s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -850,9 +864,9 @@ e1/public/cm-super/sfsx1440.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
 /cm-super/sfsx1728.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super
 /sfsx2074.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfsx2488
 .pfb>
-Output written on Thesis_0712.pdf (18 pages, 372861 bytes).
+Output written on Thesis_0822.pdf (18 pages, 369970 bytes).
 PDF statistics:
  406 PDF objects out of 1000 (max. 8388607)
- 93 named destinations out of 1000 (max. 500000)
+ 94 named destinations out of 1000 (max. 500000)
  105 words of extra memory for PDF output out of 10000 (max. 10000000)
 
