@@ -158,10 +158,32 @@ The procedure of multiple shooting method can then be summarized as
 		\item Step 1, choose multiple shooting nodes $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$ 
 		\item Step 2, choose initial guess for $\hat{y}_k, k = 0, 1, ..., m-1$ 
 		\item Step 3, form solutions of the differential equation in each subinterval $[\tau_k, \tau_{k+1}], k = 0, 1, ..., m-1$
-		\item Step 4, evaluate the error at the boundary of each interval condition, if $y(\tau_{k+1}; \hat{y}_k) - \hat{y}_{k+1} = 0, \  k = 0, 1, ..., m-1$ and $\hat{y}_{m} = y_f$, then stop, otherwise cotinue to Step 5
+		\item Step 4, evaluate the error at boundary of each interval condition, if $y(\tau_{k+1}; \hat{y}_k) - \hat{y}_{k+1} = 0, \  k = 0, 1, ..., m-1$ and $\hat{y}_{m} = y_f$, then stop, otherwise cotinue to Step 5
 		\item Step 5, update the guess for $\hat{y}_k, k = 0, 1, ..., m-1$ based on some updating schema, go to Step 3
 	\end{itemize}
 \end{description}
+
+In practice, there are many details to be decided when using (multiple) shooting methods, which we will introduce briefly without giving a rigorous formation. In Step 1 \& 2, when choosing the shooting nodes and the initial guess $\hat{y}_k$, how they are chosen usually depends on nature of the problem as well as a balance between accuracy and computational cost. For example, the nodes can be equally spaced and the $\hat{y}_k$ can be initialized with the same value, or they can be addressed in other methods. In Step 3, polynomial functions can be used as the approximate solutions, leveraging the fact that Taylor expansion can be used to approximate any continuous functions. In Step 4, "evaluate the error" is usually in the form of evaluating an objective function, which, e.g. can be defined as the sum of quadratic errors. In Step 5, the "updating schema" can be defined to so that the $\hat{y}_k$ can move in a direction that decreases the objective function. The (quasi) Newton method, for example, can be used as an updating method in Step 5. 
+
+
+The multiple shooting method can be used for many problems. For example, it can be applied to the twice differential system of the following form 
+\begin{equation}
+	 y''(t) = f(t, y(t), y'(t))  \quad y(t_0) = y_0, \quad y(t_f) = y_f,  \quad t \in [t_0, t_f]
+	 \label{eqn:tdode}
+	%\begin{aligned}
+	%	& y''(t) = f(t, y(t), y'(t))  \quad y(t_0) = y_0, \quad y(t_f) = y_f,  \quad t \in %[t_0, t_f] 
+	%\end{aligned}
+\end{equation}
+The problem \ref{eqn:tdode} is very similar to the problem \ref{eqn:ori_dae}. In each subinterval
+
+
+
+
+%the number of nodes to is usually decided by a balance of accuracy and computation cost. How the nodes is chosen (e.g. equally spaced or some other ways) depends on the nature of the problem itself. In Step 2, 
+%The step of  in the (multiple) shooting methods is usually in the form of evaluating an objective function, which, e.g. can be defined as the sum of quadratic error. 
+
+
+
 
 
 
