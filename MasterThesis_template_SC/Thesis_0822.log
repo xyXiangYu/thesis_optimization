@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2022.5.25)  28 AUG 2022 15:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2022.5.25)  28 AUG 2022 18:32
 entering extended mode
 **./Thesis_0822.tex
 (Thesis_0822.tex
@@ -489,59 +489,72 @@ Package: mathrsfs 1996/01/01 Math RSFS package v1.0 (jk)
 (C:\Program Files\MiKTeX 2.9\tex/latex/doublestroke\dsfont.sty
 Package: dsfont 1995/08/01 v0.1 Double stroke roman fonts
 )
+(C:\Program Files\MiKTeX 2.9\tex/latex/ntheorem\ntheorem.sty
+Style `ntheorem', Version 1.33 <2011/08/15>
+Package: ntheorem 2011/08/15 1.33
+(C:\Program Files\MiKTeX 2.9\tex/latex/base\ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\theorem@style=\toks23
+\theorem@@style=\toks24
+\theorembodyfont=\toks25
+\theoremnumbering=\toks26
+\theorempreskipamount=\skip71
+\theorempostskipamount=\skip72
+\theoremframepreskipamount=\skip73
+\theoremframepostskipamount=\skip74
+\theoreminframepreskipamount=\skip75
+\theoreminframepostskipamount=\skip76
+\theorem@preskip=\toks27
+\theorem@postskip=\toks28
+\theorem@framepreskip=\toks29
+\theorem@framepostskip=\toks30
+\theorem@inframepreskip=\toks31
+\theorem@inframepostskip=\toks32
+\theoremindent=\dimen155
+\theorem@indent=\dimen156
+\theoremrightindent=\dimen157
+\theorem@rightindent=\dimen158
+\theoremheaderfont=\toks33
+\theoremseparator=\toks34
+\theoremprework=\toks35
+\theorempostwork=\toks36
+\theoremsymbol=\toks37
+\qedsymbol=\toks38
+\theoremkeyword=\toks39
+\qedsymbol=\toks40
+\thm@topsep=\skip77
+\thm@topsepadd=\skip78
+Package ntheorem Info: Option `thmmarks' loaded on input line 1175.
+\c@endNonectr=\count280
+\c@currNonectr=\count281
+\mysavskip=\skip79
+Package ntheorem Info: Option `fleqn' loaded on input line 1175.
+Package ntheorem Info: option `amsmath' handling for `thmmarks' loaded on input
+ line 1175.
+\thm@amstmpdepth=\dimen159
+\tagwidth=\dimen160
+)
 (C:\Program Files\MiKTeX 2.9\tex/latex/framed\framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip71
-\fb@frw=\dimen155
-\fb@frh=\dimen156
-\FrameRule=\dimen157
-\FrameSep=\dimen158
+\OuterFrameSep=\skip80
+\fb@frw=\dimen161
+\fb@frh=\dimen162
+\FrameRule=\dimen163
+\FrameSep=\dimen164
 )
 (C:\Program Files\MiKTeX 2.9\tex/latex/ulem\ulem.sty
 \UL@box=\box51
 \UL@hyphenbox=\box52
-\UL@skip=\skip72
-\UL@hook=\toks23
-\UL@height=\dimen159
-\UL@pe=\count280
-\UL@pixel=\dimen160
+\UL@skip=\skip81
+\UL@hook=\toks41
+\UL@height=\dimen165
+\UL@pe=\count282
+\UL@pixel=\dimen166
 \ULC@box=\box53
 Package: ulem 2019/11/18
-\ULdepth=\dimen161
+\ULdepth=\dimen167
 )
-(C:\Program Files\MiKTeX 2.9\tex/latex/amscls\amsthm.sty
-Package: amsthm 2020/05/29 v2.20.6
-\thm@style=\toks24
-\thm@bodyfont=\toks25
-\thm@headfont=\toks26
-\thm@notefont=\toks27
-\thm@headpunct=\toks28
-\thm@preskip=\skip73
-\thm@postskip=\skip74
-\thm@headsep=\skip75
-\dth@everypar=\toks29
-)
-(C:\Program Files\MiKTeX 2.9\tex/latex/xpatch\xpatch.sty
-(C:\Program Files\MiKTeX 2.9\tex/latex/l3kernel\expl3.sty
-Package: expl3 2021-02-18 L3 programming layer (loader) 
-
-(C:\Program Files\MiKTeX 2.9\tex/latex/l3backend\l3backend-pdftex.def
-File: l3backend-pdftex.def 2021-02-18 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count281
-\l__pdf_internal_box=\box54
-))
-Package: xpatch 2020/03/25 v0.3a Extending etoolbox patching commands
-
-(C:\Program Files\MiKTeX 2.9\tex/latex/l3packages/xparse\xparse.sty
-Package: xparse 2020-10-27 L3 Experimental document command parser
-
-(C:\Program Files\MiKTeX 2.9\tex/latex/l3packages/xparse\xparse-generic.tex))
-(C:\Program Files\MiKTeX 2.9\tex/latex/etoolbox\etoolbox.sty
-Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count282
-))
-Class scrreprt Info: amsthm's \deferred@thm@head patched.
-
 (C:\Program Files\MiKTeX 2.9\tex/latex/amsfonts\amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 
@@ -555,7 +568,7 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 ))
 (C:\Program Files\MiKTeX 2.9\tex/latex/latex-tools\enumerate.sty
 Package: enumerate 2015/07/23 v3.00 enumerate extensions (DPC)
-\@enLab=\toks30
+\@enLab=\toks42
 )
 (C:\Program Files\MiKTeX 2.9\tex/latex/geometry\geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
@@ -566,15 +579,15 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 \Gm@cnth=\count283
 \Gm@cntv=\count284
 \c@Gm@tempcnt=\count285
-\Gm@bindingoffset=\dimen162
-\Gm@wd@mp=\dimen163
-\Gm@odd@mp=\dimen164
-\Gm@even@mp=\dimen165
-\Gm@layoutwidth=\dimen166
-\Gm@layoutheight=\dimen167
-\Gm@layouthoffset=\dimen168
-\Gm@layoutvoffset=\dimen169
-\Gm@dimlist=\toks31
+\Gm@bindingoffset=\dimen168
+\Gm@wd@mp=\dimen169
+\Gm@odd@mp=\dimen170
+\Gm@even@mp=\dimen171
+\Gm@layoutwidth=\dimen172
+\Gm@layoutheight=\dimen173
+\Gm@layouthoffset=\dimen174
+\Gm@layoutvoffset=\dimen175
+\Gm@dimlist=\toks43
 
 (C:\Program Files\MiKTeX 2.9\tex/latex/geometry\geometry.cfg))
 
@@ -587,7 +600,7 @@ Class scrreprt Warning: Usage of package `tocbibind' together
 (scrreprt)              the list of figures, list of tables, bibliography,
 (scrreprt)              index and the running head.
 (scrreprt)              Nevertheless, using requested
-(scrreprt)              package `tocbibind' on input line 49.
+(scrreprt)              package `tocbibind' on input line 52.
 
 (C:\Program Files\MiKTeX 2.9\tex/latex/tocbibind\tocbibind.sty
 Package: tocbibind 2010/10/13 v1.5k extra ToC listings
@@ -597,56 +610,73 @@ Package tocbibind Info: The document has chapter divisions on input line 50.
 Package tocbibind Note: Using chapter style headings, unless overridden.
 
 )
-\c@theorem=\count286
-\c@corollary=\count287
-\c@proposition=\count288
-\c@definition=\count289
-\c@lemma=\count290
-\c@exercise=\count291
-Package hyperref Info: Option `colorlinks' set `true' on input line 93.
- (Thesis_0822.aux (titlepages.aux) (chapter1.aux) (chapter2.aux
+\c@currtheoremctr=\count286
+\c@endtheoremctr=\count287
+\c@theorem=\count288
+\c@currcorollaryctr=\count289
+\c@endcorollaryctr=\count290
+\c@corollary=\count291
+\c@currpropositionctr=\count292
+\c@endpropositionctr=\count293
+\c@proposition=\count294
+\c@currdefinitionctr=\count295
+\c@enddefinitionctr=\count296
+\c@definition=\count297
+\c@currlemmactr=\count298
+\c@endlemmactr=\count299
+\c@lemma=\count300
+\c@currexercisectr=\count301
+\c@endexercisectr=\count302
+\c@exercise=\count303
+Package hyperref Info: Option `colorlinks' set `true' on input line 96.
+ (C:\Program Files\MiKTeX 2.9\tex/latex/l3backend\l3backend-pdftex.def
+File: l3backend-pdftex.def 2021-02-18 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count304
+\l__pdf_internal_box=\box54
+)
+(Thesis_0822.aux (titlepages.aux) (chapter1.aux) (chapter2.aux
 
 LaTeX Warning: Label `rc_x2_t1' multiply defined.
 
 ) (chapter3.aux) (chapter4.aux) (deposition.aux))
 \openout1 = `Thesis_0822.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-Package scrbase Info: activating english \contentsname on input line 95.
-Package scrbase Info: activating english \listfigurename on input line 95.
-Package scrbase Info: activating english \listtablename on input line 95.
-Package tocbasic Info: usage of `tocbibind' detected on input line 95.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 98.
+LaTeX Font Info:    ... okay on input line 98.
+Package scrbase Info: activating english \contentsname on input line 98.
+Package scrbase Info: activating english \listfigurename on input line 98.
+Package scrbase Info: activating english \listtablename on input line 98.
+Package tocbasic Info: usage of `tocbibind' detected on input line 98.
 
 (C:\Program Files\MiKTeX 2.9\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count292
-\scratchdimen=\dimen170
+\scratchcounter=\count305
+\scratchdimen=\dimen176
 \scratchbox=\box55
-\nofMPsegments=\count293
-\nofMParguments=\count294
-\everyMPshowfont=\toks32
-\MPscratchCnt=\count295
-\MPscratchDim=\dimen171
-\MPnumerator=\count296
-\makeMPintoPDFobject=\count297
-\everyMPtoPDFconversion=\toks33
+\nofMPsegments=\count306
+\nofMParguments=\count307
+\everyMPshowfont=\toks44
+\MPscratchCnt=\count308
+\MPscratchDim=\dimen177
+\MPnumerator=\count309
+\makeMPintoPDFobject=\count310
+\everyMPtoPDFconversion=\toks45
 ) (C:\Program Files\MiKTeX 2.9\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 
@@ -660,7 +690,7 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 504.
 )
-Package hyperref Info: Link coloring ON on input line 95.
+Package hyperref Info: Link coloring ON on input line 98.
 
 (C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
@@ -671,11 +701,11 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 (C:\Program Files\MiKTeX 2.9\tex/generic/gettitlestring\gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count298
+\c@section@level=\count311
 )
-LaTeX Info: Redefining \ref on input line 95.
-LaTeX Info: Redefining \pageref on input line 95.
-LaTeX Info: Redefining \nameref on input line 95.
+LaTeX Info: Redefining \ref on input line 98.
+LaTeX Info: Redefining \pageref on input line 98.
+LaTeX Info: Redefining \nameref on input line 98.
 
 (Thesis_0822.out) (Thesis_0822.out)
 \@outlinefile=\write3
@@ -688,14 +718,14 @@ Class scrreprt Info: loading recommended package `bookmark'.
 (scrreprt)           `bookmarkpackage=false' before \begin{document} and
 (scrreprt)           you can avoid this message adding:
 (scrreprt)             \usepackage{bookmark}
-(scrreprt)           before \begin{document} on input line 95.
+(scrreprt)           before \begin{document} on input line 98.
 
 (C:\Program Files\MiKTeX 2.9\tex/latex/bookmark\bookmark.sty
 Package: bookmark 2020-11-06 v1.29 PDF bookmarks (HO)
 
 (C:\Program Files\MiKTeX 2.9\tex/latex/bookmark\bkm-pdftex.def
 File: bkm-pdftex.def 2020-11-06 v1.29 bookmark driver for pdfTeX (HO)
-\BKM@id=\count299
+\BKM@id=\count312
 ))
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -792,17 +822,22 @@ ach subin-ter-val $\OT1/cmr/m/n/12 [\OML/cmm/m/it/12 []; []\OT1/cmr/m/n/12 ]\
 OML/cmm/m/it/12 ; k \OT1/cmr/m/n/12 =
  []
 
-[15]
+[15])
+\openout2 = `chapter5.aux'.
 
-LaTeX Warning: Reference `eqn:tdode' on page 16 undefined on input line 177.
-
+ (chapter5.tex
+chapter 5.
 ) [16
-\newlabel{eqn:tdode}{{4.8}{16}{Multiple Shooting Method}{equation.4.3.8}{}}
+\newlabel{eqn:tdode}{{4.3}{16}{Multiple Shooting Method}{equation.4.3.7}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Rocket Car Case}{16}{ch
+apter.5}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
 ]
 part I.
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `partprefix' that is an alias of element `partnumber'
-(scrkbase)              on input line 112.
+(scrkbase)              on input line 116.
 [17]
 
 Class scrreprt Warning: You are using `\begin{appendix}...\end{appendix}'.
@@ -816,17 +851,31 @@ Class scrreprt Warning: You are using `\begin{appendix}...\end{appendix}'.
 (scrreprt)              inconsistent.
 (scrreprt)              Because of this, you should remove `\end{appendix}'
 (scrreprt)              and replace `\begin{appendix}' by command
-(scrreprt)              `\appendix' on input line 113.
+(scrreprt)              `\appendix' on input line 117.
 
 chapter A.
 (Thesis_0822.bbl)
 \openout2 = `deposition.aux'.
 
- (deposition.tex [18]) (Thesis_0822.aux (titlepages.aux)
-(chapter1.aux) (chapter2.aux) (chapter3.aux) (chapter4.aux) (deposition.aux))
+ (deposition.tex [18])
+\tf@thm=\write5
+\openout5 = `Thesis_0822.thm'.
 
-LaTeX Warning: There were undefined references.
 
+LaTeX3 Info: Redefining command \BeforeClosingMainAux with sig. 'm' on line
+(LaTeX3)     126.
+
+
+LaTeX3 Info: Redefining command \BeforeClosingMainAux with sig. 'm' on line
+(LaTeX3)     126.
+
+
+LaTeX3 Info: Redefining command \BeforeClosingMainAux with sig. 'm' on line
+(LaTeX3)     126.
+
+ (Thesis_0822.aux (titlepages.aux)
+(chapter1.aux) (chapter2.aux) (chapter3.aux) (chapter4.aux) (chapter5.aux)
+(deposition.aux))
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -834,13 +883,13 @@ Package rerunfilecheck Info: File `Thesis_0822.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 15021 strings out of 479300
- 245253 string characters out of 2863761
- 725026 words of memory out of 3000000
- 32081 multiletter control sequences out of 15000+200000
- 424285 words of font info for 78 fonts, out of 3000000 for 9000
+ 14896 strings out of 479300
+ 243604 string characters out of 2863761
+ 723570 words of memory out of 3000000
+ 31963 multiletter control sequences out of 15000+200000
+ 423509 words of font info for 77 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 111i,14n,116p,10608b,456s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 111i,14n,116p,10608b,458s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/cm-super/cm-super-t1.enc}{C:/Pro
 gram Files/MiKTeX 2.9/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<C:/Program Fil
 es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTe
@@ -855,20 +904,20 @@ es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX
 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
 ublic/amsfonts/symbols/msbm10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
-ic/cm-super/sfbx1200.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-sup
-er/sfrm0700.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfrm08
-00.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfrm1000.pfb><C
-:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfrm1200.pfb><C:/Program
- Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfrm1440.pfb><C:/Program Files/Mi
-KTeX 2.9/fonts/type1/public/cm-super/sfss1440.pfb><C:/Program Files/MiKTeX 2.9/
-fonts/type1/public/cm-super/sfss1728.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
-e1/public/cm-super/sfsx1200.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
-/cm-super/sfsx1440.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super
-/sfsx1728.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfsx2074
-.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfsx2488.pfb>
-Output written on Thesis_0822.pdf (18 pages, 374377 bytes).
+ic/cm-super/sfrm0700.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-sup
+er/sfrm0800.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfrm10
+00.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfrm1200.pfb><C
+:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfrm1440.pfb><C:/Program
+ Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfss1440.pfb><C:/Program Files/Mi
+KTeX 2.9/fonts/type1/public/cm-super/sfss1728.pfb><C:/Program Files/MiKTeX 2.9/
+fonts/type1/public/cm-super/sfsx1200.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
+e1/public/cm-super/sfsx1440.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
+/cm-super/sfsx1728.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super
+/sfsx2074.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfsx2488
+.pfb>
+Output written on Thesis_0822.pdf (18 pages, 374190 bytes).
 PDF statistics:
- 412 PDF objects out of 1000 (max. 8388607)
+ 414 PDF objects out of 1000 (max. 8388607)
  95 named destinations out of 1000 (max. 500000)
- 105 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 113 words of extra memory for PDF output out of 10000 (max. 10000000)
 
