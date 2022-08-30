@@ -1,2 +1,21 @@
 \chapter{Rocket Car Case}
-Before we dive into the mathmatics, we first describe the phsical problem. 
+Before we dive into the mathematics, we first re-introduce the physics of the rocket car case so that we can model the problem more precisely. Within the training approach, with a given $p$, we want to solve the lower level problem of the following form \ref{TA_lower}
+\begin{subequations}
+	\begin{align}
+    	\underset{}{min} \   & \  T \\ 
+		s.t.  & \ \ x = (x_1, x_2)   \label{ta_rc_x} \\ 
+		& \ \  \dot{x} = T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix}, & \ t \in [0,1],  \label{ta_rc_partial} \\
+		& \ \ x(0,p) = 0, \label{ta_rc_t0}\\
+		& \ \ x_1(1;p) \geq 10, \label{ta_rc_x1_t1} \\
+		& \ \ x_2(t;p) \leq 4, & t \in [0,1], \label{ta_rc_x2_tc} \\
+		& \ \ x_2(1;p) \leq 0, \label{ta_rc_x2_t1}  \\
+		& \ \ T \geq 0, \\
+		& \ \ u(t) \in [-10, 10], & t \in [0,1], \\
+		& \ \ p, \   a \ given \ value
+	\end{align}
+	\label{TA_lower}
+\end{subequations}
+
+In 
+
+ 

@@ -9,7 +9,8 @@
 \contentsline {section}{\numberline {4.1}Newton method}{11}{section.4.1}%
 \contentsline {section}{\numberline {4.2}quasi-Newton method}{12}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Multiple Shooting Method}{14}{section.4.3}%
-\contentsline {part}{\numberline {I}Appendix}{17}{part.1}%
-\contentsline {chapter}{\numberline {A}Lists}{18}{appendix.A}%
-\contentsline {chapter}{Bibliography}{18}{chapter*.2}%
+\contentsline {chapter}{\numberline {5}Rocket Car Case}{16}{chapter.5}%
+\contentsline {part}{\numberline {I}Appendix}{18}{part.1}%
+\contentsline {chapter}{\numberline {A}Lists}{19}{appendix.A}%
+\contentsline {chapter}{Bibliography}{19}{chapter*.2}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
