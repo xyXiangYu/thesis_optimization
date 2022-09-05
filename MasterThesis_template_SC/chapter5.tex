@@ -4,18 +4,59 @@ Before we dive into the mathematics, we first re-introduce the physics of the ro
 	\begin{align}
     	\underset{}{min} \   & \  T \\ 
 		s.t.  & \ \ x = (x_1, x_2)   \label{ta_rc_x} \\ 
-		& \ \  \dot{x} = T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix}, & \ t \in [0,1],  \label{ta_rc_partial} \\
-		& \ \ x(0,p) = 0, \label{ta_rc_t0}\\
-		& \ \ x_1(1;p) \geq 10, \label{ta_rc_x1_t1} \\
-		& \ \ x_2(t;p) \leq 4, & t \in [0,1], \label{ta_rc_x2_tc} \\
-		& \ \ x_2(1;p) \leq 0, \label{ta_rc_x2_t1}  \\
+		& \ \  \dot{x} = T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix}, & \ t \in [0,1],  \label{ta_rc_partial2} \\
+		& \ \ x(0,p) = 0, \label{ta_rc_t2}\\
+		& \ \ x_1(1;p) \geq 10, \label{ta_rc_x1_t2} \\
+		& \ \ x_2(t;p) \leq 4, & t \in [0,1], \label{ta_rc_x2_tc2} \\
+		& \ \ x_2(1;p) \leq 0, \label{ta_rc_x2_t1_2}  \\
 		& \ \ T \geq 0, \\
 		& \ \ u(t) \in [-10, 10], & t \in [0,1], \\
 		& \ \ p, \   a \ given \ value
 	\end{align}
-	\label{TA_lower}
+	\label{TA_lower2}
 \end{subequations}
 
-In 
+In summary, we want to find the minimum time that the rocket car moves from the starting state (the position is at the origin point, and the speed is zero) to an ending state when the position is at least at point 10 or beyond, and the speed is less than or equal to zero (a negative speed indicates the car is moving in a direction that decreases the position), with constraints on the acceleration/deceleration value and the speed during the whole process. 
+
+Because our objective is to minimize the time between starting state and ending state, i.e. the variable $T$, which is unknown, we cannot define a time horizon over which we will discretize and optimize. Therefore, a new variable $t$ is defined as follows: 
+\begin{equation*}
+ 	t= \frac{\tau}{T} \in [0,1] \quad \tau \in [0, T]
+ 	\label{eqn:timet}
+\end{equation*}
+
+Where $\tau$ is the real time between starting time $0$ and ending time $T$, and $t$ is the relative time between $0$ and $1$.  The equation \ref{ta_rc_partial2} can be also written as 
+
+\begin{subequations}
+		\begin{align}
+ \dot{x} =  \begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix}  & =  T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix} = \begin{pmatrix}  Tx_2(t;p) \\ T(u(t)-p)   \end{pmatrix} \label{eq_difT} \\ 
+ \begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix} &= \begin{pmatrix} \frac{\partial x_1}{\partial t} \\ \frac{\partial x_2}{\partial t} \end{pmatrix} = \begin{pmatrix} \frac{\partial x_1}{\partial \tau} \frac{\partial \tau}{\partial t} \\ \frac{\partial x_2}{\partial \tau} \frac{\partial \tau}{\partial t} \end{pmatrix} =  \begin{pmatrix} \frac{\partial x_1}{\partial \tau} T \\ \frac{\partial x_2}{\partial \tau}T \end{pmatrix} =     \begin{pmatrix}  Tx_2(t;p) \\ T(u(t)-p)   \end{pmatrix} \\
+ \begin{pmatrix} \frac{\partial x_1}{\partial \tau}  \\ \frac{\partial x_2}{\partial \tau} \end{pmatrix} & =     \begin{pmatrix}  x_2(t;p) \\ (u(t)-p)   \end{pmatrix} \label{eq_difTau}
+ 	\end{align}
+ \end{subequations}
+
+In summary, the equation $\frac{\partial x_1}{\partial \tau}= x_2(t;p) $ means the change in the position in real time is proportional to the speed at that moment. And the equation $\frac{\partial x_2}{\partial \tau} = u(t)-p $ means the change in speed is proportional to the acceleration/deceleration value at that moment. 
+
+To use multiple shooting and quasi-Newton method, we discretize the interval $t\in [0,1]$ into subinterval $[t_{k-1}, t_k], k = 1, 2, ..., m$, where $0 =t_0, t_1, t_2, ...,t_{k-1}, t_k, ..., t_m=1$. We solve the OCP within each interval, and enforce the matching condition at the boundary of each interval. 
+
+The equation \ref{eq_difT} is equivalent to \ref{eq_difTau}
+
+
+
+
+
+% t&= \frac{\tau}{T} \in [0,1] \quad \tau \in [0, T]
+%\\
+%i.e. \ \begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix} &= \begin{pmatrix} \frac{\partial x_1}{\partial t} \\ \frac{\partial x_2}{\partial t} \end{pmatrix} = 
+%\begin{pmatrix} \frac{\partial x_1}{\partial \tau} \frac{\partial \tau}{\partial t}  \\ \frac{\partial x_2}{\partial \tau} \frac{\partial \tau}{\partial t} \end{pmatrix} 
+
+%\begin{equation*}
+%	\begin{align}
+%		\dot{x} =  \begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix}  & =  T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix} = \begin{pmatrix}  Tx_2(t;p) \\ T(u(t)-p)   \end{pmatrix} \\
+%		i.e. \ \begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix} &= \begin{pmatrix} \frac{\partial x_1}{\partial t} \\ \frac{\partial x_2}{\partial t} \end{pmatrix} = 
+%		\begin{pmatrix} \frac{\partial x_1}{\partial \tau} \frac{\partial \tau}{\partial t}  \\ \frac{\partial x_2}{\partial \tau} \frac{\partial \tau}{\partial t} \end{pmatrix} 
+%	\end{align}
+%\end{equation*}
+
+
 
  
