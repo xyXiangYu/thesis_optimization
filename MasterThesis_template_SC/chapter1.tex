@@ -84,16 +84,406 @@ The structure of this paper is as follows: in Chapter 1, i.e. this chapter,  we 
 
 
 
+\chapter{Rocket car case}
+Since the approaches we are going to use in this paper will be demonstrated with the case of rocket car, we decide to describe the rocket car case first. So that, when we are discussing our approaches, we can directly describe how they can be used in solving the rocket car case. The description of the rocket car case is mostly coming from the paper \cite{MatSch22}, with content either verbatim or in a modified form. 
+
+We consider the rocket car case with state constraints, i.e. the one-dimensional movement of a mass point under the influence of some constant acceleration/deceleration, e.g. modeling head-wind or sliding friction, which can accelerate and decelerate in order to reach a desired position. The mass of the car is normalized to 1 unit\footnote{We do not specify the unit on purpose since the actual unit, either one kilogram or meter, does not play a role in the modeling. We are more concerned about the scale.} and the constant acceleration/deceleration enters the model in form of an unknown parameter $p \in \Omega_P \subset \mathbb{R}$ suffering from uncertainty, with the uncertainty set $\Omega_P$ convex and compact. We consider a problem in which the rocket car shall reach a final feasible position and velocity in a minimum time: 
+
+
+
+\begin{subequations}
+	\begin{align}
+	\underset{T, u(\cdot), x(:,p)}{min} \   & \  T \\ 
+	s.t.  & \ \ x = (x_1, x_2)   \label{rc_x} \\ 
+	& \ \  \dot{x} = T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix}, & \ t \in [0,1],  \label{rc_partial} \\
+	& \ \ x(0,p) = 0, \label{rc_t0}\\
+	& \ \ x_1(1;p) \geq 10, \label{rc_x1_t1} \\
+	& \ \ x_2(t;p) \leq 4, & t \in [0,1], \label{rc_x2_tc} \\
+	& \ \ x_2(1;p) \leq 0, \label{rc_x2_t1}  \\
+	& \ \ T \geq 0, \\
+	& \ \ u(t) \in [-10, 10], & t \in [0,1]. 
+	\end{align}
+	\label{rc}
+\end{subequations}
+
+where $x$ represents the variables of the rocket car, and it has two components $ x = (x_1, x_2)$. The first component $x_1$ is the (time-transformed) position of the rocket car. The second component $x_2$ is (time-transformed) velocity of the rocket car. The condition \ref{rc_t0}, i.e. $x(0,p) = 0$, indicates that at $t=0$, both the position and velocity of the car is $0$. The condition \ref{rc_x1_t1}, i.e. $x_1(1;p) \geq 10$, indicates that the position of the car at $t=1$ must be greater or equal to $10$. The condition \ref{rc_x2_t1}, i.e. $x_2(t;p) \leq 4$, indicates that the velocity of the car is always smaller or equal to 4 across the whole period. The condition \ref{rc_x2_t1}, i.e. $x_2(1;p) \leq 0$, indicates that the velocity of the car at $t=1$ is always smaller or equal to $0$. Here, a negative velocity means that the car is moving in a direction that decreases the position. To make the rocket car case even simpler, we can limit the size of the uncertainty set, as following
+\begin{equation}
+p \in \Omega_P = [p_l, p_u] \subset [0,9],
+\end{equation}
+where $p_l < p_u$, with $p_l$ and $p_u$ the lower and upper boundary of the parameter $p$.  
+
+The decision variable in the problem \ref{rc} is the controllable parameter T, which encodes the process duration of the corresponding problem with free end time. The control function $ u: [0,1] \rightarrow \mathbb{R}$ represents the acceleration/deceleration value, and is dependent on the unknown parameter $p$, as shown in the condition \ref{rc_partial}. The second component of the condition \ref{rc_partial}, i.e. $\dot{x_2} = T (u(t)-p)$, indicates the change in the velocity of the car at time $t$ is subject to the value of $T, u(t)$ and $p$. The first component of the condition \ref{rc_partial}, i.e. $\dot{x_1} = Tx_2(t;p)$, indicates the position of the car at time $t$ is subject to the value of $T$ and the velocity $x_2(t;p)$ at time $t$. The variable $x(t:p)$ is a dependent variable, and is uniquely determined by $T, u(\cdot)$ and $p$. The goal is to minimize $T$ such that the variable $x(t:p)$ satisfies all the conditions in \ref{rc}. 
+
+\section{Theoretical solution to rocket car case}
+As explained in Chapter \ref{Chapter1}, we choose the rocket car case for two main reasons, i.e. the easyness of understanding and the existence of theoretical solution, which will be shown in this section. 
+
+
+
+%There are three optimization variables in the optimization problem \ref{rc}, i.e. $T, u$ and $x$, and they belong to the following normed space
+%\begin{equation}
+%	(T, u(\cdot), x(:,p)) \in \mathbb{R} \times \mathbb{L}^\infty([0,1], \mathbb{R}) \times  \mathbb{W}^{1,\infty}([0,1], \mathbb{R}^2)
+%\end{equation}
+The optimization problem \ref{rc} has a unique global solution, and no further local solution exists. The optimal controllable parameter is given by 
+\begin{equation}
+T^\star = T^\star(p) = 2.5 + \frac{40}{100-p^2},
+\end{equation}
+and the optimal control function $u^\star(\cdot) (= u^\star(\cdot; p))$ by 
+\begin{equation}
+u^\star(\cdot) =     \left\{
+\begin{array}{ll}
+10, & for \  0 \leq t <  \frac{4}{(10-p)T^\star}\\
+p  &  for \ \frac{4}{(10-p)T^\star} \leq t < 1- \frac{4}{(10+p)T^\star} \\
+-10  & for \  1- \frac{4}{(10+p)T^\star} \leq t \leq 1 
+\end{array}
+\right.
+\end{equation}
+
+In words, we accelerate as strongly as possible (the acceleration value $u^\star(t)=10$) until the velocity $x^\star_2(t;p)=4$, and then keep the velocity $x^\star_2(t;p)$ constant for a certain periofd of time\footnote{The acceleration value cancels out with a inherent deceleration value so that the velocity can stay constant. The inherent deceleration value can be result of a friction or head wind.}, and eventually decelerate as as strongly as possible until the velocity is $x_2(1;p) \leq 0, \label{rc_x2_t1}$. The moment $x_2(1;p)$ reaching the value of $0$ is the moment that we finds the optimal/smallest $T$ that all the conditions are satisfied. 
+
+The proof of the theoretical solution is given in Appendix B of \cite{MatSch22}. Because of the simplicity nature of the rocket car case, we can find the theoretical solution of the nominal/original problem for our case \ref{rc}. But for many real life problems, it is very difficult to find a direct solution to the original problem, and for some cases not feasible, due to the uncertainty in the parameter $p$. That is why in the paper \cite{MatSch22}, a classical (in the form $minmax$) approach and a training (in the form $maxmin$) approach have been discussed, and both approaches will lead to a conservative solution to the original problem. A conservative solution to the CP problem is a acceptable (or desired) result since less risk should be taken regarding the therapy design of CP problem. In the next chapter, we discuss, in details, the classical approaches and training approach for the rocket car problem. After that, we focus on the quasi-Newton and multi shooting approach to the same problem.  
 
 
 
 
 
-% \underset{\theta \in \mathscr{T}_{t,T}}{\sup} 
+\chapter{The Classical and Training Approach}
 
-% c =  \underset{x \in \mathbf{P}-x^\ast}{inf}\frac{w'(x^\ast -x)}{|x^\ast -x|}$$
-	%	&  h(x,p)  \geq  0  \\ 
-%	& x = x(p) \\
-%		& x = x(p^0) \  if \  p = p^0 \\
-%		& p \in \Omega_P	
+The paper on hand focuses on using quasi-Newton and multi-shooting method for the Training Approach. In this chapter, we shortly introduce the Classical Approach first and then we discuss the Training Approach in greater detail. In the next chapter, we can introduce the quasi-Newton and multi-shooting method, and elaborate in detail how they can be used for the Training Approach. 
+
+
+
+\section{The Classical Approach}
+
+As stated in the introduction part, the classical approach is consistent with the $minmax$ approach, during which, two level optimization problems are solved. 
+
+In the lower level, we solve an optimization problem ($max \  f(x,p)$) with respect to $p$, and in the upper level, we continue to find the best solution with respect to $x$, as shown in \ref{minmax}. In the case of the rocket car, the classical approach will be expressed in the following form
+
+\begin{subequations}
+	\begin{align}
+	\underset{T, u(\cdot)}{min} \  \underset{ p \in \Omega_P, x(\cdot,p)}{max}  \ \   & \  T \\ 
+	s.t.  & \ \ x = (x_1, x_2)   \label{ca_rc_x} \\ 
+	& \ \  \dot{x} = T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix}, & \ t \in [0,1],  \label{ca_rc_partial} \\
+	& \ \ x(0,p) = 0, \label{ca_rc_t0}\\
+	& \ \ x_1(1;p) \geq 10, & \ for \ all \ p \in \Omega_P, \label{ca_rc_x1_t1} \\
+	& \ \ x_2(t;p) \leq 4, & t \in [0,1], \ for \ all \ p \in \Omega_P,  \label{ca_rc_x2_tc} \\
+	& \ \ x_2(1;p) \leq 0, & \ for \ all \ p \in \Omega_P, \label{ca_rc_x2_t1}  \\
+	& \ \ T \geq 0, \\
+	& \ \ u(t) \in [-10, 10], & t \in [0,1]. 
+	\end{align}
+	\label{ca_rc}
+\end{subequations}
+
+In the Classical Approach, the set of feasible controllable parameters and control functions are given by those $T$ and $u(\cdot)$, which yield feasible trajectories $x(\cdot, p)$ for all $p \in \Omega_P$. The value of the objective function in the lower level does not depend on $p$ and $x(\cdot, p)$. In other words, in this approach, the driver has no prior knowledge about the value of the parameter $p$ and gets no feedback during the process and has to set up the driving strategy in advance. 
+
+\section{The Training Approach}
+Contrast to the Classical Approach, in the Training Approach it is assumed that the driver of the rocket car is able to perform optmially for every $p$ because of a preceding training period. Thus the worst possible optimal performance is given by a solution of the problem
+\begin{subequations}
+	\begin{align}
+	\underset{p \in \Omega_P, T, u(\cdot), x(\cdot,p)}{max}  \ 	\underset{}{min} \   & \  T \\ 
+	s.t.  & \ \ x = (x_1, x_2)   \label{ta_rc_x} \\ 
+	& \ \  \dot{x} = T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix}, & \ t \in [0,1],  \label{ta_rc_partial} \\
+	& \ \ x(0,p) = 0, \label{ta_rc_t0}\\
+	& \ \ x_1(1;p) \geq 10, \label{ta_rc_x1_t1} \\
+	& \ \ x_2(t;p) \leq 4, & t \in [0,1], \label{ta_rc_x2_tc} \\
+	& \ \ x_2(1;p) \leq 0, \label{ta_rc_x2_t1}  \\
+	& \ \ T \geq 0, \\
+	& \ \ u(t) \in [-10, 10], & t \in [0,1]. 
+	\end{align}
+	\label{TA_rc}
+\end{subequations}
+
+The solution of the Training Approach in paper \cite{MatSch22} is given by a gradient-free method, more precisely, a so-called model-based Derivative-Free Optimization (DFO) approach for box-constrained optimization problems is used. The BOBYQA algorithm is chosen for such approach to solve problems of the form
+\begin{equation}
+\begin{aligned}
+\underset{x \in \mathcal{R}^n}{min} & \  F(x)  \\ 
+s.t.  & \ a_i \leq x_i \leq b_i, i = 1, ..., n \\
+\end{aligned}
+\label{DFO_bc}
+\end{equation}
+
+The name BOBYQA is an acronym for "Bound Optimization BY Quadratic Approximation", and is used to solve lower level problem of \ref{TA_rc}. In the general DFO method, the objective function $F(\cdot)$ is considered a black box. For a given $p$, the parametric lower level OCP of the Training Approach \ref{TA_rc} is solved with a direct DFO approach and the resulting (finite dimensional) solution is viewed as dependent variable. Furthermore, the uncentainty set $\Omega_P$ is box-shaped, and hence the BOBYQA algorithm is applicable to the problem in the Training Approach. The BOBYQA algorithm has been introduced in details in the paper \cite{MicPow09}, and we reiterate the main idea in the text that follows.  
+
+The method of BOBYQA is iterative, $k$ and $n$ being reserved for the iteration number and the number of variables, respectively. Further, $m$ is reserved for the number of interpolation conditions that are imposed on a quadratic approximation $Q_k(x) \xrightarrow{} F(x), \ x \in  \mathcal{R}^n$, with $m$ is a chosen constant  integer from the interval $[n+2, \frac{1}{2}(n+1)(n+2)]$. 
+
+The approximation is available at the beginning of the $k$-th iteration, the interpolation equations have the form
+\begin{equation}
+Q_k(y_j)= F(y_j),\   j = 1, 2, ..., m.
+\end{equation}
+We let $x_k$ be the point in the set $\{y_j : j = 1, 2, ... , m\}$ that has the property
+\begin{equation}
+F(x_k)= min\ \{F(y_j), \  j = 1, 2, ..., m\}, 
+\end{equation}
+with any ties being broken by giving priority to an earlier evaluation of the least function value $F(x_k)$. A positive number $\Delta_k$, called the “trust region radius”, is also available at the beginning of the $k$-th iteration. If a termination condition\footnote{Typically, a termination condition is satified when the objective value can not be improved further after some iterations. for the termination condition of BOBYQA algorithm, please refer the paper \cite{MicPow09} for more details.} is satisfied, then the iteration stops. Otherwise, a step $d_k$ from $x_k$ is constructed such that $ \Vert d_k \Vert \leq \Delta_k $ holds, $x = x_k+d_k$ is within the bounds of equation \ref{DFO_bc}, and $x_k+d_k$ is not one of the interpolation points $y_j : j = 1, 2, ... , m$. Then the new function value $F(x_k+d_k)$ is calculated, and one of the interpolation points, $y_t$ say, is replaced by $x_k+d_k$, where $y_t$ is different from $x_k$. It follows that $x_{k+1}$ is defined by the formula
+\begin{equation}
+x_{k+1} =
+\begin{cases}
+x_k, & F(x_k+d_k) \geq F(x_k) \\
+x_k+d_k  , & F(x_k+d_k) < F(x_k) 
+\end{cases}
+\end{equation}
+
+Further, $\Delta_{k+1}$ and $Q_{k+1}$ are generated for the next iteration, $Q_{k+1}$ being subject to the constraints 
+\begin{equation}
+Q_{k+1}(\hat{y}_j)= F(\hat{y}_j), \  j = 1, 2, ..., m, 
+\end{equation}
+at the new interpolation points
+\begin{equation}
+\hat{y}_j =
+\begin{cases}
+y_j, & j \neq t, \\
+x_k+d_k  , & j =t 
+\end{cases},  \  j = 1, 2, ..., m.
+\end{equation}
+
+The operations of BOBYQA algorithm requires the user to provide an initial vector of variables $x_0 \in \mathcal{R}^n$, the initial trust region $\Delta_1$, and the number $m$ of interpolation conditions where $n+2 \leq m \leq \frac{1}{2}(n+1)(n+2)$. Two different ways have been proposed for constructing the step $d_k$ from $x_k$ and updating procedures from the $k$-th iteration to the $k+1$-th iteration in the paper \cite{MicPow09}, with both methods having utilized the "quadratic" nature of the approximation function $Q(\cdot)$.
+
+The lower level OCP of the Training Approach \ref{TA_rc} can be solved with the BOBYQA algorithm for a given $p$, since the lower level problem can be re-written into the form of \ref{DFO_bc} and the constraints are box-shaped. With the BOBYQA algorithm computing local extrema, the upper level problem still needs to be solved globally. In our rocket car case, this is straight-forward, i.e. maximizing over all $p$. 
+
+Nevertheless, the BOBYQA algorithm has limitations with several strong assumptions being made. Firstly, it has been assumed the uncertainty set is of moderate size and is box-shaped. Secondly, it has been assumed that there is only one local extrema, i.e. the lower level problem has only one solution for each $p \in \Omega_P$. In general, we cannot expect the second assumption to be valid. The BOBYQA algorithm is a gradient-free method with repect to the objective function $F(\cdot)$, it still utilizes the gradient of the approximation function $Q(\cdot)$ while updating the iteration. Therefore, this BOBYQA algorithm, or a general DFO approach, is still subject to the numerical errors and computational costs while calculating the gradients of the approximation function $Q(\cdot)$  and updating them in each iteration.  
+
+The paper at hand, instead, is utilizing the gradient of the objective function $F(\cdot)$ directly, with some approximation applied as well. We have used the multiple shooting and quasi-Newton method for solving the lower level problem of the Training Approach \ref{TA_rc}. In the chapter that follows, we introduce the quasi-Newton and multiple shooting method. 
+
+
+\chapter{quasi-Newton and Multiple Shooting Method}
+In this chapter, we first introduce the classical Newton method used for solving optimization problems and then focus on the quasi-Newton and multiple shooting method. 
+
+As stated in the introduction chapter \ref{Chapter1}, a general optimization problem is typically of the form 
+\begin{equation}
+\begin{aligned}
+\  \  \ & min \  f(x) \\
+s.t.\ \  & x \in \Omega
+\end{aligned}
+\label{OptGen}
+\end{equation}
+Here $x \in \Omega$ represents the constraints for which $x$ must satisfy, it may be in the form of $ g(x) = 0,  h(x)  \geq  0$ as in the problem \ref{GeneralMin}, i.e. the feasible set $\Omega = \underset{x}{arg} \ \{ g(x) = 0,  h(x)  \geq  0 \}$. Various methods exist for eliminating the constraints, therefore, we can solve the resulting problem with algorithms for unconstrained minimization. For the sake of simplicity, we focus on explaining the Newton and quasi-Newton method without constraints in this chapter. How the quasi-Newton can be expanded for problems with constraints, will be explained in the next chapter. 
+
+
+\section{Newton method}
+The problem \ref{OptGen} without constraints, i.e. $min \  f(x)$  can be solved via Newton's method, which attempts to solve this problem by constructing a sequence $\{x_k\}$ from an initial guess (starting point) $x_0$ that converges towards a minimizer $x^\star$ of $f(x)$  by using a sequence of second-order Taylor approximations of $f(x)$ around the iterates. The second-order Taylor expansion of $f(x)$ around $x_k$ is
+%\begin{multline*}
+\begin{align*}
+f(x_k + \delta_x) \approx h(x_k) : = f(x_k) + f'(x_k)\delta(x_k) +\frac{1}{2}f''(x_k)\delta(x_k)^2 
+\end{align*}
+where $\delta$ represents a small change (with respect to $x$), and $f', f''$ are the first and second order derivatives of the original function $f(x)$, and are usually denoted as $\nabla f$ and the Hessian matrix $H$ of $f(x)$ respectively when $x$ is a vector of multiple variables. In the text that follows, we will use the symbol $\nabla f$ and $H$ directly, therefore, the Talyor expansion can be written as 
+\begin{align*}
+f(x_k + \delta_x) \approx h(x_k) : = f(x_k) + \nabla f(x_k)^T\delta(x_k) +\frac{1}{2}H(x_k)\delta(x_k)^2 
+\end{align*}
+The next iterate $x_{k+1}$ is defined so as to minimize this quadratic approximation $h(\cdot)$. The function $h(\cdot)$ is a quadratic function of $\delta(x)$, and is minimized by solving $\nabla h(\cdot) = 0$. The gradient of $h(\cdot)$ with respect to $\delta(x_k)$ at point $x_k$ is
+\begin{align*}
+\nabla h(x_k) = \nabla f(x_k) + H(x_k) \delta(x_k) 
+\end{align*}
+We are motivated to solve $\nabla h(x_k) =0$, which leads to solve a linear system
+%\begin{align*}
+\begin{equation}
+\nabla f(x_k) + H(x_k) \delta(x_k) =0
+\label{HessianEq}
+\end{equation}
+%\end{align*}
+Therefore, for the next iteration point $x_{k+1}$, we can just add the small change $\delta(x_k)$ to the current iterate, i.e. 
+\begin{align*}
+x_{k+1}  = x_k + \delta(x_k) = x_k - H^{-1}(x_k)\nabla f(x_k), 
+\end{align*}
+here $ H^{-1}(\cdot)$ represents the inverse of the Hessian matrix $H(\cdot)$. The Newton's method performs the iteration until the convergence, i.e. $x_k$ and $f(x_k)$ converge to $x^\star$ and $f(x^\star)$, respectively \footnote{In another word, the Newton mehtod has converged when the small change $\delta(x_k) =0$ or $\delta(x_k)$ is small enough that the change in the objective function is below a pre-defined tolerance level.}. The details of the Newton method is as follows: 
+\begin{description}
+	\item[Newton method steps]\ 
+	\begin{itemize}
+		\item Step 0, $k=0$, choose an initial value $x_0$ 
+		\item Step 1, $\delta(x_k)  =- H^{-1}(x_k)\nabla f(x_k)$, if $\delta(x_k) =0$, then stop
+		\item Step 2, choose a step-size $\alpha_k$ (typically $\alpha_k =1$)
+		\item Step 3, set $x_{k+1}  = x_k + \alpha_k \delta(x_k) $, let $k= k+1$. Go to Step 1
+	\end{itemize}
+\end{description}
+
+The parameter $\alpha_k$ is introduced to augment the Newton method such that a line-search of $f(x_k + \alpha_k \delta(x_k))$ is applied to find an optimal value of the step size parameter $\alpha_k$. 
+
+Though the Newton method is straightforward and easy to understand, it has two main limitations. Firstly, it is sensitive to initial conditions. This is especially apparent if the objective function is non-convex. Depending on the choice of the starting point $x_0$, the Newton method may converge to a global minimum, a saddle point, a local minimum or may not converge at all. In another word, due to the sensitivity with respect to the initialization, the Newton method may be not able to find the global solution. Secondly, the Newton method can be computationally expensive, with the second-order derivatives, aka, the Hessian matrix $H(\cdot)$ and its inverse very expensive to compute. It may also happen that the Hessian matrix is not positive definite, therefore, Newton method can not be used at all for solving the optimization problem. Due to these limitations of the Newton method, we have chosen the quasi-Netwon method instead for solving our problem in the rocket car case. 
+
+\section{quasi-Newton method}
+We have stated that one limitation or the downside of the Newton method, is that Newton method can be computationally expensive when calculating the Hessian (i.e. second-order derivatives)  matrix and its inverse, especially when the dimensions get large. The quasi-Newton methods are a class of optimization methods that attempt to address this issue. More specifically, any modification of the Newton methods employing an approximation matrix $B$ to the original Hessian matrix $H$, can be classified into a quasi-Newton method. 
+
+The first quasi-Newton algorithm, i.e. the Davidon–Fletcher–Powell (DFP) method, was proposed by William C. Davidon in 1959 \cite{WilDav59}, which was later popularized by Fletcher and Powell in 1963 \cite{FlePow63}. Some of the most common used quasi-Newton algorithms currently are the symmetric rank-one (SR1) method \cite{ANP91} and Broyden–Fletcher–Goldfarb–Shanno(BFGS) method. The family of the quasi-Newton algorithms are similar in nature, with most of the difference arising in the part how the approximation Hessian matrix is decided and the updating distance $\delta(x_k) $ is calculated. One of the chief advantages of the quasi-Newton methods over Newton's method is that the approximation Hessian matrix $B$ can be chosen in a way that no matrix needs to be directly inverted. The Hessian approximation $B$ is chosen to satisfy the equation \ref{HessianEq}, with the approximation matrix $B$ replacing the original Hessian matrix $H$, i.e. 
+\begin{equation}
+\nabla f(x_k) +B_k\delta(x_k) =0
+\label{HessianAppro}
+\end{equation}
+
+In the text that follows, we explain how the iteration is performed in the BFGS method, as an example illustrating the quasi-Newton method. In the BFGS method, instead of computing $B_k$ afresh at every iteration, it has been proposed to update it in a simple manner to account for the curvature measured during the most recent step. To determine an update scheme for $B$, we will need to impose additional constraints. One such constraint is the symmetry and positive-definiteness of $B$, which is to be preserved in each update for $k = 1,2, 3, ...$. Another desirable property we want is for $B_{k+1}$ to be sufficiently close to $B_k$ at each update $k+1$, and such closeness can be measured by the matrix norm, i.e. the quantity $\Vert B_{k+1} - B_{k} \Vert$. We can, therefore, formulate our problem during the $k+1$ update as 
+\begin{equation}
+\begin{aligned}
+\underset{B_{k+1}}{min} \  &  \Vert B_{k+1} - B_{k} \Vert\\
+s.t.\ \  & B_{k+1}= B_{k+1}^T, \ B_{k+1}\delta(x_k)  = y_k \\
+\end{aligned}
+\label{BFGSB}
+\end{equation}
+where $\delta(x_k) = x_{k+1} -x_k$ and $y_k = \nabla f(x_{k+1}) - \nabla f(x_k)$. In the BFGS method, the norm is chosen to be the Frobenius norm:
+\begin{align*}
+\Vert B \Vert_F = \sqrt{\sum_{i}^{m} \sum_{j}^{n} |b_{ij}|^2} 
+\end{align*}
+Solving the problem \ref{BFGSB} directly is not trivial, but we can prove that problem ends up being equivalent to updating our approximate Hessian $B$ at each iteration by adding two symmetric, rank-one matrices $U$ and $V$:
+%Solving the problem \ref{BFGSBUp} directly is not trivial, but we can prove that problem ends up being equivalent to updating our approximate Hessian $B$ at each iteration by adding two symmetric, rank-one matrices $U$ and $V$:
+\begin{align*}
+B_{k+1} = B_k + U_k + V_k
+\end{align*}
+where the update matrices can then be chosen to be of the form $U = a u u^T$ and $V = b v v^T$, where $u$ and $v$ are linearly independent non-zero vectors, and $a$ and $b$ are constants.  The outer product of any two non-zero vectors is always rank one, i.e. $U_k$ and $V_k$ are rank-one. Since $u$ and $v$ are linearly independent, the sum of $U_k$ and $V_k$ is rank-two, and an update of this form is known as a rank-two update. The rank-two condition guarantees the “closeness” of $B_k$ and $B_{k+1}$ at each iteration. 
+
+Besides, the condition $B_{k+1}\delta(x_k) = y_k$ has to be imposed.
+\begin{align*}
+B_{k+1}\delta(x_k) = B_k\delta(x_k)  + a u u^T\delta(x_k) + b v v^T\delta(x_k) = y_k
+\end{align*}
+
+Then, a natural choice of $u$ and $v$ would be $u=y_k$ and $v=B_k\delta(x_k)$, we then have
+
+\begin{align*}
+B_k\delta(x_k) + a y_ky^T_k\delta(x_k) + bB_k\delta(x_k) \delta(x_k)^TB_k^T\delta(x_k) = y_k  \\
+y_k(1-ay_k^T\delta(x_k) ) = B_k\delta(x_k)(1+ b \delta(x_k)^TB_k^T\delta(x_k)) \\
+\Rightarrow a = \frac{1}{y_k^T\delta(x_k)}, \  b= - \frac{1}{\delta(x_k)^TB_k\delta(x_k)}
+\end{align*}
+Finally, we get the update formula as follows: 
+\begin{align*}
+B_{k+1} = B_k +  \frac{y_ky_k^T}{y_k^T\delta(x_k)}  - \frac{B_k\delta(x_k)\delta(x_k)^TB_k}{\delta(x_k)^TB_k\delta(x_k)}
+\end{align*}
+
+Since $B$ is positive definite for all $k = 1,2, 3, ...$, we can actually minimize the change in the inverse $B^{-1}$ at each iteration, subject to the (inverted) quasi-Newton condition and the requirement that it be symmetric. Applying the Woodbury formula , we can show (see the Appendix for more details) that the updating formula of inverse $B^{-1}$ is as follows
+
+\begin{align*}
+B_{k+1}^{-1} = (I - \frac{\delta(x_k)y_k^T}{y_k^T\delta(x_k)})B_k^{-1}(I - \frac{y_k\delta(x_k)^T}{y_k^T\delta(x_k)}) +  \frac{\delta(x_k)\delta(x_k)^T}{y_k^T\delta(x_k)} 
+\end{align*}
+As shown in the formula above, at each iteration, we update the value of $B^{-1}$ using only the values of $\delta(x_k) = x_{k+1} -x_k$ and $y_k = \nabla f(x_{k+1}) - \nabla f(x_k)$. Since an update of $B^{-1}$ depends on the previous value, we need to initialize $B^{-1}$, either as an identity matrix or as the true Hessian matrix $H(x_0)$, calculated based on the starting point $x_0$.
+
+The problem \ref{TA_rc} involves constraints in the partial differential equation form. Therefore, we can apply multiple shooting method to transform the original problem into  discretized non-linear optimal control problem, with the constraints applied in each subinterval. Together with the matching conditions, we can then apply quasi  , apply multiple shooting and quasi-Newton method to get the optimal solution. In the text the follows, we explain the multilpe shooting method first and then focus on how it, together with quasi-Newton method, can be used for solving the rocket car problem.  
+
+\section{Multiple Shooting Method}
+Multiple shooting method was initially introduced to solve boundary value problem (BVP) in differential equation scope \cite{DJJ62}. This method, therefore, is well suited for solving optimal control problem which consists of differential equations with constraints. However, some modification is necessary so that the multiple shooting method can be applied to solve optimal control problem. In the text that follows, we first explain how the multiple shooting can be used for solving BVP in the differential equation scope. After that, we explain how mutilple shooting can be applied to a general optimal control problem, and particularly how it can be used for solving the rocket car case \ref{TA_rc}.
+
+To illustrate the concept of shooting method to solve boundary value problem (BVP), we use the the following example.
+\begin{align*}
+\dot{x} = x(t), t_0 \leq t \leq t_f	
+\end{align*}
+The analytical solution of above equation is 
+\begin{align*}
+x(t) = x(t_0)e^{t - t_0}
+\end{align*}
+where $e$ is the exponential number. Then $x(t_0) = x_0$ will be determined such that it will satisfy
+$x(t_f)=b$ for given value $b$. Therefore, the equation $x(t_f)-b = 0$ or $x_0e^{t - t_0}-b =0$ is obtained. This derivation is called as shooting method. Generally, the shooting method can be summarized as follow
+\begin{description}
+	\item[shooting method] \
+	\begin{itemize}
+		\item Step 1, choose an initial value $x_0 = x(t_0)$ 
+		\item Step 2, form a solution of the differential equation from $t_0$ to $t_f$
+		\item Step 3, evaluate an error of the boundary condition, if $x(t_f) - b = 0$, then stop, otherwise continue to Step 4 
+		\item Step 4, update the guess for $x_0$ based on some updating schema, go to Step 2
+	\end{itemize}
+\end{description}
+
+In multiple shooting method, the "shoot" interval is partitioned into some short intervals. We define a general differential equation with boundary value of the following form
+\begin{equation}\label{eqn:ori_dae}
+\begin{aligned}
+& \dot{y} = f(t, y, p) \\ 
+& y(t_f) = y_f  \\
+\end{aligned}
+\end{equation}
+where $y$ denotes the differential variables, $p$ is some parameter, $t \in [t_0, t_f]$,  $y_f$ is the boundary value at $t_f$.  With multiple shooting method, one chooses a suitable grid of multiple shooting nodes $\tau_j \in [t_0,t_f] $, where $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$,  i.e. $m$ subintervals covering the whole interval. At the beginning of each subinterval, $[\tau_k, \tau_{k+1}], k = 0, 1, ..., m-1$, we have the initial guess of the starting value $\hat{y}_k$. Then in each subinterval, we have the initial value problem of the following form: 
+\begin{equation}\label{eqn:msh}
+\begin{aligned}
+& \dot{y} = f(t, y, p) , t \in [\tau_k, \tau_{k+1}], \ k = 0, 1, ..., m-1   \\ 
+& y(\tau_k) = \hat{y}_k, k = 0, 1, ..., m-1  \\
+\end{aligned}
+\end{equation}
+In each subinterval, we introduce the new unkown parameter $\hat{y}_k$, we solve an initial value problem and will get a solution $y(t), t \in [\tau_k, \tau_{k+1}]$. The piecewise solution is not necessary continuous and also not necessarily satisfy the boundary condition $y(t_f) = y_f$. The continuity has to be enforced by additional matching conditions at each subinterval point, i.e. 
+\begin{equation}\label{eqn:mc}
+\begin{aligned}
+& y(\tau_{k+1}; \hat{y}_k) = \hat{y}_{k+1}, \  k = 0, 1, ..., m-1  \\
+& \hat{y}_{m} = \hat{y}_{\tau_m} = \hat{y}_{t_f} =  y_f 
+\end{aligned}
+\end{equation}
+
+The procedure of multiple shooting method can then be summarized as
+\begin{description}
+	\item[Mutilple shooting method] \
+	\begin{itemize}
+		\item Step 1, choose multiple shooting nodes $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$ 
+		\item Step 2, choose initial guess for $\hat{y}_k, k = 0, 1, ..., m-1$ 
+		\item Step 3, form solutions of the differential equation in each subinterval $[\tau_k, \tau_{k+1}], k = 0, 1, ..., m-1$
+		\item Step 4, evaluate the error at boundary of each interval condition, if $y(\tau_{k+1}; \hat{y}_k) - \hat{y}_{k+1} = 0, \  k = 0, 1, ..., m-1$ and $\hat{y}_{m} = y_f$, then stop, otherwise cotinue to Step 5
+		\item Step 5, update the guess for $\hat{y}_k, k = 0, 1, ..., m-1$ based on some updating schema, go to Step 3
+	\end{itemize}
+\end{description}
+
+In practice, there are many details to be decided when using (multiple) shooting methods, which we will introduce briefly without giving a rigorous formation. In Step 1 \& 2, when choosing the shooting nodes and the initial guess $\hat{y}_k$, how they are chosen usually depends on nature of the problem as well as a balance between accuracy and computational cost. For example, the nodes can be equally spaced and the $\hat{y}_k$ can be initialized with the same value, or they can be addressed in other methods. In Step 3, polynomial functions can be used as the approximate solutions, leveraging the fact that Taylor expansion can be used to approximate any continuous functions. In Step 4, "evaluate the error" is usually in the form of evaluating an objective function, which, e.g. can be defined as the sum of quadratic errors. In Step 5, the "updating schema" can be defined to so that the $\hat{y}_k$ can move in a direction that decreases the objective function. The (quasi) Newton method, for example, can be used as an updating method in Step 5. 
+
+
+The multiple shooting method can be used for many problems. For example, it can be applied to the twice differential system of the following form 
+\begin{equation*}
+y''(t) = f(t, y(t), y'(t))  \quad y(t_0) = y_0, \quad y(t_f) = y_f,  \quad t \in [t_0, t_f]
+\label{eqn:tdode}
+\end{equation*}
+The problem above is similar to the problem \ref{eqn:ori_dae}. In each subinterval, a boudary value problem (BVP) is to be solved and matching conditions at the boundary of each subinterval  are to be enforced applied so that the final solution found is applicable to the whole interval. 
+
+
+With the same idea, we can use mutiple shooting to solve a optimal control problem. For the rocket car problem \ref{TA_rc}, we can discretize the time $t \in [0, 1]$ and the original OCP problem is split into multiple intervals, with the constraints also applied to each subinterval. We also need to introduce the initial guess for each interval and add the matching constraints. In the end, we turn the original problem  \ref{TA_rc} into piecewise OCPs with augmented parameters and constraints. But the piecewise OCPs can be solved as as a whole due to their non-overlapping properties and same structure, i.e. they can be aggregated to one objective function with the constraints expressed in matrix form. The final problem can then be solved with quasi-Newton method. In the next chatper, we discuss in detail how the problem \ref{TA_rc} can be solved with mutiple shooting method and quasi-Newton method in details. 
+
+
+\chapter{Rocket Car Case}
+Before we dive into the mathematics, we first re-introduce the physics of the rocket car case so that we can model the problem more precisely. Within the training approach, with a given $p$, we want to solve the lower level problem of the following form \ref{TA_lower}
+\begin{subequations}
+	\begin{align}
+	\underset{}{min} \   & \  T \\ 
+	s.t.  & \ \ x = (x_1, x_2)   \label{ta_rc_x} \\ 
+	& \ \  \dot{x} = T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix}, & \ t \in [0,1],  \label{ta_rc_partial2} \\
+	& \ \ x(0,p) = 0, \label{ta_rc_t2}\\
+	& \ \ x_1(1;p) \geq 10, \label{ta_rc_x1_t2} \\
+	& \ \ x_2(t;p) \leq 4, & t \in [0,1], \label{ta_rc_x2_tc2} \\
+	& \ \ x_2(1;p) \leq 0, \label{ta_rc_x2_t1_2}  \\
+	& \ \ T \geq 0, \\
+	& \ \ u(t) \in [-10, 10], & t \in [0,1], \\
+	& \ \ p, \   a \ given \ value
+	\end{align}
+	\label{TA_lower2}
+\end{subequations}
+
+In summary, we want to find the minimum time that the rocket car moves from the starting state (the position is at the origin point, and the speed is zero) to an ending state when the position is at least at point 10 or beyond, and the speed is less than or equal to zero (a negative speed indicates the car is moving in a direction that decreases the position), with constraints on the acceleration/deceleration value and the speed during the whole process. 
+
+Because our objective is to minimize the time between starting state and ending state, i.e. the variable $T$, which is unknown, we cannot define a time horizon over which we will discretize and optimize. Therefore, a new variable $t$ is defined as follows: 
+\begin{equation*}
+t= \frac{\tau}{T} \in [0,1] \quad \tau \in [0, T]
+\label{eqn:timet}
+\end{equation*}
+
+Where $\tau$ is the real time between starting time $0$ and ending time $T$, and $t$ is the relative time between $0$ and $1$.  The equation \ref{ta_rc_partial2} can be also written as 
+
+\begin{subequations}
+	\begin{align}
+	\dot{x} =  \begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix}  & =  T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix} = \begin{pmatrix}  Tx_2(t;p) \\ T(u(t)-p)   \end{pmatrix} \label{eq_difT} \\ 
+	\begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix} &= \begin{pmatrix} \frac{\partial x_1}{\partial t} \\ \frac{\partial x_2}{\partial t} \end{pmatrix} = \begin{pmatrix} \frac{\partial x_1}{\partial \tau} \frac{\partial \tau}{\partial t} \\ \frac{\partial x_2}{\partial \tau} \frac{\partial \tau}{\partial t} \end{pmatrix} =  \begin{pmatrix} \frac{\partial x_1}{\partial \tau} T \\ \frac{\partial x_2}{\partial \tau}T \end{pmatrix} =     \begin{pmatrix}  Tx_2(t;p) \\ T(u(t)-p)   \end{pmatrix} \\
+	\begin{pmatrix} \frac{\partial x_1}{\partial \tau}  \\ \frac{\partial x_2}{\partial \tau} \end{pmatrix} & =     \begin{pmatrix}  x_2(t;p) \\ (u(t)-p)   \end{pmatrix} \label{eq_difTau}
+	\end{align}
+\end{subequations}
+
+In summary, the equation $\frac{\partial x_1}{\partial \tau}= x_2(t;p) $ means the change in the position in real time is proportional to the speed at that moment. And the equation $\frac{\partial x_2}{\partial \tau} = u(t)-p $ means the change in speed is proportional to the acceleration/deceleration value at that moment. 
+
+To use multiple shooting and quasi-Newton method, we discretize the interval $t\in [0,1]$ into subinterval $[t_{k-1}, t_k], k = 1, 2, ..., m$, where $0 =t_0, t_1, t_2, ...,t_{k-1}, t_k, ..., t_m=1$. We solve the OCP within each interval, and enforce the matching condition at the boundary of each interval. 
+
+The equation \ref{eq_difT} is equivalent to \ref{eq_difTau}
+
+
+
+
+
+% t&= \frac{\tau}{T} \in [0,1] \quad \tau \in [0, T]
+%\\
+%i.e. \ \begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix} &= \begin{pmatrix} \frac{\partial x_1}{\partial t} \\ \frac{\partial x_2}{\partial t} \end{pmatrix} = 
+%\begin{pmatrix} \frac{\partial x_1}{\partial \tau} \frac{\partial \tau}{\partial t}  \\ \frac{\partial x_2}{\partial \tau} \frac{\partial \tau}{\partial t} \end{pmatrix} 
+
+%\begin{equation*}
+%	\begin{align}
+%		\dot{x} =  \begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix}  & =  T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix} = \begin{pmatrix}  Tx_2(t;p) \\ T(u(t)-p)   \end{pmatrix} \\
+%		i.e. \ \begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix} &= \begin{pmatrix} \frac{\partial x_1}{\partial t} \\ \frac{\partial x_2}{\partial t} \end{pmatrix} = 
+%		\begin{pmatrix} \frac{\partial x_1}{\partial \tau} \frac{\partial \tau}{\partial t}  \\ \frac{\partial x_2}{\partial \tau} \frac{\partial \tau}{\partial t} \end{pmatrix} 
+%	\end{align}
+%\end{equation*}
+
+
+
+
+
 
