@@ -532,10 +532,10 @@
    In summary, we want to find the minimum time that the rocket car moves from the starting state (the position is at the origin point, and the speed is zero) to an ending state when the position is at least at point 10 or beyond, and the speed is less than or equal to zero (a negative speed indicates the car is moving in a direction that decreases the position), with constraints on the acceleration/deceleration value and the speed during the whole process. 
    
    Because our objective is to minimize the time between starting state and ending state, i.e. the variable $T$, which is unknown, we cannot define a time horizon over which we will discretize and optimize. Therefore, a new variable $t$ is defined as follows: 
-   \begin{equation*}
+   \begin{equation}
    t= \frac{\tau}{T} \in [0,1] \quad \tau \in [0, T]
    \label{eqn:timet}
-   \end{equation*}
+   \end{equation}
    
    Where $\tau$ is the real time between starting time $0$ and ending time $T$, and $t$ is the relative time between $0$ and $1$.  The equation \ref{ta_rc_partial2} can be also written as 
    
@@ -549,8 +549,28 @@
    
    In summary, the equation $\frac{\partial x_1}{\partial \tau}= x_2(t;p) $ means the change in the position in real time is proportional to the speed at that moment. And the equation $\frac{\partial x_2}{\partial \tau} = u(t)-p $ means the change in speed is proportional to the acceleration/deceleration value at that moment. 
    
-   To use multiple shooting and quasi-Newton method, we discretize the interval $t\in [0,1]$ into subinterval $[t_{k-1}, t_k], k = 1, 2, ..., m$, where $0 =t_0, t_1, t_2, ...,t_{k-1}, t_k, ..., t_m=1$. We solve the OCP within each interval, and enforce the matching condition at the boundary of each interval. 
-   The equation \ref{eq_difT} is equivalent to \ref{eq_difTau}, and $\partial x_1= x_2(t;p) \partial \tau, \ \partial x_2 = ( u(t)-p) \partial \tau$
+   To use multiple shooting and quasi-Newton method, we discretize the interval $t\in [0,1]$ into subinterval $[t_{k}, t_{k+1}], k = 0, 1, 2, ..., m-1$, where $0 = t_0, t_1, t_2, ...,t_k, t_k, ..., t_m = 1$. We solve the OCP within each interval, and enforce the matching condition at the boundary of each interval. 
+   The equation \ref{eq_difT} is equivalent to \ref{eq_difTau}, and $\partial x_1= x_2(t;p) \partial \tau, \ \partial x_2 = ( u(t)-p) \partial \tau$, we can solve this partial equation in each subinterval directly. We have the following solution
+   
+   \begin{subequations}
+	\begin{align}
+      x_1(t_{k+1}) -  x_1(t_k)  &= \int_{t_k}^{t_{k+1}} x_2(t;p) d \tau \label{eq_x1_int} \\
+      x_2(t_{k+1}) -  x_2(t_k)  &= \int_{t_k}^{t_{k+1}} (u(t)-p) d \tau \\
+      t \in [t_{k}, t_{k+1}], \  k &= 0, 1, 2, ..., m-1, \  t_0 =0, t_m =1
+   	\end{align}
+\end{subequations}
+
+The integral can be approximated by numerical method, one simple approximation to the integral in equation \ref{eq_x1_int} can be 
+\begin{equation}
+\int_{t_k}^{t_{k+1}} x_2(t;p) d \tau  \approx \frac{x_2(t_{k+1}) + x_2(t_k)}{2} (\tau_{k+1} -\tau_k)
+\end{equation}
+
+There are many different methods that can be used to approximate the integrals, one of the widely used method is the Runge–Kutta method. With initial value $x_1(t_k),x_2(t_k), u(t_k)$ given at each subinterval $[t_{k}, t_{k+1}]$, based on the differential equation \ref{ta_rc_partial2}, we can find the (approximation) solution within this subinterval. Together with enforcing the matching condition, we can get the final solution by summing up the corresponding real time $\sum_{k=0}^{k=m-1} \tau_{k+1} - \tau_k$ 
+
+
+%% = \frac{x_2(t_k) + x_2(t_{k-1})}{2} (\tau_k -\tau_{k_1})
+%%%  \frac{x_2(t_k) + x_2(t_{k-1})}{2} (\tau_k -\tau_{k_1}) 
+   
    
    
    
