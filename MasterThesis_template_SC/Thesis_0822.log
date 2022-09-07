@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2022.5.25)  6 SEP 2022 23:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2022.5.25)  7 SEP 2022 22:25
 entering extended mode
 **./Thesis_0822.tex
 (Thesis_0822.tex
@@ -854,22 +854,22 @@ OML/cmm/m/it/12 ; u\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 t[]\OT1/cmr/m/n/12 )$
 .0.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.599    \newpage
+l.605    \newpage
                  pdfTeX warning (ext4): destination with the same identifier (n
 ame{equation.5.0.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.599    \newpage
+l.605    \newpage
                  pdfTeX warning (ext4): destination with the same identifier (n
 ame{equation.5.0.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.599    \newpage
+l.605    \newpage
                  ]
 part I.
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `partprefix' that is an alias of element `partnumber'
-(scrkbase)              on input line 600.
+(scrkbase)              on input line 606.
 [19]
 
 Class scrreprt Warning: You are using `\begin{appendix}...\end{appendix}'.
@@ -883,7 +883,7 @@ Class scrreprt Warning: You are using `\begin{appendix}...\end{appendix}'.
 (scrreprt)              inconsistent.
 (scrreprt)              Because of this, you should remove `\end{appendix}'
 (scrreprt)              and replace `\begin{appendix}' by command
-(scrreprt)              `\appendix' on input line 601.
+(scrreprt)              `\appendix' on input line 607.
 
 chapter A.
 (Thesis_0822.bbl)
@@ -892,15 +892,15 @@ chapter A.
  (deposition.tex [20])
 
 LaTeX3 Info: Redefining command \BeforeClosingMainAux with sig. 'm' on line
-(LaTeX3)     610.
+(LaTeX3)     616.
 
 
 LaTeX3 Info: Redefining command \BeforeClosingMainAux with sig. 'm' on line
-(LaTeX3)     610.
+(LaTeX3)     616.
 
 
 LaTeX3 Info: Redefining command \BeforeClosingMainAux with sig. 'm' on line
-(LaTeX3)     610.
+(LaTeX3)     616.
 
  (Thesis_0822.aux (titlepages.aux)
 (deposition.aux))
@@ -946,7 +946,7 @@ e1/public/cm-super/sfsx1200.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
 /cm-super/sfsx1440.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super
 /sfsx1728.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfsx2074
 .pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfsx2488.pfb>
-Output written on Thesis_0822.pdf (20 pages, 386435 bytes).
+Output written on Thesis_0822.pdf (20 pages, 386553 bytes).
 PDF statistics:
  436 PDF objects out of 1000 (max. 8388607)
  98 named destinations out of 1000 (max. 500000)

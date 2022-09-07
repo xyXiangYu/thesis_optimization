@@ -565,7 +565,13 @@ The integral can be approximated by numerical method, one simple approximation t
 \int_{t_k}^{t_{k+1}} x_2(t;p) d \tau  \approx \frac{x_2(t_{k+1}) + x_2(t_k)}{2} (\tau_{k+1} -\tau_k)
 \end{equation}
 
-There are many different methods that can be used to approximate the integrals, one of the widely used method is the Runge–Kutta method. With initial value $x_1(t_k),x_2(t_k), u(t_k)$ given at each subinterval $[t_{k}, t_{k+1}]$, based on the differential equation \ref{ta_rc_partial2}, we can find the (approximation) solution within this subinterval. Together with enforcing the matching condition, we can get the final solution by summing up the corresponding real time $\sum_{k=0}^{k=m-1} \tau_{k+1} - \tau_k$ 
+There are many different methods that can be used to approximate the integrals, one of the widely used method is the Runge–Kutta method. With initial value $x_1(t_k),x_2(t_k), u(t_k)$ given at each subinterval $[t_{k}, t_{k+1}]$, based on the differential equation \ref{ta_rc_partial2}, we can find the (approximation) solution within this subinterval. Together with enforcing the matching condition, we can get the final solution by summing up the corresponding real time $\sum_{k=0}^{k=m-1} \tau_{k+1} - \tau_k$, if the constraints do not exist. 
+
+
+In order to get the feasible solution, we need to include the constraints into consideration 
+
+
+
 
 
 %% = \frac{x_2(t_k) + x_2(t_{k-1})}{2} (\tau_k -\tau_{k_1})
