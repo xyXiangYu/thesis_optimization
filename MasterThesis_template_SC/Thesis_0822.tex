@@ -97,18 +97,18 @@
    \begin{aligned}
    \  \  \ & min \  f(x) \\
    s.t.  \  \  \ & g(x) = 0, \\ 
-   &  h(x)  \geq  0 
+   &  h(x)  \leq  0 
    \end{aligned}
    \label{GeneralMin}
    \end{equation}
-   where $f(x)$ is the objective or cost function, $g(x) = 0$ and $h(x)  \geq  0$ are the constraints. Some optimization problems may have uncertain parameters whose value are priori unknown, and the optimal objective value depends on the parameter value. This kind of problem is called the parameterized optimization problems and is of the form 
+   where $f(x)$ is the objective or cost function, $g(x) = 0$ and $h(x)  \leq  0$ are the constraints. Some optimization problems may have uncertain parameters whose value are priori unknown, and the optimal objective value depends on the parameter value. This kind of problem is called the parameterized optimization problems and is of the form 
    
    
    \begin{equation}
    \begin{aligned}
    \  \  \ & min \  f(x, p) \\
    s.t.  \  \  \ & g(x, p) = 0, \\ 
-   &  h(x,p)  \geq  0  \\ 
+   &  h(x,p)  \leq  0  \\ 
    & x = x(p) \\
    & x = x(p^0) \  if \  p = p^0 \\
    & p \in \Omega_P		
@@ -139,7 +139,7 @@
    \begin{equation}
    \begin{aligned}
    \underset{x}{min} \   \underset{p \in \Omega_P}{max} & \  f(x,p) \\ 
-   s.t.  & \  g(x, p) = 0, \  h(x,p)  \geq  0 \\
+   s.t.  & \  g(x, p) = 0, \  h(x,p)  \leq  0 \\
    \end{aligned}
    \label{minmax}
    \end{equation}
@@ -154,7 +154,7 @@
    \begin{equation}
    \begin{aligned}
    \underset{p \in \Omega_P}{max} \ \underset{x}{min} & \  f(x,p) \\ 
-   s.t.  & \  g(x, p) = 0, \  h(x,p)  \geq  0 \\
+   s.t.  & \  g(x, p) = 0, \  h(x,p)  \leq  0 \\
    \end{aligned}
    \label{maxmin}
    \end{equation}
@@ -565,13 +565,41 @@ The integral can be approximated by numerical method, one simple approximation t
 \int_{t_k}^{t_{k+1}} x_2(t;p) d \tau  \approx \frac{x_2(t_{k+1}) + x_2(t_k)}{2} (\tau_{k+1} -\tau_k)
 \end{equation}
 
-There are many different methods that can be used to approximate the integrals, one of the widely used method is the Runge–Kutta method. With initial value $x_1(t_k),x_2(t_k), u(t_k)$ given at each subinterval $[t_{k}, t_{k+1}]$, based on the differential equation \ref{ta_rc_partial2}, we can find the (approximation) solution within this subinterval. Together with enforcing the matching condition, we can get the final solution by summing up the corresponding real time $\sum_{k=0}^{k=m-1} \tau_{k+1} - \tau_k$, if the constraints do not exist. 
+There are many different methods that can be used to approximate the integrals, one of the widely used method is the Runge–Kutta method. With initial value $x_1(t_k),x_2(t_k), u(t_k)$ given at each subinterval $[t_{k}, t_{k+1}]$, based on the differential equation \ref{ta_rc_partial2}, we can find the (approximation) solution within this subinterval. Together with enforcing the matching condition, we can get the final solution by summing up the corresponding real time $\sum_{k=0}^{k=m-1} \tau_{k+1} - \tau_k$, but only if the constraints do not exist. 
 
 
-In order to get the feasible solution, we need to include the constraints into consideration 
+In order to get the feasible solution, we can take the constraints into consideration by Lagrange multipliers with the Karush–Kuhn–Tucker (KKT) condition incorporated. Considering a problem of the following form
+\begin{equation}
+	\label{eq:OCP_discret_compact}
+	\begin{aligned}
+		\underset{x \in \mathbb{R}^n}{\text{min}} \qquad &f(x)	\\
+		\qquad \text{s.t.}\qquad	&  g(x)	 = 0   \\
+						                  &  h(x)	\leq 0 
+	\end{aligned}
+\end{equation}
+The constrained optimization \ref{eq:OCP_discret_compact} can form the Lagrangian function
+\begin{equation}
+	 \mathcal{L}(w,\lambda, \mu) = \Phi(w) - \lambda ^\top a(w)-  \mu^\top b(w) 
+\end{equation}
+
+\begin{definition}(Feasible set)
+The feasible set $\Omega$ is the set 
+\begin{align}
+	\Omega:= \{x \in \mathbb{R}^n \ | \ g(x)= 0 , \ h(x)	\leq 0 \}	
+\end{align}
+\end{definition}	
 
 
 
+\definition(Feasible set){ The feasiable set $\Omega$} 
+%\definition (Active Constraints and Active Set) An inequality constraint hi(x) ≤ 0 is called active at x∗ 2 Ω
+%iff hi(x∗) = 0 and otherwise inactive. The index set A(x∗) ⊂ f1; : : : ; nhg of active inequality constraint indices
+%is called the ”active set”
+Before we introduce the KKT theorem, we need the following definition. 
+
+
+
+The Karush–Kuhn–Tucker theorem then states the following.
 
 
 %% = \frac{x_2(t_k) + x_2(t_{k-1})}{2} (\tau_k -\tau_{k_1})
