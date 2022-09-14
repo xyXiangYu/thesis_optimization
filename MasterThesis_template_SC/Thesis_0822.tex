@@ -512,7 +512,7 @@
    
    
    \chapter{Solving Rocket Car Case}
-   Before we dive into the mathematics, we first re-introduce the physics of the rocket car case so that we can model the problem more precisely. Within the training approach, with a given $p$, we want to solve the lower level problem of the following form \ref{TA_lower}
+   Before we dive into the mathematics, we first re-introduce the physics of the rocket car case so that we can model the problem more precisely. Within the training approach, with a given $p$, we want to solve the lower level problem of the following form \ref{TA_lower2}
    \begin{subequations}
    	\begin{align}
    	\underset{}{min} \   & \  T \\ 
@@ -577,25 +577,35 @@ In order to get the feasible solution, we can take the constraints into consider
 						                  &  h(x)	\leq 0 
 	\end{aligned}
 \end{equation}
+
+
+Before we explain the KKT condition, we first need to introduce several definitions in the following text. 
+\begin{definition}(Feasible set) The feasible set $\Omega$ is the set 
+	\begin{align}
+		\Omega:= \{x \in \mathbb{R}^n \ | \ g(x)= 0 , \ h(x)	\leq 0 \}	
+	\end{align}
+\end{definition}	
+
+\begin{definition}(Active Constraints and Active Set) An inequality constraint $h_i(x) \leq 0$ is called active at $x^\star \in  \Omega$  iff  $h_i(x^\star) = 0$ and otherwise inactive. The index set $\mathcal{A}(x^\star) \subset \{1, ..., n_h\}$  of active inequality constraint indices is called the ”active set”.
+\end{definition}
+Often, the name active set also comprises all equality constraint indices, as equalities could be considered to be
+always active. 
+\begin{definition} (LICQ) The linear independence constraint qualification (LICQ) holds at $x^\star \in  \Omega $ iff all vectors $\nabla g_i(x^\star)$ for $i \in \{1, ..., n_g \}$ and $\nabla h_i(x^\star)$ for  $i \in \mathcal{A}(x^\star)$ are linearly independent.
+\end{definition}
+
+With the definitions above, we are ready to formulate the famous KKT condition. 
+
+
 The constrained optimization \ref{eq:OCP_discret_compact} can form the Lagrangian function
 \begin{equation}
 	 \mathcal{L}(w,\lambda, \mu) = \Phi(w) - \lambda ^\top a(w)-  \mu^\top b(w) 
 \end{equation}
 
-\begin{definition}(Feasible set)
-The feasible set $\Omega$ is the set 
-\begin{align}
-	\Omega:= \{x \in \mathbb{R}^n \ | \ g(x)= 0 , \ h(x)	\leq 0 \}	
-\end{align}
-\end{definition}	
 
-
-
-\definition(Feasible set){ The feasiable set $\Omega$} 
 %\definition (Active Constraints and Active Set) An inequality constraint hi(x) ≤ 0 is called active at x∗ 2 Ω
 %iff hi(x∗) = 0 and otherwise inactive. The index set A(x∗) ⊂ f1; : : : ; nhg of active inequality constraint indices
 %is called the ”active set”
-Before we introduce the KKT theorem, we need the following definition. 
+
 
 
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2022.5.25)  14 SEP 2022 00:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2022.5.25)  14 SEP 2022 23:58
 entering extended mode
 **./Thesis_0822.tex
 (Thesis_0822.tex
@@ -799,9 +799,6 @@ OML/cmm/m/it/12 ; k \OT1/cmr/m/n/12 =
 
 [15]
 chapter 5.
-
-LaTeX Warning: Reference `TA_lower' on page 16 undefined on input line 515.
-
 [16] [17pdfTeX warning (ext4): destination with the same identifier (name{equat
 ion.5.0.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
@@ -859,32 +856,32 @@ l.572 \begin{equation}
 er (name{equation.5.0.7}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.581 \begin{equation}
-                      pdfTeX warning (ext4): destination with the same identifi
-er (name{equation.5.0.8}) has been already used, duplicate ignored
+l.586 	\end{align}
+                  pdfTeX warning (ext4): destination with the same identifier (
+name{equation.5.0.8}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.589 \end{align}
-                  [18pdfTeX warning (ext4): destination with the same identifie
-r (name{equation.5.0.1}) has been already used, duplicate ignored
+l.600 \begin{equation}
+                       [18pdfTeX warning (ext4): destination with the same iden
+tifier (name{equation.5.0.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.631    \newpage
+l.643    \newpage
                  pdfTeX warning (ext4): destination with the same identifier (n
 ame{equation.5.0.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.631    \newpage
+l.643    \newpage
                  pdfTeX warning (ext4): destination with the same identifier (n
 ame{equation.5.0.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.631    \newpage
+l.643    \newpage
                  ]
 part I.
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `partprefix' that is an alias of element `partnumber'
-(scrkbase)              on input line 632.
+(scrkbase)              on input line 644.
 [19]
 
 Class scrreprt Warning: You are using `\begin{appendix}...\end{appendix}'.
@@ -898,7 +895,7 @@ Class scrreprt Warning: You are using `\begin{appendix}...\end{appendix}'.
 (scrreprt)              inconsistent.
 (scrreprt)              Because of this, you should remove `\end{appendix}'
 (scrreprt)              and replace `\begin{appendix}' by command
-(scrreprt)              `\appendix' on input line 633.
+(scrreprt)              `\appendix' on input line 645.
 
 chapter A.
 (Thesis_0822.bbl)
@@ -907,21 +904,18 @@ chapter A.
  (deposition.tex [20])
 
 LaTeX3 Info: Redefining command \BeforeClosingMainAux with sig. 'm' on line
-(LaTeX3)     642.
+(LaTeX3)     654.
 
 
 LaTeX3 Info: Redefining command \BeforeClosingMainAux with sig. 'm' on line
-(LaTeX3)     642.
+(LaTeX3)     654.
 
 
 LaTeX3 Info: Redefining command \BeforeClosingMainAux with sig. 'm' on line
-(LaTeX3)     642.
+(LaTeX3)     654.
 
  (Thesis_0822.aux (titlepages.aux)
 (deposition.aux))
-
-LaTeX Warning: There were undefined references.
-
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -930,9 +924,9 @@ Package rerunfilecheck Info: File `Thesis_0822.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  15569 strings out of 479300
- 268093 string characters out of 2863761
+ 268095 string characters out of 2863761
  754193 words of memory out of 3000000
- 32686 multiletter control sequences out of 15000+200000
+ 32685 multiletter control sequences out of 15000+200000
  424640 words of font info for 73 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  111i,15n,116p,10608b,463s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -962,9 +956,9 @@ e1/public/cm-super/sfsx1200.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
 /sfsx1728.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfsx2074
 .pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfsx2488.pfb><C:/
 Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on Thesis_0822.pdf (20 pages, 439751 bytes).
+Output written on Thesis_0822.pdf (20 pages, 428322 bytes).
 PDF statistics:
- 443 PDF objects out of 1000 (max. 8388607)
- 100 named destinations out of 1000 (max. 500000)
+ 445 PDF objects out of 1000 (max. 8388607)
+ 101 named destinations out of 1000 (max. 500000)
  113 words of extra memory for PDF output out of 10000 (max. 10000000)
 
