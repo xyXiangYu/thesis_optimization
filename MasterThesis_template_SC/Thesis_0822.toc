@@ -10,7 +10,10 @@
 \contentsline {section}{\numberline {4.2}quasi-Newton method}{12}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Multiple Shooting Method}{14}{section.4.3}%
 \contentsline {chapter}{\numberline {5}Solving Rocket Car Case}{16}{chapter.5}%
-\contentsline {part}{\numberline {I}Appendix}{19}{part.1}%
-\contentsline {chapter}{\numberline {A}Lists}{20}{appendix.A}%
-\contentsline {chapter}{Bibliography}{20}{chapter*.2}%
+\contentsline {section}{\numberline {5.1}Re-introduce the rocket car problem}{17}{section.5.1}%
+\contentsline {section}{\numberline {5.2}KKT Conditions}{18}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Rokect car problem in Lagrangian form}{20}{section.5.3}%
+\contentsline {part}{\numberline {I}Appendix}{22}{part.1}%
+\contentsline {chapter}{\numberline {A}Lists}{23}{appendix.A}%
+\contentsline {chapter}{Bibliography}{23}{chapter*.2}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

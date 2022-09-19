@@ -29,6 +29,8 @@
 \usepackage{hyperref}
 \usepackage{cleveref}
 
+%\usepackage{enumitem}
+\usepackage[shortlabels]{enumitem}
 
 %\usepackage[thmmarks,amsmath]{ntheorem}
 %\usepackage{tikz}
@@ -512,7 +514,9 @@
    
    
    \chapter{Solving Rocket Car Case}
-   Before we dive into the mathematics, we first re-introduce the physics of the rocket car case so that we can model the problem more precisely. Within the training approach, with a given $p$, we want to solve the lower level problem of the following form \ref{TA_lower2}
+   Before we dive into the mathematics, we first re-introduce the physics of the rocket car case so that we can model the problem more precisely. 
+   \section{Re-introduce the rocket car problem}
+   Within the training approach, with a given $p$, we want to solve the lower level problem of the following form \ref{TA_lower2}
    \begin{subequations}
    	\begin{align}
    	\underset{}{min} \   & \  T \\ 
@@ -523,7 +527,7 @@
    	& \ \ x_2(t;p) \leq 4, & t \in [0,1], \label{ta_rc_x2_tc2} \\
    	& \ \ x_2(1;p) \leq 0, \label{ta_rc_x2_t1_2}  \\
    	& \ \ T \geq 0, \\
-   	& \ \ u(t) \in [-10, 10], & t \in [0,1], \\
+   	& \ \ u(t) \in [-10, 10], & t \in [0,1], \label{ta_ut}\\
    	& \ \ p, \   a \ given \ value
    	\end{align}
    	\label{TA_lower2}
@@ -545,6 +549,7 @@
    	\begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix} &= \begin{pmatrix} \frac{\partial x_1}{\partial t} \\ \frac{\partial x_2}{\partial t} \end{pmatrix} = \begin{pmatrix} \frac{\partial x_1}{\partial \tau} \frac{\partial \tau}{\partial t} \\ \frac{\partial x_2}{\partial \tau} \frac{\partial \tau}{\partial t} \end{pmatrix} =  \begin{pmatrix} \frac{\partial x_1}{\partial \tau} T \\ \frac{\partial x_2}{\partial \tau}T \end{pmatrix} =     \begin{pmatrix}  Tx_2(t;p) \\ T(u(t)-p)   \end{pmatrix} \\
    	\begin{pmatrix} \frac{\partial x_1}{\partial \tau}  \\ \frac{\partial x_2}{\partial \tau} \end{pmatrix} & =     \begin{pmatrix}  x_2(t;p) \\ (u(t)-p)   \end{pmatrix} \label{eq_difTau}
    	\end{align}
+   \label{partialX}
    \end{subequations}
    
    In summary, the equation $\frac{\partial x_1}{\partial \tau}= x_2(t;p) $ means the change in the position in real time is proportional to the speed at that moment. And the equation $\frac{\partial x_2}{\partial \tau} = u(t)-p $ means the change in speed is proportional to the acceleration/deceleration value at that moment. 
@@ -563,11 +568,13 @@
 The integral can be approximated by numerical method, one simple approximation to the integral in equation \ref{eq_x1_int} can be 
 \begin{equation}
 \int_{t_k}^{t_{k+1}} x_2(t;p) d \tau  \approx \frac{x_2(t_{k+1}) + x_2(t_k)}{2} (\tau_{k+1} -\tau_k)
+\label{mid_approx}
 \end{equation}
 
 There are many different methods that can be used to approximate the integrals, one of the widely used method is the Runge–Kutta method. With initial value $x_1(t_k),x_2(t_k), u(t_k)$ given at each subinterval $[t_{k}, t_{k+1}]$, based on the differential equation \ref{ta_rc_partial2}, we can find the (approximation) solution within this subinterval. Together with enforcing the matching condition, we can get the final solution by summing up the corresponding real time $\sum_{k=0}^{k=m-1} \tau_{k+1} - \tau_k$, but only if the constraints do not exist. 
 
 
+\section{KKT Conditions}
 In order to get the feasible solution, we can take the constraints into consideration by Lagrange multipliers with the Karush–Kuhn–Tucker (KKT) condition incorporated. Considering a problem of the following form
 \begin{equation}
 	\label{eq:OCP_discret_compact}
@@ -585,21 +592,125 @@ Before we explain the KKT condition, we first need to introduce several definiti
 		\Omega:= \{x \in \mathbb{R}^n \ | \ g(x)= 0 , \ h(x)	\leq 0 \}	
 	\end{align}
 \end{definition}	
-
 \begin{definition}(Active Constraints and Active Set) An inequality constraint $h_i(x) \leq 0$ is called active at $x^\star \in  \Omega$  iff  $h_i(x^\star) = 0$ and otherwise inactive. The index set $\mathcal{A}(x^\star) \subset \{1, ..., n_h\}$  of active inequality constraint indices is called the ”active set”.
 \end{definition}
 Often, the name active set also comprises all equality constraint indices, as equalities could be considered to be
 always active. 
 \begin{definition} (LICQ) The linear independence constraint qualification (LICQ) holds at $x^\star \in  \Omega $ iff all vectors $\nabla g_i(x^\star)$ for $i \in \{1, ..., n_g \}$ and $\nabla h_i(x^\star)$ for  $i \in \mathcal{A}(x^\star)$ are linearly independent.
+	\label{df_LICO}
 \end{definition}
 
+To give further meaning to the LICQ condition, let us combine all active inequalities with all equalities in a map $\tilde{g}$ defined by stacking all functions on top of each other in a colum vector as follows:
+\begin{equation}
+	\tilde{g}(x) =  \begin{pmatrix} g(x) \\ h_i(x), \ i \in \mathcal{A}(x^\star)    \end{pmatrix}
+\end{equation}
 With the definitions above, we are ready to formulate the famous KKT condition. 
 
+\begin{theorem}(KKT Conditions)
+If $x^\star$ is a local minimizer of the problem \ref{TA_lower2} and the LICQ holds at $x^\star$, then there exist
+so called multiplier vectors $\lambda \in \mathbb{R}^n_g$ and $\mu \in \mathbb{R}^n_h$ with 
+   \begin{subequations}
+	\begin{align}
+		 \nabla f(x^\star) + \nabla g(x^\star) \lambda^\star +  \nabla h(x^\star) \mu^\star &= 0 \\
+		 g(x^\star)	 &= 0   \\
+	     h(x^\star)	&\leq 0  \label{kkt_smaller}\\
+	     \mu^\star & \geq 0 \\
+	     \mu_i^\star  h_i(x^\star) &=0 , \  i = 1, ..., n_h \label{kkt_active}
+	\end{align}
+\end{subequations}
+\label{TH_KKT}
+\end{theorem}
+The "KKT Conditons" are also known as "First-Order Necessary Conditons". 
 
-The constrained optimization \ref{eq:OCP_discret_compact} can form the Lagrangian function
+\begin{definition}(KKT Point)
+We call a triple $(x^\star, \lambda^\star; \mu^\star)$ a "KKT Point" if it satisfies LICQ  (Definition \ref{df_LICO}) and the KKT (Theorem \ref{TH_KKT}) conditions .
+\end{definition}
+
+
+\begin{definition}(Lagrangian Function)
+We define the so called "Lagrangian function" to be
 \begin{equation}
-	 \mathcal{L}(w,\lambda, \mu) = \Phi(w) - \lambda ^\top a(w)-  \mu^\top b(w) 
+	\mathcal{L}(x,\lambda, \mu) = f(x) + \lambda^\top g(x) +  \mu^\top h(x) 
+	\label{eq_Lagrangian}
 \end{equation}
+\end{definition}
+Here, we have used again the so called "Lagrange multipliers" or "dual variables"  $\lambda \in \mathbb{R}^n_g$ and $\mu \in \mathbb{R}^n_h$. 
+
+The last three KKT conditions \ref{kkt_smaller} - \ref{kkt_active} are called the complementarity conditions. For each index $i$, they define an $L-$shaped set in the $(h_i, \mu_i)$ space. This set is not a smooth manifold but has a non-differentiability at the origin, i.e., if  $h_i(x^\star)$ and also $\mu_i^\star = 0$. This case is called a weakly active constraint. Often we want to exclude this case. On the other hand, an active constraint with $\mu_i^\star = 0$ is called strictly active.
+\begin{definition}
+	Regard a KKT point $(x^\star, \lambda^\star; \mu^\star)$. We say that strict complementarity holds at this KKT point iff all	active constraints are strictly active.
+\end{definition}
+
+\begin{theorem}(Second Order Optimality Conditions) Let us regard a point $x^\star$ at which LICQ holds together with
+multipliers $\lambda^\star, \mu^\star$ so that the KKT conditions are satisfied and let strict complementarity hold. Regard a basis matrix $\mathbb{Z} \in  \mathbb{R}^{n*(n-n_g)}$ of the null space of $\frac{\partial \tilde{g}}{\partial x} (x^\star) \in \mathbb{R}^{n_{\tilde{g}} *n}$, i.e., $\mathbb{Z}$ has full column rank and $\frac{\partial \tilde{g}}{\partial x} (x^\star)\mathbb{Z} =0$ .
+Then the following two statements hold:
+\end{theorem}
+\begin{itemize}
+\item  If $x^\star$ is a local minimizer, then $\mathbb{Z}^\top \nabla_x^2 \mathcal{L}(x^\star, \lambda^\star, \mu^\star)\mathbb{Z} \succeq 0  $.(Second Order Necessary Condition, short : SONC)
+\item  If $\mathbb{Z}^\top \nabla_x^2 \mathcal{L}(x^\star, \lambda^\star, \mu^\star)\mathbb{Z} \succ 0 $, then $x^\star$ a local minimizer. This minimizer is unique in its neighborhood, i.e., a strict local minimizer, and stable against small differentiable perturbations of the problem data. (Second Order Sufficient Condition, short: SOSC).
+\end{itemize}
+
+
+The matrix $\nabla_x^2 \mathcal{L}(x^\star, \lambda^\star, \mu^\star)$ plays an important role in optimization algorithms and is called the Hessian of the Lagrangian, while its projection on the null space of the Jacobian, $\mathbb{Z}^\top \nabla_x^2 \mathcal{L}(x^\star, \lambda^\star, \mu^\star)\mathbb{Z}$, is called the reduced
+Hessian. For an optimization problem, if we can start with an initial guess $x_0$ and find a updating schema which decreases the objective value while maintain the Hessian matrix positive, if such updating schema can converge, it will converge to a local minimizer. And if the original problem is convex, the local miminizer is, therefore, the global minimizer. Taking advantage of these properties, we can reformulate our rocket car problem into the form as in \ref{eq:OCP_discret_compact}, and then re-write in the Lagrangian form \ref{eq_Lagrangian}, and optimize with Lagrangian function. 
+
+\section{Rokect car problem in Lagrangian form}
+
+We discretize the original problem \ref{TA_lower2} based on time $t$ into $m$ sub-problems, i.e. we split the interval $t\in [0,1]$ into subinterval $[t_{k}, t_{k+1}], k = 0, 1, 2, ..., m-1$, where $0 = t_0, t_1, t_2, ...,t_k, t_{k+1}, ..., t_m = 1$. We assume the $p$ is given, for example, we can assume $p=0$, and find a corresponding optimal $T$. Later, we can find different optimal $T$ with different $p$ given. In each subinterval, we have inital guess for $x$, we introduce anther two variables, with $s$ as the guess for $x$, and $q$ as the guess for $u$. Therefore, in each subinterval, we have the value $ x(t_k) = s(t_k), u(t_k) = q(t_k),  k = 0, 1, 2, ..., m-1$,. When no confusion arise, will write $s(t_k) = s_k $ and $q(t_k) = q_k$. Notice $s(t_k)$ has two component which corrsponds to $x_1$ (position) and $x_2$ (speed). When we want to specify the exact component at the $t_k$, we would write $s(t_k) = (s_1(t_K), s_2(t_k))$. We would like to find the solution for $x(t; q_k, s_k, p),  t  \in [t_{k}, t_{k+1}]$. Assume that such solution has been found, the matching condition at the boundary of each sub-interval will lead to the following equation
+
+\begin{equation}
+	g(s,q) = \begin{bmatrix}
+		s_0 -0 \\
+		x(t_0; p) - s_0  \\
+		x(t_1; t_0, s_0, q_0, p) - s_1 \\ 
+		\vdots \\
+		x(t_{m-1}; t_{m-2}, s_{m-2}, q_{m-2}, p) - s_{m-1} \\
+	\end{bmatrix} = 0
+  \label{TA_eqCons}
+\end{equation}
+Notice, we have the equality constraints up to the second to the last subinterval, i.e. $[t_{m_2}, t_{m-1}]$. This is because the terminal condition at time $t_m =1$ (i.e. the subinterval $[t_{m_1}, t_m]$ covers) has already been defined in the inequality constraints \ref{ta_rc_x1_t2} and \ref{ta_rc_x2_t1_2}. Moreover, the boundary point $s_k, u_k, k = 0, 1, 2, ..., m-1$ is also subject to the inequality constraints \ref{ta_rc_x2_tc2} and \ref{ta_ut}. All these constraints can be combined together in the following form
+
+\begin{equation}
+	h(s,q) = \begin{bmatrix}
+		s_2(t_k) - 4, k =0, 1, 2, ..., m-1  \\
+		10 - x_1(t_m; t_{m-1}, s_{m-1}, q_{m-1}, p)\\ 
+		x_2(t_m; t_{m-1}, s_{m-1}, q_{m-1}, p) \\
+		q_k - 10,   k =0, 1, 2, ..., m-1 \\
+		-10 - q_k,  k =0, 1, 2, ..., m-1 
+		u(t_m) - 10 \\
+		-10 - u(t_m) \\
+	\end{bmatrix} \leq 0
+\label{TA_IneqCons}
+\end{equation}
+
+Within equations \ref{TA_eqCons} and \ref{TA_IneqCons}, the solution of $x(t_{k+1}, t_k, s_k, q_k, p)$ comes from numerically solving the partial differential equation \ref{partialX}. For example, using the Runge–Kutta method or simply using the approximation as used in equation \ref{mid_approx}. 
+The objectitve function $min \ T$ can be regarded as a function of $T(s, q)$. Therefore, we can regarded the pair $(s,q)$ as the new independent variables, and the the original problem \ref{TA_lower2} is then transformed into the following form
+\begin{equation}
+	\label{TA_Transform}
+	\begin{aligned}
+		\underset{s, q}{\text{min}} \qquad & T(s, q)	\\
+		\qquad \text{s.t.}\qquad	&  g(s,q) = 0   \\
+		&  h(s, q)	\leq 0 
+	\end{aligned}
+\end{equation}
+
+
+
+
+  
+
+
+
+ 
+ 
+
+
+
+
+%The constrained optimization \ref{eq:OCP_discret_compact} can form the Lagrangian function
+%\begin{equation}
+%	 \mathcal{L}(w,\lambda, \mu) = \Phi(w) - \lambda ^\top a(w)-  \mu^\top b(w) 
+%\end{equation}
 
 
 %\definition (Active Constraints and Active Set) An inequality constraint hi(x) ≤ 0 is called active at x∗ 2 Ω
@@ -609,7 +720,7 @@ The constrained optimization \ref{eq:OCP_discret_compact} can form the Lagrangia
 
 
 
-The Karush–Kuhn–Tucker theorem then states the following.
+%The Karush–Kuhn–Tucker theorem then states the following.
 
 
 %% = \frac{x_2(t_k) + x_2(t_{k-1})}{2} (\tau_k -\tau_{k_1})
