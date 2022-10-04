@@ -1,0 +1,19 @@
+\babel@toc {english}{}
+\contentsline {chapter}{\numberline {1}Introduction}{4}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Rocket car case}{6}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Theoretical solution to rocket car case}{7}{section.2.1}%
+\contentsline {chapter}{\numberline {3}The Classical and Training Approach}{8}{chapter.3}%
+\contentsline {section}{\numberline {3.1}The Classical Approach}{8}{section.3.1}%
+\contentsline {section}{\numberline {3.2}The Training Approach}{9}{section.3.2}%
+\contentsline {chapter}{\numberline {4}quasi-Newton and Multiple Shooting Method}{11}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Newton method}{11}{section.4.1}%
+\contentsline {section}{\numberline {4.2}quasi-Newton method}{12}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Multiple Shooting Method}{14}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Solving Rocket Car Problem}{16}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Re-introduce the rocket car problem}{17}{section.5.1}%
+\contentsline {section}{\numberline {5.2}KKT Conditions}{18}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Rokect car problem in Lagrangian form}{20}{section.5.3}%
+\contentsline {part}{\numberline {I}Appendix}{22}{part.1}%
+\contentsline {chapter}{\numberline {A}Lists}{23}{appendix.A}%
+\contentsline {chapter}{Bibliography}{23}{chapter*.2}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

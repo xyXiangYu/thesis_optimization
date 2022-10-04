@@ -343,8 +343,7 @@
    \end{aligned}
    \label{OptGen}
    \end{equation}
-   Here $x \in \Omega$ represents the constraints for which $x$ must satisfy, it may be in the form of $ \{g(x) = 0,  h(x)  \leq  0 \}$ as in the problem \ref{GeneralMin}, i.e. the feasible set $\Omega = \underset{x}{arg} \ \{ g(x) = 0,  h(x)  \leq  0 \}$. Various methods exist for eliminating the constraints, therefore, we can solve the resulting problem with algorithms for unconstrained minimization. For the sake of simplicity, we focus on explaining the Newton and quasi-Newton method without constraints in this chapter. How the quasi-Newton can be expanded for problems with constraints, will be explained in the next chapter. 
-   
+   Here $x \in \Omega$ represents the constraints for which $x$ must satisfy, it may be in the form of $\{g(x) = 0,  h(x)  \leq  0 \}$ as in the problem \ref{GeneralMin}, i.e. the feasible set $\Omega = \underset{x}{arg} \ \{ g(x) = 0,  h(x)  \leq  0 \}$. Various methods exist for handling the constraints, such as  Karush–Kuhn–Tucker (KKT) method discussed in Section \ref{Sec_KKT}. After transforming the constrained problem into an unconstrained form, we can, therefore, directly apply algorithms that are suitable for unconstrained minimization. For the sake of simplicity, we focus on explaining the Newton and quasi-Newton method without constraints in this chapter. How the quasi-Newton can be expanded for problems with constraints, will be explained in the more details in Section \ref{Sec_KKT}. 
    
    \section{Newton method}
    The problem \ref{OptGen} without constraints, i.e. $min \  f(x)$  can be solved via Newton's method, which attempts to solve this problem by constructing a sequence $\{x_k\}$ from an initial guess (starting point) $x_0$ that converges towards a minimizer $x^\star$ of $f(x)$  by using a sequence of second-order Taylor approximations of $f(x)$ around the iterates. The second-order Taylor expansion of $f(x)$ around $x_k$ is
@@ -352,7 +351,7 @@
    \begin{align*}
    f(x_k + \delta_x) \approx h(x_k) : = f(x_k) + f'(x_k)\delta(x_k) +\frac{1}{2}f''(x_k)\delta(x_k)^2 
    \end{align*}
-   where $\delta$ represents a small change (with respect to $x$), and $f', f''$ are the first and second order derivatives of the original function $f(x)$, and are usually denoted as $\nabla f$ and the Hessian matrix $H$ of $f(x)$ respectively when $x$ is a vector of multiple variables. In the text that follows, we will use the symbol $\nabla f$ and $H$ directly, therefore, the Talyor expansion can be written as 
+   where $\delta$ represents a small change (with respect to $x$), and $f', f''$ are the first and second order derivatives of the original function $f(x)$. The notation $f', f''$ are usually expressed as $\nabla f$ and  $H$ (the Hessian matrix) respectively when $x$ is a vector of variables. In the text that follows, we will use the symbol $\nabla f$ and $H$ directly. Therefore, the Talyor expansion can be written as 
    \begin{align*}
    f(x_k + \delta_x) \approx h(x_k) : = f(x_k) + \nabla f(x_k)^T\delta(x_k) +\frac{1}{2}H(x_k)\delta(x_k)^2 
    \end{align*}
@@ -360,7 +359,7 @@
    \begin{align*}
    \nabla h(x_k) = \nabla f(x_k) + H(x_k) \delta(x_k) 
    \end{align*}
-   We are motivated to solve $\nabla h(x_k) =0$, which leads to solve a linear system
+   We are motivated to solve $\nabla h(x_k) =0$, which turns out to solve a linear system
    %\begin{align*}
    \begin{equation}
    \nabla f(x_k) + H(x_k) \delta(x_k) =0
@@ -371,7 +370,7 @@
    \begin{align*}
    x_{k+1}  = x_k + \delta(x_k) = x_k - H^{-1}(x_k)\nabla f(x_k), 
    \end{align*}
-   here $ H^{-1}(\cdot)$ represents the inverse of the Hessian matrix $H(\cdot)$. The Newton's method performs the iteration until the convergence, i.e. $x_k$ and $f(x_k)$ converge to $x^\star$ and $f(x^\star)$, respectively \footnote{In another word, the Newton mehtod has converged when the small change $\delta(x_k) =0$ or $\delta(x_k)$ is small enough that the change in the objective function is below a pre-defined tolerance level.}. The details of the Newton method is as follows: 
+   here $ H^{-1}(\cdot)$ represents the inverse of the Hessian matrix $H(\cdot)$. The Newton method performs the iteration until the convergence, i.e. $x_k$ and $f(x_k)$ converge to $x^\star$ and $f(x^\star)$, respectively \footnote{In another word, the Newton mehtod has converged when the small change $\delta(x_k) =0$ or $\delta(x_k)$ is small enough that the change in the objective function is below a pre-defined tolerance level.}. The details of the Newton method is as follows: 
    \begin{description}
    	\item[Newton method steps]\ 
    	\begin{itemize}
@@ -384,18 +383,18 @@
    
    The parameter $\alpha_k$ is introduced to augment the Newton method such that a line-search of $f(x_k + \alpha_k \delta(x_k))$ is applied to find an optimal value of the step size parameter $\alpha_k$. 
    
-   Though the Newton method is straightforward and easy to understand, it has two main limitations. Firstly, it is sensitive to initial conditions. This is especially apparent if the objective function is non-convex. Depending on the choice of the starting point $x_0$, the Newton method may converge to a global minimum, a saddle point, a local minimum or may not converge at all. In another word, due to the sensitivity with respect to the initialization, the Newton method may be not able to find the global solution. Secondly, the Newton method can be computationally expensive, with the second-order derivatives, aka, the Hessian matrix $H(\cdot)$ and its inverse very expensive to compute. It may also happen that the Hessian matrix is not positive definite, therefore, Newton method can not be used at all for solving the optimization problem. Due to these limitations of the Newton method, we have chosen the quasi-Netwon method instead for solving our problem in the rocket car case. 
+   Though the Newton method is straightforward and easy to understand, it has two main limitations. Firstly, it is sensitive to initial conditions. This is especially apparent if the objective function is non-convex. Depending on the choice of the starting point $x_0$, the Newton method may converge to a global minimum, a saddle point, a local minimum or may not converge at all. In another word, due to the sensitivity with respect to the initialization, the Newton method may be not able to find the global solution. Secondly, the Newton method can be computationally expensive, with the second-order derivatives, aka, the Hessian matrix $H(\cdot)$ and its inverse very expensive to compute. It may also happen that the Hessian matrix is not positive definite, therefore, Newton method can not be used at all for solving the optimization problem. Due to these limitations of the Newton method, instead, we have chosen the quasi-Netwon method for solving our rocket car problem. 
    
    \section{quasi-Newton method}
    We have stated that one limitation or the downside of the Newton method, is that Newton method can be computationally expensive when calculating the Hessian (i.e. second-order derivatives)  matrix and its inverse, especially when the dimensions get large. The quasi-Newton methods are a class of optimization methods that attempt to address this issue. More specifically, any modification of the Newton methods employing an approximation matrix $B$ to the original Hessian matrix $H$, can be classified into a quasi-Newton method. 
    
-   The first quasi-Newton algorithm, i.e. the Davidon–Fletcher–Powell (DFP) method, was proposed by William C. Davidon in 1959 \cite{WilDav59}, which was later popularized by Fletcher and Powell in 1963 \cite{FlePow63}. Some of the most common used quasi-Newton algorithms currently are the symmetric rank-one (SR1) method \cite{ANP91} and Broyden–Fletcher–Goldfarb–Shanno(BFGS) method. The family of the quasi-Newton algorithms are similar in nature, with most of the difference arising in the part how the approximation Hessian matrix is decided and the updating distance $\delta(x_k) $ is calculated. One of the chief advantages of the quasi-Newton methods over Newton's method is that the approximation Hessian matrix $B$ can be chosen in a way that no matrix needs to be directly inverted. The Hessian approximation $B$ is chosen to satisfy the equation \ref{HessianEq}, with the approximation matrix $B$ replacing the original Hessian matrix $H$, i.e. 
+   The first quasi-Newton algorithm, i.e. the Davidon–Fletcher–Powell (DFP) method, was proposed by William C. Davidon in 1959 \cite{WilDav59}, which was later popularized by Fletcher and Powell in 1963 \cite{FlePow63}. Some of the most common used quasi-Newton algorithms currently are the symmetric rank-one (SR1) method \cite{ANP91} and the Broyden–Fletcher–Goldfarb–Shanno(BFGS) method. The family of the quasi-Newton algorithms are similar in nature, with most of the difference arising in the part how the approximation Hessian matrix is decided and the updating distance $\delta(x_k) $ is calculated. One of the main advantages of the quasi-Newton methods over Newton method is that the approximation Hessian matrix $B$ can be chosen in a way that no matrix needs to be directly inverted. The Hessian approximation $B$ is chosen to satisfy the equation \ref{HessianEq}, with the approximation matrix $B$ replacing the original Hessian matrix $H$, i.e. 
    \begin{equation}
    \nabla f(x_k) +B_k\delta(x_k) =0
    \label{HessianAppro}
    \end{equation}
    
-   In the text that follows, we explain how the iteration is performed in the BFGS method, as an example illustrating the quasi-Newton method. In the BFGS method, instead of computing $B_k$ afresh at every iteration, it has been proposed to update it in a simple manner to account for the curvature measured during the most recent step. To determine an update scheme for $B$, we will need to impose additional constraints. One such constraint is the symmetry and positive-definiteness of $B$, which is to be preserved in each update for $k = 1,2, 3, ...$. Another desirable property we want is for $B_{k+1}$ to be sufficiently close to $B_k$ at each update $k+1$, and such closeness can be measured by the matrix norm, i.e. the quantity $\Vert B_{k+1} - B_{k} \Vert$. We can, therefore, formulate our problem during the $k+1$ update as 
+   In the text that follows, we explain how the iteration is performed in the BFGS method, as an example illustrating the quasi-Newton method. In the BFGS method, instead of computing $B_k$ afresh at every iteration, it has been proposed to update it in a simple manner to account for the curvature measured during the most recent step. To determine an update scheme for $B$, we will need to impose additional constraints. One such constraint is the symmetry and positive-definiteness of $B$, which is to be preserved in each update for $k = 1,2, 3, ...$. Another desirable property is that $B_{k+1}$ is sufficiently close to $B_k$ at each update $k+1$, and such closeness can be measured by the matrix norm, i.e. the quantity $\Vert B_{k+1} - B_{k} \Vert$. We can, therefore, formulate our problem during the $k+1$ update as 
    \begin{equation}
    \begin{aligned}
    \underset{B_{k+1}}{min} \  &  \Vert B_{k+1} - B_{k} \Vert\\
@@ -412,7 +411,7 @@
    \begin{align*}
    B_{k+1} = B_k + U_k + V_k
    \end{align*}
-   where the update matrices can then be chosen to be of the form $U = a u u^T$ and $V = b v v^T$, where $u$ and $v$ are linearly independent non-zero vectors, and $a$ and $b$ are constants.  The outer product of any two non-zero vectors is always rank one, i.e. $U_k$ and $V_k$ are rank-one. Since $u$ and $v$ are linearly independent, the sum of $U_k$ and $V_k$ is rank-two, and an update of this form is known as a rank-two update. The rank-two condition guarantees the “closeness” of $B_k$ and $B_{k+1}$ at each iteration. 
+   where the update matrices can then be chosen of the form $U = a u u^T$ and $V = b v v^T$, where $u$ and $v$ are linearly independent non-zero vectors, and $a$ and $b$ are constants.  The outer product of any two non-zero vectors is always rank one, i.e. $U_k$ and $V_k$ are rank-one. Since $u$ and $v$ are linearly independent, the sum of $U_k$ and $V_k$ is rank-two, and an update of this form is known as a rank-two update. The rank-two condition guarantees the “closeness” of $B_k$ and $B_{k+1}$ at each iteration. 
    
    Besides, the condition $B_{k+1}\delta(x_k) = y_k$ has to be imposed.
    \begin{align*}
@@ -431,17 +430,18 @@
    B_{k+1} = B_k +  \frac{y_ky_k^T}{y_k^T\delta(x_k)}  - \frac{B_k\delta(x_k)\delta(x_k)^TB_k}{\delta(x_k)^TB_k\delta(x_k)}
    \end{align*}
    
-   Since $B$ is positive definite for all $k = 1,2, 3, ...$, we can actually minimize the change in the inverse $B^{-1}$ at each iteration, subject to the (inverted) quasi-Newton condition and the requirement that it be symmetric. Applying the Woodbury formula , we can show (see the Appendix for more details) that the updating formula of inverse $B^{-1}$ is as follows
+   Since $B$ is positive definite for all $k = 1,2, 3, ...$, we can actually minimize the change in the inverse $B^{-1}$ at each iteration, subject to the (inverted) quasi-Newton condition and the requirement that it is symmetric. Applying the Woodbury formula, we can show (see the Appendix for more details) that the updating formula of inverse $B^{-1}$ is as follows
    
-   \begin{align*}
+   \begin{equation}
    B_{k+1}^{-1} = (I - \frac{\delta(x_k)y_k^T}{y_k^T\delta(x_k)})B_k^{-1}(I - \frac{y_k\delta(x_k)^T}{y_k^T\delta(x_k)}) +  \frac{\delta(x_k)\delta(x_k)^T}{y_k^T\delta(x_k)} 
-   \end{align*}
-   As shown in the formula above, at each iteration, we update the value of $B^{-1}$ using only the values of $\delta(x_k) = x_{k+1} -x_k$ and $y_k = \nabla f(x_{k+1}) - \nabla f(x_k)$. Since an update of $B^{-1}$ depends on the previous value, we need to initialize $B^{-1}$, either as an identity matrix or as the true Hessian matrix $H(x_0)$, calculated based on the starting point $x_0$.
+   \label{eq_updateB_}
+   \end{equation}
+   As shown in the formula \ref{eq_updateB_}, at each iteration, we update $B^{-1}$ by using  $\delta(x_k) = x_{k+1} -x_k$ and $y_k = \nabla f(x_{k+1}) - \nabla f(x_k)$. Since an update of $B^{-1}$ depends on the previous value, we need to initialize $B^{-1}$, either as an identity matrix or as the true Hessian matrix $H(x_0)$, calculated based on the starting point $x_0$.
    
-   The problem \ref{TA_rc} involves constraints in the partial differential equation form. Therefore, we can apply multiple shooting method to transform the original problem into  discretized non-linear optimal control problem, with the constraints applied in each subinterval. Together with the matching conditions, we can then apply quasi  , apply multiple shooting and quasi-Newton method to get the optimal solution. In the text the follows, we explain the multilpe shooting method first and then focus on how it, together with quasi-Newton method, can be used for solving the rocket car problem.  
+   The problem \ref{TA_rc} involves constraints in the partial differential equation form and in a fixed time horizon (after the time transformation from $[0, T]$ to $t \in [0, 1]$). Therefore, we can apply multiple shooting method discretize the original OP problem into mutiple OP problems in different subintervals, with the constraints enforced at the boundary of subintervals to guarantee the continuity. Together with the matching conditions, we can then aggregate the subproblems and apply quasi-Newton method to get the final optimal solution. In the next section, we explain the multilpe shooting method first and in the next chapter we then focus on how the multilpe shooting and the quasi-Newton method, together, can be used for solving the rocket car problem.  
    
    \section{Multiple Shooting Method}
-   Multiple shooting method was initially introduced to solve boundary value problem (BVP) in differential equation scope \cite{DJJ62}. This method, therefore, is well suited for solving optimal control problem which consists of differential equations with constraints. However, some modification is necessary so that the multiple shooting method can be applied to solve optimal control problem. In the text that follows, we first explain how the multiple shooting can be used for solving BVP in the differential equation scope. After that, we explain how mutilple shooting can be applied to a general optimal control problem, and particularly how it can be used for solving the rocket car case \ref{TA_rc}.
+   Multiple shooting method was initially introduced to solve boundary value problem (BVP) in differential equation scope \cite{DJJ62}. This method, therefore, is well suited for solving optimal control problem with constraints in differential equations. However, some modification is necessary so that the multiple shooting method can be applied to solve optimal control problem. In the text that follows, we first explain how the multiple shooting can be used for solving BVP in the differential equation scope. After that, we explain how mutilple shooting can be applied to a general optimal control problem, and particularly how it can be used for solving the rocket car problem \ref{TA_rc}.
    
    To illustrate the concept of shooting method to solve boundary value problem (BVP), we use the the following example.
    \begin{align*}
@@ -451,14 +451,13 @@
    \begin{align*}
    x(t) = x(t_0)e^{t - t_0}
    \end{align*}
-   where $e$ is the exponential number. Then $x(t_0) = x_0$ will be determined such that it will satisfy
-   $x(t_f)=b$ for given value $b$. Therefore, the equation $x(t_f)-b = 0$ or $x_0e^{t - t_0}-b =0$ is obtained. This derivation is called as shooting method. Generally, the shooting method can be summarized as follow
+   where $e$ is the exponential number. Then $x(t_0) = x_0$ will be determined such that it will satisfy $x(t_f)=b$ for a given value $b$. Therefore, the equation $x(t_f)-b = 0$ or $x_0e^{t - t_0}-b =0$ is obtained. This derivation is called as shooting method. Generally, the shooting method can be summarized as follow
    \begin{description}
    	\item[shooting method] \
    	\begin{itemize}
    		\item Step 1, choose an initial value $x_0 = x(t_0)$ 
    		\item Step 2, form a solution of the differential equation from $t_0$ to $t_f$
-   		\item Step 3, evaluate an error of the boundary condition, if $x(t_f) - b = 0$, then stop, otherwise continue to Step 4 
+   		\item Step 3, evaluate the error at the boundary, if $x(t_f) - b = 0$, then stop, otherwise continue to Step 4 
    		\item Step 4, update the guess for $x_0$ based on some updating schema, go to Step 2
    	\end{itemize}
    \end{description}
@@ -477,7 +476,7 @@
    & y(\tau_k) = \hat{y}_k, k = 0, 1, ..., m-1  \\
    \end{aligned}
    \end{equation}
-   In each subinterval, we introduce the new unkown parameter $\hat{y}_k$, we solve an initial value problem and will get a solution $y(t), t \in [\tau_k, \tau_{k+1}]$. The piecewise solution is not necessary continuous and also not necessarily satisfy the boundary condition $y(t_f) = y_f$. The continuity has to be enforced by additional matching conditions at each subinterval point, i.e. 
+   In each subinterval, we introduce the new unkown parameter $\hat{y}_k$, we solve an initial value problem and will get a solution $y(t), t \in [\tau_k, \tau_{k+1}]$. The piecewise solution is not necessary continuous and also not necessarily satisfy the boundary condition $y(t_f) = y_f$. The continuity has to be enforced by additional matching conditions at each subinterval boundary, i.e. 
    \begin{equation}\label{eqn:mc}
    \begin{aligned}
    & y(\tau_{k+1}; \hat{y}_k) = \hat{y}_{k+1}, \  k = 0, 1, ..., m-1  \\
@@ -492,12 +491,12 @@
    		\item Step 1, choose multiple shooting nodes $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$ 
    		\item Step 2, choose initial guess for $\hat{y}_k, k = 0, 1, ..., m-1$ 
    		\item Step 3, form solutions of the differential equation in each subinterval $[\tau_k, \tau_{k+1}], k = 0, 1, ..., m-1$
-   		\item Step 4, evaluate the error at boundary of each interval condition, if $y(\tau_{k+1}; \hat{y}_k) - \hat{y}_{k+1} = 0, \  k = 0, 1, ..., m-1$ and $\hat{y}_{m} = y_f$, then stop, otherwise cotinue to Step 5
+   		\item Step 4, evaluate the error at the boundary of each subinterval. If $y(\tau_{k+1}; \hat{y}_k) - \hat{y}_{k+1} = 0, \  k = 0, 1, ..., m-1$ and $\hat{y}_{m} - y_f =0$, then stop, otherwise continue to Step 5
    		\item Step 5, update the guess for $\hat{y}_k, k = 0, 1, ..., m-1$ based on some updating schema, go to Step 3
    	\end{itemize}
    \end{description}
    
-   In practice, there are many details to be decided when using (multiple) shooting methods, which we will introduce briefly without giving a rigorous formation. In Step 1 \& 2, when choosing the shooting nodes and the initial guess $\hat{y}_k$, how they are chosen usually depends on nature of the problem as well as a balance between accuracy and computational cost. For example, the nodes can be equally spaced and the $\hat{y}_k$ can be initialized with the same value, or they can be addressed in other methods. In Step 3, polynomial functions can be used as the approximate solutions, leveraging the fact that Taylor expansion can be used to approximate any continuous functions. In Step 4, "evaluate the error" is usually in the form of evaluating an objective function, which, e.g. can be defined as the sum of quadratic errors. In Step 5, the "updating schema" can be defined to so that the $\hat{y}_k$ can move in a direction that decreases the objective function. The (quasi) Newton method, for example, can be used as an updating method in Step 5. 
+   In practice, there are many details to be decided when using (multiple) shooting methods, which we will discuss briefly without giving a complete description. In Step 1 \& 2, when choosing the shooting nodes and the initial guess $\hat{y}_k$, how they are chosen usually depends on nature of the problem as well as a balance between accuracy and computational cost. For example, the nodes can be equally spaced and the $\hat{y}_k$ can be initialized with the same value, or they can be addressed in different methods. In Step 3, polynomial functions can be used as the approximate solutions, leveraging the fact that Taylor expansion can be used to approximate any continuous functions. In Step 4, "evaluate the error" is usually in the form of evaluating an objective function, which, e.g. can be defined as the sum of quadratic errors. In Step 5, the "updating schema" can be defined to so that the $\hat{y}_k$ can move in a direction that decreases the objective function. The (quasi-) Newton method, for example, can be used as an updating method in Step 5. 
    
    
    The multiple shooting method can be used for many problems. For example, it can be applied to the twice differential system of the following form 
@@ -505,14 +504,14 @@
    y''(t) = f(t, y(t), y'(t))  \quad y(t_0) = y_0, \quad y(t_f) = y_f,  \quad t \in [t_0, t_f]
    \label{eqn:tdode}
    \end{equation}
-   The problem \ref{eqn:tdode} is similar to the problem \ref{eqn:ori_dae}. In each subinterval, a boundary value problem (BVP) is to be solved and matching conditions at the boundary of each subinterval are to be enforced applied so that the final solution found is applicable to the whole interval. 
+   The problem \ref{eqn:tdode} is similar to the problem \ref{eqn:ori_dae}. In each subinterval, a boundary value problem (BVP) is to be solved and matching conditions at the boundary of each subinterval are to be enforced so that the final solution is continuous and applicable to the whole interval. 
    
    
-   With the same idea, we can use mutiple shooting to solve a optimal control problem. For the rocket car problem \ref{TA_rc}, we can discretize the time $t \in [0, 1]$ and the original OCP problem is split into multiple intervals, with the constraints also applied to each subinterval. We also need to introduce the initial guess for each interval and add the matching constraints. In the end, we turn the original problem  \ref{TA_rc} into piecewise OCPs with augmented parameters and constraints. But the piecewise OCPs can be solved as as a whole due to their non-overlapping properties and same structure, i.e. they can be aggregated to one objective function with the constraints expressed in matrix form. The final problem can then be solved with quasi-Newton method. In the next chatper, we discuss in detail how the problem \ref{TA_rc} can be solved with mutiple shooting method and quasi-Newton method in details. 
+   With the same idea, we can use mutiple shooting to solve optimal control problems. For the rocket car problem \ref{TA_rc}, we can discretize the time $t \in [0, 1]$ and the original problem is split into multiple subintervals, with the constraints discretized and applied to each subinterval. We also need to introduce the initial guess for each subinterval and add the matching condition at each boundary. In the end, we turn the original problem  \ref{TA_rc} into piecewise OCPs with augmented parameters and constraints. But the piecewise OCPs can be aggregated together due to their non-overlapping properties and the same structure, i.e. they can be aggregated to one objective function with the constraints expressed in matrix form. The transformed problem can then be solved with quasi-Newton method. In the next chatper, we discuss in detail how the problem \ref{TA_rc} can be solved with mutiple shooting and quasi-Newton method in details. 
    
    
-   \chapter{Solving Rocket Car Case}
-   Before we dive into the mathematics, we first re-introduce the physics of the rocket car case so that we can model the problem more precisely. 
+   \chapter{Solving Rocket Car Problem}
+   Before we dive into the mathematics, we first re-introduce the physics of the rocket car case so that we can describe and model the problem more precisely. 
    \section{Re-introduce the rocket car problem}
    Within the training approach, with a given $p$, we want to solve the lower level problem of the following form \ref{TA_lower2}
    \begin{subequations}
@@ -520,7 +519,7 @@
    	\underset{}{min} \   & \  T \\ 
    	s.t.  & \ \ x = (x_1, x_2)   \label{ta_rc_x} \\ 
    	& \ \  \dot{x} = T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix}, & \ t \in [0,1],  \label{ta_rc_partial2} \\
-   	& \ \ x(0,p) = 0, \label{ta_rc_t2}\\
+   	& \ \ x(0;p) = 0, \label{ta_rc_t2}\\
    	& \ \ x_1(1;p) \geq 10, \label{ta_rc_x1_t2} \\
    	& \ \ x_2(t;p) \leq 4, & t \in [0,1], \label{ta_rc_x2_tc2} \\
    	& \ \ x_2(1;p) \leq 0, \label{ta_rc_x2_t1_2}  \\
@@ -531,7 +530,7 @@
    	\label{TA_lower2}
    \end{subequations}
    
-   In summary, we want to find the minimum time that the rocket car moves from the starting state (the position is at the origin point, and the speed is zero) to an ending state when the position is at least at point 10 or beyond, and the speed is less than or equal to zero (a negative speed indicates the car is moving in a direction that decreases the position), with constraints on the acceleration/deceleration value and the speed during the whole process. 
+   In summary, we want to find the minimum time that the rocket car moves from the starting state (the position is at the origin point, and the speed is zero) to an ending state(the position is at least at point 10 or beyond, and the speed is less than or equal to zero). A negative speed indicates the car is moving in a direction that decreases the position. During the whole process, constraints on the acceleration/deceleration value and the speed are to be satisfied. 
    
    Because our objective is to minimize the time between starting state and ending state, i.e. the variable $T$, which is unknown, we cannot define a time horizon over which we will discretize and optimize. Therefore, a new variable $t$ is defined as follows: 
    \begin{equation}
@@ -545,15 +544,14 @@
    	\begin{align}
    	\dot{x} =  \begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix}  & =  T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix} = \begin{pmatrix}  Tx_2(t;p) \\ T(u(t)-p)   \end{pmatrix} \label{eq_difT} \\ 
    	\begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix} &= \begin{pmatrix} \frac{\partial x_1}{\partial t} \\ \frac{\partial x_2}{\partial t} \end{pmatrix} = \begin{pmatrix} \frac{\partial x_1}{\partial \tau} \frac{\partial \tau}{\partial t} \\ \frac{\partial x_2}{\partial \tau} \frac{\partial \tau}{\partial t} \end{pmatrix} =  \begin{pmatrix} \frac{\partial x_1}{\partial \tau} T \\ \frac{\partial x_2}{\partial \tau}T \end{pmatrix} =     \begin{pmatrix}  Tx_2(t;p) \\ T(u(t)-p)   \end{pmatrix} \\
-   	\begin{pmatrix} \frac{\partial x_1}{\partial \tau}  \\ \frac{\partial x_2}{\partial \tau} \end{pmatrix} & =     \begin{pmatrix}  x_2(t;p) \\ (u(t)-p)   \end{pmatrix} \label{eq_difTau}
+   	\begin{pmatrix} \frac{\partial x_1}{\partial \tau}  \\ \frac{\partial x_2}{\partial \tau} \end{pmatrix} & =     \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix} \label{eq_difTau}
    	\end{align}
    \label{partialX}
    \end{subequations}
    
-   In summary, the equation $\frac{\partial x_1}{\partial \tau}= x_2(t;p) $ means the change in the position in real time is proportional to the speed at that moment. And the equation $\frac{\partial x_2}{\partial \tau} = u(t)-p $ means the change in speed is proportional to the acceleration/deceleration value at that moment. 
+   In summary, the equation $\frac{\partial x_1}{\partial \tau}= x_2(t;p) $ means the change in the position in real time is proportional to the speed at that moment. The equation $\frac{\partial x_2}{\partial \tau} = u(t)-p $ means the change in speed is proportional to the acceleration/deceleration value at that moment. 
    
-   To use multiple shooting and quasi-Newton method, we discretize the interval $t\in [0,1]$ into subinterval $[t_{k}, t_{k+1}], k = 0, 1, 2, ..., m-1$, where $0 = t_0, t_1, t_2, ...,t_k, t_k, ..., t_m = 1$. We solve the OCP within each interval, and enforce the matching condition at the boundary of each interval. 
-   The equation \ref{eq_difT} is equivalent to \ref{eq_difTau}, and $\partial x_1= x_2(t;p) \partial \tau, \ \partial x_2 = ( u(t)-p) \partial \tau$, we can solve this partial equation in each subinterval directly. We have the following solution
+   To use multiple shooting and quasi-Newton method, we discretize the interval $t\in [0,1]$ into subinterval $[t_{k}, t_{k+1}], k = 0, 1, 2, ..., m-1$, where $0 = t_0, t_1, t_2, ...,t_k, t_k, ..., t_m = 1$. We solve the OCP within each subinterval, and enforce the matching condition at the boundary of each subinterval. The equation \ref{eq_difT} is equivalent to \ref{eq_difTau}, and $\partial x_1= x_2(t;p) \partial \tau, \ \partial x_2 = ( u(t)-p) \partial \tau$. We can, therefore, solve the partial equations within each subinterval directly. We have the following solution
    
    \begin{subequations}
 	\begin{align}
@@ -563,17 +561,19 @@
    	\end{align}
 \end{subequations}
 
-The integral can be approximated by numerical method, one simple approximation to the integral in equation \ref{eq_x1_int} can be 
+The integral can be approximated by numerical method, one simple approximation method to the integral in equation \ref{eq_x1_int} can be 
 \begin{equation}
 \int_{t_k}^{t_{k+1}} x_2(t;p) d \tau  \approx \frac{x_2(t_{k+1}) + x_2(t_k)}{2} (\tau_{k+1} -\tau_k)
 \label{mid_approx}
 \end{equation}
 
-There are many different methods that can be used to approximate the integrals, one of the widely used method is the Runge–Kutta method. With initial value $x_1(t_k),x_2(t_k), u(t_k)$ given at each subinterval $[t_{k}, t_{k+1}]$, based on the differential equation \ref{ta_rc_partial2}, we can find the (approximation) solution within this subinterval. Together with enforcing the matching condition, we can get the final solution by summing up the corresponding real time $\sum_{k=0}^{k=m-1} \tau_{k+1} - \tau_k$, but only if the constraints do not exist. 
+There are many methods that can be used to approximate the integrals, one of the widely used method is the Runge–Kutta method. With initial value $x_1(t_k),x_2(t_k), u(t_k)$ given at each subinterval $[t_{k}, t_{k+1}]$, based on the differential equation \ref{ta_rc_partial2}, we can find the (approximation) solution within this subinterval. 
+However, in order to get the feasible optimal solution for the original problem (i.e. the whole interval), we need to enforce the matching condition at the boundary of each subinterval as well as the constraints defined in equations \ref{ta_rc_t2}-\ref{ta_ut}.  These constraints can be addressed with the KKT method discussed in the next Section \ref{Sec_KKT}.
 
 
 \section{KKT Conditions}
-In order to get the feasible solution, we can take the constraints into consideration by Lagrange multipliers with the Karush–Kuhn–Tucker (KKT) condition incorporated. Considering a problem of the following form
+\label{Sec_KKT}
+In order to get the feasible solution, we can take the constraints into consideration by Lagrange multipliers with the Karush–Kuhn–Tucker (KKT) condition incorporated. Before we explain the KKT condition, we need to introduce several definitions and theorems first. We consider a general optimal control problem of the following form
 \begin{equation}
 	\label{eq:OCP_discret_compact}
 	\begin{aligned}
@@ -582,9 +582,6 @@ In order to get the feasible solution, we can take the constraints into consider
 						                  &  h(x)	\leq 0 
 	\end{aligned}
 \end{equation}
-
-
-Before we explain the KKT condition, we first need to introduce several definitions in the following text. 
 \begin{definition}(Feasible set) The feasible set $\Omega$ is the set 
 	\begin{align}
 		\Omega:= \{x \in \mathbb{R}^n \ | \ g(x)= 0 , \ h(x)	\leq 0 \}	
@@ -592,18 +589,15 @@ Before we explain the KKT condition, we first need to introduce several definiti
 \end{definition}	
 \begin{definition}(Active Constraints and Active Set) An inequality constraint $h_i(x) \leq 0$ is called active at $x^\star \in  \Omega$  iff  $h_i(x^\star) = 0$ and otherwise inactive. The index set $\mathcal{A}(x^\star) \subset \{1, ..., n_h\}$  of active inequality constraint indices is called the ”active set”.
 \end{definition}
-Often, the name active set also comprises all equality constraint indices, as equalities could be considered to be
-always active. 
+Often, the name active set also includes all equality constraint indices, as equalities could be considered to be always active. 
 \begin{definition} (LICQ) The linear independence constraint qualification (LICQ) holds at $x^\star \in  \Omega $ iff all vectors $\nabla g_i(x^\star)$ for $i \in \{1, ..., n_g \}$ and $\nabla h_i(x^\star)$ for  $i \in \mathcal{A}(x^\star)$ are linearly independent.
 	\label{df_LICO}
 \end{definition}
-
 To give further meaning to the LICQ condition, let us combine all active inequalities with all equalities in a map $\tilde{g}$ defined by stacking all functions on top of each other in a colum vector as follows:
 \begin{equation}
 	\tilde{g}(x) =  \begin{pmatrix} g(x) \\ h_i(x), \ i \in \mathcal{A}(x^\star)    \end{pmatrix}
 \end{equation}
 With the definitions above, we are ready to formulate the famous KKT condition. 
-
 \begin{theorem}(KKT Conditions)
 If $x^\star$ is a local minimizer of the problem \ref{TA_lower2} and the LICQ holds at $x^\star$, then there exist
 so called multiplier vectors $\lambda \in \mathbb{R}^n_g$ and $\mu \in \mathbb{R}^n_h$ with 
@@ -621,10 +615,8 @@ so called multiplier vectors $\lambda \in \mathbb{R}^n_g$ and $\mu \in \mathbb{R
 The "KKT Conditons" are also known as "First-Order Necessary Conditons". 
 
 \begin{definition}(KKT Point)
-We call a triple $(x^\star, \lambda^\star; \mu^\star)$ a "KKT Point" if it satisfies LICQ  (Definition \ref{df_LICO}) and the KKT (Theorem \ref{TH_KKT}) conditions .
+We call a triple $(x^\star, \lambda^\star; \mu^\star)$ a "KKT Point" if it satisfies LICQ  (Definition \ref{df_LICO}) and the KKT conditions (Theorem \ref{TH_KKT}).
 \end{definition}
-
-
 \begin{definition}(Lagrangian Function)
 We define the so called "Lagrangian function" to be
 \begin{equation}
@@ -632,16 +624,14 @@ We define the so called "Lagrangian function" to be
 	\label{eq_Lagrangian}
 \end{equation}
 \end{definition}
-Here, we have used again the so called "Lagrange multipliers" or "dual variables"  $\lambda \in \mathbb{R}^n_g$ and $\mu \in \mathbb{R}^n_h$. 
-
-The last three KKT conditions \ref{kkt_smaller} - \ref{kkt_active} are called the complementarity conditions. For each index $i$, they define an $L-$shaped set in the $(h_i, \mu_i)$ space. This set is not a smooth manifold but has a non-differentiability at the origin, i.e., if  $h_i(x^\star)$ and also $\mu_i^\star = 0$. This case is called a weakly active constraint. Often we want to exclude this case. On the other hand, an active constraint with $\mu_i^\star = 0$ is called strictly active.
+Here, we have used the so called "Lagrange multipliers" $\lambda \in \mathbb{R}^n_g$ and $\mu \in \mathbb{R}^n_h$. 
+The last three KKT conditions \ref{kkt_smaller} - \ref{kkt_active} are called the complementarity conditions. For each index $i$, they define an $L-$shaped set in the $(h_i, \mu_i)$ space. This set is not a smooth manifold but has a non-differentiability at the origin, i.e., if  $h_i(x^\star)=0$ and also $\mu_i^\star = 0$. This case is called a weakly active constraint. Often we want to exclude this case. On the other hand, an active constraint with $\mu_i^\star = 0$ is called strictly active.
 \begin{definition}
 	Regard a KKT point $(x^\star, \lambda^\star; \mu^\star)$. We say that strict complementarity holds at this KKT point iff all	active constraints are strictly active.
 \end{definition}
 
 \begin{theorem}(Second Order Optimality Conditions) Let us regard a point $x^\star$ at which LICQ holds together with
-multipliers $\lambda^\star, \mu^\star$ so that the KKT conditions are satisfied and let strict complementarity hold. Regard a basis matrix $\mathbb{Z} \in  \mathbb{R}^{n*(n-n_g)}$ of the null space of $\frac{\partial \tilde{g}}{\partial x} (x^\star) \in \mathbb{R}^{n_{\tilde{g}} *n}$, i.e., $\mathbb{Z}$ has full column rank and $\frac{\partial \tilde{g}}{\partial x} (x^\star)\mathbb{Z} =0$ .
-Then the following two statements hold:
+multipliers $\lambda^\star, \mu^\star$ so that the KKT conditions are satisfied and let strict complementarity hold. Regard a basis matrix $\mathbb{Z} \in  \mathbb{R}^{n*(n-n_g)}$ of the null space of $\frac{\partial \tilde{g}}{\partial x} (x^\star) \in \mathbb{R}^{n_{\tilde{g}} *n}$, i.e., $\mathbb{Z}$ has full column rank and $\frac{\partial \tilde{g}}{\partial x} (x^\star)\mathbb{Z} =0$. Then the following two statements hold:
 \end{theorem}
 \begin{itemize}
 \item  If $x^\star$ is a local minimizer, then $\mathbb{Z}^\top \nabla_x^2 \mathcal{L}(x^\star, \lambda^\star, \mu^\star)\mathbb{Z} \succeq 0  $.(Second Order Necessary Condition, short : SONC)
@@ -650,11 +640,11 @@ Then the following two statements hold:
 
 
 The matrix $\nabla_x^2 \mathcal{L}(x^\star, \lambda^\star, \mu^\star)$ plays an important role in optimization algorithms and is called the Hessian of the Lagrangian, while its projection on the null space of the Jacobian, $\mathbb{Z}^\top \nabla_x^2 \mathcal{L}(x^\star, \lambda^\star, \mu^\star)\mathbb{Z}$, is called the reduced
-Hessian. For an optimization problem, if we can start with an initial guess $x_0$ and find a updating schema which decreases the objective value while maintain the Hessian matrix positive, if such updating schema can converge, it will converge to a local minimizer. And if the original problem is convex, the local miminizer is, therefore, the global minimizer. Taking advantage of these properties, we can reformulate our rocket car problem into the form as in \ref{eq:OCP_discret_compact}, and then re-write in the Lagrangian form \ref{eq_Lagrangian}, and optimize with Lagrangian function. 
+Hessian. For an optimization problem, if we can start with an initial guess $x_0$ and find a updating schema which decreases the objective value while maintain the Hessian matrix positive, if such updating schema can converge, it will converge to a local minimizer. And if the original problem is convex, the local miminizer is, therefore, the global minimizer. Taking advantage of these properties, we can reformulate our rocket car problem into the form as in equation \ref{eq:OCP_discret_compact}, and then re-write in the Lagrangian form \ref{eq_Lagrangian}, optimize the (objective) Lagrangian function with quasi-Newton method. 
 
 \section{Rokect car problem in Lagrangian form}
 
-We discretize the original problem \ref{TA_lower2} based on time $t$ into $m$ sub-problems, i.e. we split the interval $t\in [0,1]$ into subinterval $[t_{k}, t_{k+1}], k = 0, 1, 2, ..., m-1$, where $0 = t_0, t_1, t_2, ...,t_k, t_{k+1}, ..., t_m = 1$. We assume the $p$ is given, for example, we can assume $p=0$, and find a corresponding optimal $T$. Later, we can find different optimal $T$ with different $p$ given. In each subinterval, we have inital guess for $x$, we introduce anther two variables, with $s$ as the guess for $x$, and $q$ as the guess for $u$. Therefore, in each subinterval, we have the value $ x(t_k) = s(t_k), u(t_k) = q(t_k),  k = 0, 1, 2, ..., m-1$,. When no confusion arise, will write $s(t_k) = s_k $ and $q(t_k) = q_k$. Notice $s(t_k)$ has two component which corrsponds to $x_1$ (position) and $x_2$ (speed). When we want to specify the exact component at the $t_k$, we would write $s(t_k) = (s_1(t_K), s_2(t_k))$. We would like to find the solution for $x(t; q_k, s_k, p),  t  \in [t_{k}, t_{k+1}]$. Assume that such solution has been found, the matching condition at the boundary of each sub-interval will lead to the following equation
+We discretize the original problem \ref{TA_lower2} based on time $t$ into $m$ sub-problems, i.e. we split the interval $t\in [0,1]$ into subinterval $[t_{k}, t_{k+1}],\  k = 0, 1, 2, ..., m-1$, where $0 = t_0, t_1, t_2, ...,t_k, t_{k+1}, ..., t_m = 1$. We assume the parameter $p$ is given, for example, we can assume $p=0$, and find a corresponding optimal $T$. Later, we can find different optimal $T$ with different $p$ given. In each subinterval, we have inital guess for $x$, we introduce anther two variables, with $s$ as the guess for $x$, and $q$ as the guess for $u$. Therefore, in each subinterval, we have the initial value $ x(t_k) = s(t_k), u(t_k) = q(t_k),  k = 0, 1, 2, ..., m-1$. When no confusion arises, we will write $s(t_k) = s_k $ and $q(t_k) = q_k$. Notice $s(t_k)$ has two component which corrsponds to $x_1$ (position) and $x_2$ (speed). When we want to specify the exact component at time $t_k$, we would write $s(t_k) = (s_1(t_k), s_2(t_k))$. We would like to find the solution for $x(t; q_k, s_k, p),  t  \in [t_{k}, t_{k+1}]$. Assume that such solution has been found, the matching condition at the boundary of each sub-interval will lead to the following equation
 
 \begin{equation}
 	g(s,q) = \begin{bmatrix}
@@ -666,7 +656,7 @@ We discretize the original problem \ref{TA_lower2} based on time $t$ into $m$ su
 	\end{bmatrix} = 0
   \label{TA_eqCons}
 \end{equation}
-Notice, we have the equality constraints up to the second to the last subinterval, i.e. $[t_{m_2}, t_{m-1}]$. This is because the terminal condition at time $t_m =1$ (i.e. the subinterval $[t_{m_1}, t_m]$ covers) has already been defined in the inequality constraints \ref{ta_rc_x1_t2} and \ref{ta_rc_x2_t1_2}. Moreover, the boundary point $s_k, u_k, k = 0, 1, 2, ..., m-1$ is also subject to the inequality constraints \ref{ta_rc_x2_tc2} and \ref{ta_ut}. All these constraints can be combined together in the following form
+Notice, we have the equality constraints up to the second to the last subinterval, i.e. $[t_{m-2}, t_{m-1}]$. This is because the terminal condition at time $t_m =1$ (which the subinterval $[t_{m-1}, t_m]$ covers) has already been defined in the inequality constraints \ref{ta_rc_x1_t2} and \ref{ta_rc_x2_t1_2}. Moreover, the boundary point $s_k, u_k, k = 0, 1, 2, ..., m-1$ is also subject to the inequality constraints \ref{ta_rc_x2_tc2} and \ref{ta_ut}. All these constraints can be combined together in the following form
 
 \begin{equation}
 	h(s,q) = \begin{bmatrix}
@@ -674,25 +664,41 @@ Notice, we have the equality constraints up to the second to the last subinterva
 		10 - x_1(t_m; t_{m-1}, s_{m-1}, q_{m-1}, p)\\ 
 		x_2(t_m; t_{m-1}, s_{m-1}, q_{m-1}, p) \\
 		q_k - 10,   k =0, 1, 2, ..., m-1 \\
-		-10 - q_k,  k =0, 1, 2, ..., m-1 
+		-10 - q_k,  k =0, 1, 2, ..., m-1 \\
 		u(t_m) - 10 \\
 		-10 - u(t_m) \\
 	\end{bmatrix} \leq 0
 \label{TA_IneqCons}
 \end{equation}
 
-Within equations \ref{TA_eqCons} and \ref{TA_IneqCons}, the solution of $x(t_{k+1}, t_k, s_k, q_k, p)$ comes from numerically solving the partial differential equation \ref{partialX}. For example, using the Runge–Kutta method or simply using the approximation as used in equation \ref{mid_approx}. 
-The objectitve function $min \ T$ can be regarded as a function of $T(s, q)$. Therefore, we can regard the pair $(s,q)$ as the new independent variables, and the the original problem \ref{TA_lower2} is then transformed into the following form
+Within equations \ref{TA_eqCons} and \ref{TA_IneqCons}, the solution of each subinterval 
+\begin{equation}
+   \begin{aligned}
+x(t; w_k) &= (x_1(t;w_k), x_2(t; w_k)),  t \in [t_{k}, t_{k+1}]\\
+ w_k &= (s_k, q_k, p) \\
+ p, & \   a \ given \ value
+\end{aligned}
+\end{equation}
+comes from numerically solving the partial differential equation \ref{partialX}. For example, using the Runge–Kutta method or simply using the approximation as used in equation \ref{mid_approx}. 
+
+The original objective function  $min \ T$ is to minimize the free final time, which is unknown, and we are discretizing the variable $t \in [0,1]$ as defined in equation \ref{eqn:timet}. Then the original problem can be transformed, with the final time $T$ as a variable to be optimized. Therefore, we can regard the triple $(s,q,T): w$ as the new independent variables, and the original problem \ref{TA_lower2} is then transformed into the following form
 \begin{equation}
 	\label{TA_Transform}
 	\begin{aligned}
-		\underset{s, q}{\text{min}} \qquad & T(s, q)	\\
-		\qquad \text{s.t.}\qquad	&  g(s,q) = 0   \\
-		&  h(s, q)	\leq 0 
+		\underset{w}{\text{min}} \qquad & 1	\\
+		\qquad \text{s.t.}\qquad	&  g(w) = 0   \\
+		&  h(w)	\leq 0  \\ 
+		w = (s, q)
 	\end{aligned}
 \end{equation}
-If we write 
+The objective function actually is gone, only the constraints play a role. Therefore, we have the Lagrangian function for the rocket car problem of the following form
+\begin{equation}
+	\mathcal{L}(w,\lambda, \mu) = T(w) + \lambda^\top g(w) +  \mu^\top h(w) 
+	\label{eq_RC_Lag}
+\end{equation}
 
+
+%% The objectitve function $min \ T$ can be regarded as a function of $T(s, q)$.
 
 
 

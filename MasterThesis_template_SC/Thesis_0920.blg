@@ -1,0 +1,59 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: Thesis_0920.aux
+Reallocating 'name_of_file' (item size: 1) to 15 items.
+A level-1 auxiliary file: titlepages.aux
+Reallocating 'name_of_file' (item size: 1) to 11 items.
+Reallocating 'name_of_file' (item size: 1) to 9 items.
+The style file: plainnat.bst
+Reallocating 'name_of_file' (item size: 1) to 15 items.
+A level-1 auxiliary file: deposition.aux
+Database file #1: references.bib
+Warning--empty journal in ANP91
+Warning--empty journal in DJJ62
+Warning--empty journal in WilDav59
+Warning--empty journal in FlePow63
+Warning--empty journal in MicPow09
+Warning--empty journal in MatSch22
+You've used 6 entries,
+            2773 wiz_defined-function locations,
+            624 strings with 5586 characters,
+and the built_in function-call counts, 1815 in all, are:
+= -- 150
+> -- 60
+< -- 6
++ -- 24
+- -- 18
+* -- 92
+:= -- 298
+add.period$ -- 18
+call.type$ -- 6
+change.case$ -- 24
+chr.to.int$ -- 6
+cite$ -- 18
+duplicate$ -- 114
+empty$ -- 181
+format.name$ -- 24
+if$ -- 367
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 6
+newline$ -- 38
+num.names$ -- 24
+pop$ -- 66
+preamble$ -- 1
+purify$ -- 18
+quote$ -- 0
+skip$ -- 79
+stack$ -- 0
+substring$ -- 12
+swap$ -- 0
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 66
+warning$ -- 6
+while$ -- 18
+width$ -- 0
+write$ -- 73
+(There were 6 warnings)
