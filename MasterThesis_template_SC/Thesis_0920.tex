@@ -681,14 +681,14 @@ x(t; w_k) &= (x_1(t;w_k), x_2(t; w_k)),  t \in [t_{k}, t_{k+1}]\\
 \end{equation}
 comes from numerically solving the partial differential equation \ref{partialX}. For example, using the Runge–Kutta method or simply using the approximation as used in equation \ref{mid_approx}. 
 
-The original objective function  $min \ T$ is to minimize the free final time, which is unknown, and we are discretizing the variable $t \in [0,1]$ as defined in equation \ref{eqn:timet}. Then the original problem can be transformed, with the final time $T$ as a variable to be optimized. Therefore, we can regard the triple $(s,q,T): w$ as the new independent variables, and the original problem \ref{TA_lower2} is then transformed into the following form
+The original objective function  $min \ T$ is to minimize the free final time, which is unknown, and we are discretizing the variable $t \in [0,1]$ as defined in equation \ref{eqn:timet}. Then the original problem can be transformed, with the final time $T$ as a variable to be optimized. Therefore, we can regard the triple $(s,q,T):= w$ as the new independent variables, and the original problem \ref{TA_lower2} is then transformed into the following form
 \begin{equation}
 	\label{TA_Transform}
 	\begin{aligned}
 		\underset{w}{\text{min}} \qquad & 1	\\
 		\qquad \text{s.t.}\qquad	&  g(w) = 0   \\
 		&  h(w)	\leq 0  \\ 
-		w = (s, q)
+		w &= (s, q, T)
 	\end{aligned}
 \end{equation}
 The objective function actually is gone, only the constraints play a role. Therefore, we have the Lagrangian function for the rocket car problem of the following form
