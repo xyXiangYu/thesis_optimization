@@ -1,0 +1,335 @@
+%% Template for Master thesis
+%% ===========================
+%%
+\documentclass  [
+  paper    = a4,
+  BCOR     = 10mm,
+  twoside,
+  fontsize = 12pt,
+  fleqn,
+  toc      = bibnumbered,
+  toc      = listofnumbered,
+  numbers  = noendperiod,
+  headings = normal,
+  listof   = leveldown,
+  version  = 3.03
+]                                       {scrreprt}
+
+\usepackage     [T1]                    {fontenc}
+\usepackage                             {color}
+\usepackage     [english]               {babel}
+\usepackage                             {natbib}
+\usepackage                             {hyperref}
+\usepackage{graphicx}
+\usepackage{framed}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+%\usepackage{enumitem}
+\usepackage[shortlabels]{enumitem}
+
+%\usepackage[thmmarks,amsmath]{ntheorem}
+%\usepackage{tikz}
+%\usepackage[inline]{enumitem}
+%\usepackage[thmmarks]{ntheorem}
+%\usepackage{cleveref}
+\usepackage{enumerate}
+%\usepackage[utf8]{inputenc}
+\usepackage[top=1 in,bottom=1in, left=1 in, right=1 in]{geometry}
+\usepackage[nottoc, notlof, notlot]{tocbibind}
+%\usepackage{dsfont}
+
+\newcommand{\matlab}{{\sc Matlab} }
+\newcommand{\cvec}[1]{{\mathbf #1}}
+\newcommand{\rvec}[1]{\vec{\mathbf #1}}
+\newcommand{\ihat}{\hat{\textbf{\i}}}
+\newcommand{\jhat}{\hat{\textbf{\j}}}
+\newcommand{\khat}{\hat{\textbf{k}}}
+\newcommand{\minor}{{\rm minor}}
+\newcommand{\trace}{{\rm trace}}
+\newcommand{\spn}{{\rm Span}}
+\newcommand{\rem}{{\rm rem}}
+\newcommand{\ran}{{\rm range}}
+\newcommand{\range}{{\rm range}}
+\newcommand{\mdiv}{{\rm div}}
+\newcommand{\proj}{{\rm proj}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\<}{\langle}
+\renewcommand{\>}{\rangle}
+\renewcommand{\emptyset}{\varnothing}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{exercise}{Exercise}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.4}
+\definecolor{darkgreen}{rgb}{0.0,0.4,0.0}
+\hypersetup{
+    colorlinks,
+    linkcolor=black,
+    citecolor=darkgreen,
+    urlcolor=darkblue
+}
+
+\begin{document}
+  %% title pages similar to providet template instead of maketitle
+  \include{titlepages} 
+   \tableofcontents
+    \let\clearpage\relax
+   \newpage
+   % \include{chapter1}
+   
+   
+ \chapter{Introduction}  
+ \label{Chapter1}
+Many real-life problems can be modeled as an optimal control problem, for example, launching a rocket to the moon with minimum fuel expenditure as the objective, or maximizing the profit from the factory production, with constraints in resources available and uncertain market demand. This paper focus on solving optimal control problems with multiple shooting and quasi Newton method. 
+
+In general, optimal control deals with the problem of finding the control over the state for a dynamic system over a period of time such that an objective function is optimized. Generally, an optimal control problem can be formulized as follows: 
+      \begin{equation}
+   	\begin{aligned}
+   	\underset{x(t), u(t)}{\text{min}}  \ &  \Psi(x(t), u(t)) \\
+   		s.t.\ \  & x(t) \in \Omega \\
+   		          & u(t) \in \mathbb{U}  \\
+   		          & t \in [t_0, t_f]
+   	\end{aligned}
+   	\label{P1_OPH}
+   \end{equation}
+ Here $t$ is the independent variable (generally speaking, time), usually using $t_0$ and $t_f$ representing the initial and terminal time respectively. $x(t)$ is the state variables, and $u(t)$ is the control variables, $\Psi(\cdot)$ is the objective function, also called the cost function. $x(t) \in \Omega$ and  $ u(t) \in \mathbb{U}$ represents the constraints for which the state variables $x(t)$ and control variable $u(t)$ must satisfy respectively.  Sometimes, the constraints are expressed in as functions of $x(t)$ and $u(t)$ together. 
+ 
+
+Generally speaking, there are three basis approaches to address optimal control problems (a) dynamic programming (b) indirect, and (c) direct approaches. (ref \cite{MHHP05}). This paper on hand, focus on the direct approaches, which are one of the most widespread and successfully used techniques. Direct approaches transform the original infinite optimal control problem into a finite dimensional nonlinear programming problem (NLP). This NLP is then solved by variants of state-of-the-art numerical optimization methods, and the approach is therefore often sketched as “first discretize, then optimize.” 
+
+Mutilple shooting method can be used in the "first discretize" part of the direct approaches. The main idea is to divide the whole interval $t \in [t_0, t_f]$ into multiple subintervals, and introduce initial guess for each subinterval,  solve the problem in each subinterval with the initial guess, and impose additional matching conditions at the boundary of each subinterval to form a solution of the whole interval.   
+
+In each subinterval, we are actually solving a NLP problem with constraints, i.e. the "then optimize" part of the direct approaches. We can use the Karush–Kuhn–Tucker (KKT) approach to combine the constraints and the original objective function into a new Lagrange function whose optimal point, under some conditions (details in Chapter \ref{Chapter3}), can be found via its derivatives.  Newton and quasi Newton methods are second-order derivatives iterative optimization algorthm and generally, but not always, converges faster than first-order derivatives mehtod (e.g. gradient descent). The Newton method needs to calculate the second order derivatives, i.e. the Hessian matrix and its inverse in each iteration, which is very expensive to compute. Quasi Netwon methods employs an approximation to the original Hessian matrix and takes an efficient way to update the approximation matrix. Therefore, quasi Newton method is generally faster than Newton method. 
+
+The multiple shooting method first discretizes the whole interval into subintervals and has initial guess introduced for each subinterval, and solves the problem in each subinterval. Then the solution of each subinterval needs to be updated by iteration so that matching condition can be reached. To update the solution in each subinterval, we can actually aggregate the problems in the subinterval together and form a new objective function with the introduced initial guess in each subinterval as independent variables. By iteration to minimize the objective function, we can update the guess step by step so that the guess can satisfy the matching codition and all other constraints defined in the original problem.  The details of solving optimal control problems with mutiple shooting and quasi Netwon method will be given Chapter \ref{Chapter2}. 
+
+Besides the control variables $u$ and state variables $x$, some optimal control problems may have  uncertain parameters whose value are priori unknown, and the optimal objective value depends on the parameter value. This kind of problem is called the parameterized optimal control problems and is of the form 
+      \begin{equation}
+   	\begin{aligned}
+	\underset{x(t), u(t)}{\text{min}}  \ &  \Psi(x(t), u(t), p) \\
+	s.t.\ \  & x(t) \in \Omega \\
+	& u(t) \in \mathbb{U}  \\
+	& p  \in   \mathbb{P}  \\
+	& x = x(;,p^\star) \ if \ p = p^\star \\
+	& t \in [t_0, t_f]
+\end{aligned}
+\label{P3_POP}
+\end{equation}
+where $p^\star$ is a fixed value in the feasible uncertainty set $ \mathbb{P}$, where the parameter $p$ can take value from. Equation \ref{P3_POP} derives from the equation \ref{P1_OPH}, with the paramter $p$ added.  Similarly, Equation \ref{P2_OPM} can be expanded to have parameter $p$ included.  
+
+Parameterized optimal control problems are very difficult to solve due to the uncertainty in the parameter $p$. Since the paramter $p$ can take different values, so does the corresponding  objective function $\Psi(\cdot)$. Then, the solution of \ref{P3_POP},  i.e. $min \  \Psi(\cdot; p)$ can be regarded as a function of parameter $p$. One $p$ value corresponds to one solution. Since $p$ is priori unknown, then it makes sense to solve the parameterized optimal control problems in a conservative way. In the paper \cite{MatSch22}, multiple methods of solving the parameterized optimal control problem have been discussed. One method  of solving the parameterized optimal control problem in a conservative way is to transform the problem \ref{P3_POP} into another form. Two different ways of solving the parameterized optimal control problem have been discussed in details, i.e. the classical approach and the training approach. Both are in the form of a bilevel optimization roblem, i.e. an optimization problem in which another optimization problem enters the constraints. Details about these two approaches will be discussed in Chapter \ref{Chapter3}. 
+
+The approaches discussed above will be demonstrated with a case study in state constrained rocket car, with the description of the case, and its numerical solution given in \ref{Chapter4}.  
+
+The structure of this paper is as follows. Following current introduction Chapter \ref{Chapter1}, in next Chapter \ref{Chapter2}, we focus on expaining in details how to solve optimial control problems with direct approaches using mutiple shooting and quasi Newton method.  In Chapter \ref{Chapter3}, we discuss the approaches for solving parameterized optimal control problem, i.e. the classic approach and the training approach.  Within the training apporach, the knowledge from Chapter \ref{Chapter2} will be utilized. In Chapter \ref{Chapter4}, we give the description of our case study, i.e. the state constrained rocket car case, and compare the numerical solutions of the classical approach and training approach. In the final Chapter \ref{Chapter5}, we conclude the analysis with the numerical results. 
+
+
+
+\chapter{Numerical methods}
+\label{Chapter2}
+
+%The Karush–Kuhn–Tucker (KKT) approach to NLP can include both equality constraints and inequality constraints, together with the original objective function,
+
+%The gradient descent method starts with an initial guess and follows a direction opposite the gradient, which decreases the Lagrange function to reach the optimal point. Therefore, gradient descent method is a first-order iterative optimization algorithm, but often suffers slow convergence. Instead,
+ 
+ %  In another word, for any $p$, its corresponding solution $min \  \Psi(\cdot; p)$  should smaller or equal to the conservative solution.  
+ 
+$x(t) \in \Omega$ represents the constraints for which the state variables $x(t)$ must satisfy, usually it is in the form of a set of differential equations describing the path of state variables, and/or with some equality and inequality constraints. $ u(t) \in \mathbb{U}$ represents the constraints for which the control variables $u(t)$ must satisfy, and $\mathbb{U}$ is usually a convex set. In many cases, the constraints on $x(t)$ and $u(t)$ comes together, i.e. functions of $x(t)$ and $u(t)$ must satisfy some conditions. The choice of the control variable $u(t)$ will have an effect on the value of the state variable $x(t)$, therefore, will affect the objective function value $\Psi(\cdot)$. 
+
+Equation \ref{P1_OPH} gives a high-level formulation of an optimal control problem, which can be enhanced with more mathematical details. Depending on nature of the underlying optimal control problems, their mathematical expression can be in various form. For real-life problems, their optimal control formulation can typically be expressed in the following form  
+\begin{subequations}
+	\begin{align}
+		\underset{x(t), u(t)}{\text{min}}   \ &  \Psi(x(t), u(t))  = \int_{t_0}^{t_f}L(x(t), u(t))dt + E (x(t_f))\\
+		s.t.\ \ &  \dot{x} (t) = f(x(t), u(t)), \ \ (system \ dynamics)   \label{P2_sd} \\
+		& g(x(t), u(t)) = 0, \ \  (path\  equality\  constraints)  \label{P2_ec}\\
+		& h(x(t), u(t)) \leq 0, \ \ (path\  inequality \ constraints)  \label{P2_inc}\\
+		& x(t_0) = x_0, \ \ (initial \ value) \\
+		& r(x(t_f)) \leq 0, \ \ (terminal \ constraints) \\
+		& x^{lower} \leq x(t) \leq x^{upper}    \\ 
+		& u^{lower} \leq u(t) \leq u^{upper}    \\ 
+		& t \in [t_0, t_f]
+	\end{align}
+	\label{P2_OPM}
+\end{subequations}
+
+Here $L(\cdot)$ and $E(\cdot)$ are called the running cost and end cost, with their sum $\Psi(\cdot)$ the cost/objective function. For certain problems, some of the constraints defined in \ref{P2_OPM} may not play a role, while for other problems, addtional constraints may be needed or existing constraints need to be modified. Nevertheless, Equation \ref{P2_OPM} gives us a general mathematical formulation of the typical optimal control problems in real life, and we do not go further discussion with possible (minor) modification to Equation \ref{P2_OPM}. 
+
+One of the most important advantages of direct approaches is that they can easily treat inequality constraints, like the inequality path constraints in the formulation \ref{P2_inc}. This is because structural changes in the active constraints during the optimization procedure are treated by well developed NLP methods that can deal with inequality constraints and active set changes. (ref \cite{MHHP05}).
+
+\section{Multiple shooting}
+
+\section{KKT condition}
+\section{quasi Newton method}
+
+
+
+\chapter{Optimal control under uncertainty}
+\label{Chapter3}
+
+
+Knowing that the parameter $ p^\star$ lies in an uncertainty set $\mathbb{P} $, we can firstly take one value  $p^\star \in \mathbb{P}$ and  reach one objective with $p=p^\star$, i.e. identifying a worst possible solution with respect to $ p^\star $. That is to solve a lower level problem. Based on the result of lower level, we can continue to find the best solution with respect to $x$, i.e. solving a upper level problem. The "worst-case treatment planning by bilevel optimal control" from the paper  \cite{MatSch22}, i.e. a  bilevel optimization problem, is an optimization problem in which another optimization problem enters the constraints. Mathematically, the problem \ref{P3_POP} is transformed into another form, and can be formulated in a simplified notation, as following
+\begin{equation}
+	\begin{aligned}
+		\underset{x}{min} \   \underset{p \in \mathbb{P}}{max} & \ \   \Psi(x(t), u(t), p) \\
+		s.t.\ \  & x(t) \in \Omega \\
+		& u(t) \in \mathbb{U}  \\
+		& x = x(;,p^\star) \ if \ p = p^\star \\
+		& t \in [t_0, t_f]
+	\end{aligned}
+	\label{P4_minmax}
+\end{equation}
+
+
+Due to the $min \ max$ notation, this classical approach of solving the bilevel problem is called $min max$ approach, it can also be called robust optimization appraoch. 
+%As stated in \cite{MatSch22}, many different methods can be used to solve a bilevel problem, three approaches have been discussed in detail, i.e. a transformation of the bilevel problem to a single level problem, a classical approach and a training approach. A intuitive approach is to transfer the bilevel problem into a single level problem, however, in general the resulting single level problem is not equivalent to the original bilevel problem and this approach is also out of the focus of the paper \cite{MatSch22} as well as this paper at hand. A classical approach, aka a robust optimization appraoch, is consistent with the $minmax$ appoach, which will be discussed in more detail in Chapter 2.
+The paper \cite{MatSch22} introduces the "Training Approach".  It is based on the idea that in the real world, during the training period, an intervention is introduced and a certain, but a priori unknown, parameter $p \in \Omega_P$ is realized. What follows the training period (during which the parameter $p$ is realized), an reaction is being taken in an optimal manner, i.e. an optimal value $f(x,p)$ will be obtained given the realized parameter $p$. The paper \cite{MatSch22} call this approach "worst case modeling Training Approach", and it can be generalized to parameterized optimal control problem as 
+
+\begin{equation}
+	\begin{aligned}
+		\underset{p \in \mathbb{P}}{max} \ \underset{x}{min} & \ \   \Psi(x(t), u(t), p) \\ 
+		s.t.\ \  & x(t) \in \Omega \\
+		& u(t) \in \mathbb{U}  \\
+		& x = x(;,p^\star) \ if \ p = p^\star \\
+		& t \in [t_0, t_f]
+	\end{aligned}
+	\label{P5_maxmin}
+\end{equation}
+
+Due to the $max \ mix$ notation, this approach of solving the bilevel problem can also be called $max min$ approach. 
+
+\section{Classical approach}
+
+\section{Training approach}
+
+
+\chapter{Numerical solution}
+\label{Chapter4}
+\section{Introduction to the rocket car case}
+
+\section{Apply Classical (minmax) approach}
+
+
+\section{Apply Training (maxmin) approach}
+
+\chapter{Conclusion}
+\label{Chapter5}
+
+ 
+ 
+
+
+
+
+%The constrained optimization \ref{eq:OCP_discret_compact} can form the Lagrangian function
+%\begin{equation}
+%	 \mathcal{L}(w,\lambda, \mu) = \Phi(w) - \lambda ^\top a(w)-  \mu^\top b(w) 
+%\end{equation}
+
+
+%\definition (Active Constraints and Active Set) An inequality constraint hi(x) ≤ 0 is called active at x∗ 2 Ω
+%iff hi(x∗) = 0 and otherwise inactive. The index set A(x∗) ⊂ f1; : : : ; nhg of active inequality constraint indices
+%is called the ”active set”
+
+
+
+
+%The Karush–Kuhn–Tucker theorem then states the following.
+
+
+%% = \frac{x_2(t_k) + x_2(t_{k-1})}{2} (\tau_k -\tau_{k_1})
+%%%  \frac{x_2(t_k) + x_2(t_{k-1})}{2} (\tau_k -\tau_{k_1}) 
+   
+   
+   
+   
+   
+   
+   % t&= \frac{\tau}{T} \in [0,1] \quad \tau \in [0, T]
+   %\\
+   %i.e. \ \begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix} &= \begin{pmatrix} \frac{\partial x_1}{\partial t} \\ \frac{\partial x_2}{\partial t} \end{pmatrix} = 
+   %\begin{pmatrix} \frac{\partial x_1}{\partial \tau} \frac{\partial \tau}{\partial t}  \\ \frac{\partial x_2}{\partial \tau} \frac{\partial \tau}{\partial t} \end{pmatrix} 
+   
+   %\begin{equation*}
+   %	\begin{align}
+   %		\dot{x} =  \begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix}  & =  T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix} = \begin{pmatrix}  Tx_2(t;p) \\ T(u(t)-p)   \end{pmatrix} \\
+   %		i.e. \ \begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix} &= \begin{pmatrix} \frac{\partial x_1}{\partial t} \\ \frac{\partial x_2}{\partial t} \end{pmatrix} = 
+   %		\begin{pmatrix} \frac{\partial x_1}{\partial \tau} \frac{\partial \tau}{\partial t}  \\ \frac{\partial x_2}{\partial \tau} \frac{\partial \tau}{\partial t} \end{pmatrix} 
+   %	\end{align}
+   %\end{equation*}
+   
+   
+   
+   
+   
+   
+   
+   
+   \newpage
+  \part{Appendix}
+  \begin{appendix}
+    \chapter{Lists}
+    %\listoffigures
+    %\listoftables
+    \bibliography{references}{}
+    \citestyle{egu}
+    \bibliographystyle{plainnat}
+    \include{deposition}
+  \end{appendix}
+\end{document}
+
+   %\include{chapter3}
+%\include{chapter4}
+%\include{chapter5}
+%
+% \include{chapter2}
+%{\let\clearpage\relax \chapter{bar}}
+%% Put your contents here
+
+
+%\usepackage{amsthm}
+%\usepackage{amssymb}
+
+%\usepackage[normalem]{ulem}
+%\usepackage{amssymb}
+%\usepackage{amsfonts}
+%\usepackage[normalem]{ulem}
+%\usepackage                             {amsmath}
+%\usepackage                             {graphicx}
+
+
+%\usepackage{etoolbox}
+%\makeatletter
+%\patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
+%\makeatother
+%\usepackage{mathrsfs}
+
+%\usepackage                             {mathrsfs}
+%\usepackage{dsfont}
+%\usepackage{amsmath}
+%% \usepackage[thmmarks,amsmath]{ntheorem}
+%\usepackage{amsmath}
+%\usepackage{amsthm}
+%\usepackage[thmmarks,amsmath]{ntheorem}
+
+%\newcommand{\attn}[1]{\textbf{#1}}
+%\theoremstyle{definition}
+
+%\newtheorem{example}{Example}
+%\newtheorem*{note}{Note}
+
+%\newcommand{\P}{\mathbb{P}}
+% links
+% used pagages
+%\usepackage     [utf8]                  {inputenc}

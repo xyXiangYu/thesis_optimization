@@ -1,0 +1,38 @@
+
+\chapter{Optimal control under uncertainty}
+\label{Chapter3}
+
+
+Knowing that the parameter $ p^\star$ lies in an uncertainty set $\mathbb{P} $, we can firstly take one value  $p^\star \in \mathbb{P}$ and  reach one objective with $p=p^\star$, i.e. identifying a worst possible solution with respect to $ p^\star $. That is to solve a lower level problem. Based on the result of lower level, we can continue to find the best solution with respect to $x$, i.e. solving a upper level problem. The "worst-case treatment planning by bilevel optimal control" from the paper  \cite{MatSch22}, i.e. a  bilevel optimization problem, is an optimization problem in which another optimization problem enters the constraints. Mathematically, the problem \ref{P3_POP} is transformed into another form, and can be formulated in a simplified notation, as following
+\begin{equation}
+	\begin{aligned}
+		\underset{x}{min} \   \underset{p \in \mathbb{P}}{max} & \ \   \Psi(x(t), u(t), p) \\
+		s.t.\ \  & x(t) \in \Omega \\
+		& u(t) \in \mathbb{U}  \\
+		& x = x(;,p^\star) \ if \ p = p^\star \\
+		& t \in [t_0, t_f]
+	\end{aligned}
+	\label{P4_minmax}
+\end{equation}
+
+
+Due to the $min \ max$ notation, this classical approach of solving the bilevel problem is called $min max$ approach, it can also be called robust optimization appraoch. 
+%As stated in \cite{MatSch22}, many different methods can be used to solve a bilevel problem, three approaches have been discussed in detail, i.e. a transformation of the bilevel problem to a single level problem, a classical approach and a training approach. A intuitive approach is to transfer the bilevel problem into a single level problem, however, in general the resulting single level problem is not equivalent to the original bilevel problem and this approach is also out of the focus of the paper \cite{MatSch22} as well as this paper at hand. A classical approach, aka a robust optimization appraoch, is consistent with the $minmax$ appoach, which will be discussed in more detail in Chapter 2.
+The paper \cite{MatSch22} introduces the "Training Approach".  It is based on the idea that in the real world, during the training period, an intervention is introduced and a certain, but a priori unknown, parameter $p \in \Omega_P$ is realized. What follows the training period (during which the parameter $p$ is realized), an reaction is being taken in an optimal manner, i.e. an optimal value $f(x,p)$ will be obtained given the realized parameter $p$. The paper \cite{MatSch22} call this approach "worst case modeling Training Approach", and it can be generalized to parameterized optimal control problem as 
+
+\begin{equation}
+	\begin{aligned}
+		\underset{p \in \mathbb{P}}{max} \ \underset{x}{min} & \ \   \Psi(x(t), u(t), p) \\ 
+		s.t.\ \  & x(t) \in \Omega \\
+		& u(t) \in \mathbb{U}  \\
+		& x = x(;,p^\star) \ if \ p = p^\star \\
+		& t \in [t_0, t_f]
+	\end{aligned}
+	\label{P5_maxmin}
+\end{equation}
+
+Due to the $max \ mix$ notation, this approach of solving the bilevel problem can also be called $max min$ approach. 
+
+\section{Classical approach}
+
+\section{Training approach}

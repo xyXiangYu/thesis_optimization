@@ -1,0 +1,62 @@
+This is BibTeX, Version 0.99d (TeX Live 2022)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: Thesis_1130.aux
+A level-1 auxiliary file: titlepages.aux
+The style file: plainnat.bst
+A level-1 auxiliary file: deposition.aux
+Database file #1: references.bib
+Too many commas in name 1 of "Moritz Diehl, Hans Georg Bock, Holger Diedam, Pierre-Brice Wieber" for entry MHHP05
+while executing---line 1347 of file plainnat.bst
+Too many commas in name 1 of "Moritz Diehl, Hans Georg Bock, Holger Diedam, Pierre-Brice Wieber" for entry MHHP05
+while executing---line 1347 of file plainnat.bst
+Warning--empty journal in ANP91
+Warning--empty journal in DJJ62
+Warning--empty journal in WilDav59
+Warning--empty journal in FlePow63
+Too many commas in name 1 of "Moritz Diehl, Hans Georg Bock, Holger Diedam, Pierre-Brice Wieber" for entry MHHP05
+while executing---line 1429 of file plainnat.bst
+Too many commas in name 1 of "Moritz Diehl, Hans Georg Bock, Holger Diedam, Pierre-Brice Wieber" for entry MHHP05
+while executing---line 1429 of file plainnat.bst
+Warning--empty journal in MatSch22
+You've used 7 entries,
+            2773 wiz_defined-function locations,
+            631 strings with 5849 characters,
+and the built_in function-call counts, 2114 in all, are:
+= -- 177
+> -- 70
+< -- 7
++ -- 28
+- -- 21
+* -- 107
+:= -- 348
+add.period$ -- 21
+call.type$ -- 7
+change.case$ -- 28
+chr.to.int$ -- 7
+cite$ -- 19
+duplicate$ -- 133
+empty$ -- 211
+format.name$ -- 28
+if$ -- 430
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 7
+newline$ -- 43
+num.names$ -- 28
+pop$ -- 73
+preamble$ -- 1
+purify$ -- 21
+quote$ -- 0
+skip$ -- 92
+stack$ -- 0
+substring$ -- 14
+swap$ -- 2
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 77
+warning$ -- 5
+while$ -- 21
+width$ -- 0
+write$ -- 86
+(There were 4 error messages)

@@ -1,0 +1,22 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {1}Introduction}{4}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Numerical methods}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Multiple shooting}{7}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Mutiple shooting method for OCP}{9}{subsection.2.1.1}%
+\contentsline {section}{\numberline {2.2}KKT condition}{11}{section.2.2}%
+\contentsline {section}{\numberline {2.3}quasi Newton method}{13}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Newton method}{13}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}quasi Newton method}{15}{subsection.2.3.2}%
+\contentsline {section}{\numberline {2.4}Sequential quadrative programming}{16}{section.2.4}%
+\contentsline {chapter}{\numberline {3}Optimal control under uncertainty}{17}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Classical approach}{18}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Training approach}{19}{section.3.2}%
+\contentsline {chapter}{\numberline {4}Numerical solution}{21}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Introduction to the rocket car case}{21}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Apply Classical (minmax) approach}{21}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Apply Training (maxmin) approach}{21}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Conclusion}{21}{chapter.5}%
+\contentsline {part}{\numberline {I}Appendix}{22}{part.1}%
+\contentsline {chapter}{\numberline {A}Lists}{23}{appendix.A}%
+\contentsline {chapter}{Bibliography}{23}{chapter*.2}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
