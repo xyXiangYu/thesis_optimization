@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.30)  25 DEC 2022 13:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.30)  25 DEC 2022 13:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -806,26 +806,26 @@ pdfTeX warning (ext4): destination with the same identifier (name{equation.4.3.
 7}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.842 \section
-              {Apply training (maxmin) approach}
+l.845 	\begin{align}
+                    
 pdfTeX warning (ext4): destination with the same identifier (name{equation.4.3.
 8}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.842 \section
-              {Apply training (maxmin) approach}]
+l.845 	\begin{align}
+                    ]
 chapter 5.
 [25
 pdfTeX warning (ext4): destination with the same identifier (name{equation.4.4.
 9}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.976    \newpage
+l.975    \newpage
                  ]
 part I.
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `partprefix' that is an alias of element `partnumber'
-(scrkbase)              on input line 977.
+(scrkbase)              on input line 976.
 [26]
 
 Class scrreprt Warning: You are using `\begin{appendix}...\end{appendix}'.
@@ -839,7 +839,7 @@ Class scrreprt Warning: You are using `\begin{appendix}...\end{appendix}'.
 (scrreprt)              inconsistent.
 (scrreprt)              Because of this, you should remove `\end{appendix}'
 (scrreprt)              and replace `\begin{appendix}' by command
-(scrreprt)              `\appendix' on input line 978.
+(scrreprt)              `\appendix' on input line 977.
 
 chapter A.
 (./Thesis_1224.bbl)
@@ -888,7 +888,7 @@ ts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2022/texmf-dist/fonts
 ype1/public/cm-super/sfsx2074.pfb></usr/local/texlive/2022/texmf-dist/fonts/typ
 e1/public/cm-super/sfsx2488.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1
 /public/cm-super/sfti1200.pfb>
-Output written on Thesis_1224.pdf (27 pages, 456703 bytes).
+Output written on Thesis_1224.pdf (27 pages, 456617 bytes).
 PDF statistics:
  712 PDF objects out of 1000 (max. 8388607)
  619 compressed objects within 7 object streams
