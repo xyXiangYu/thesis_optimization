@@ -787,6 +787,7 @@ The variable $x(t;p)$ is a dependent variable, and is uniquely determined by $T,
 The optimization problem \ref{rc} has a unique global solution, and no further local solution exists. The optimal solution based on the uncertain parameter $p$ is given by 
 \begin{equation}
 	T^\star = T^\star(p) = 2.5 + \frac{40}{100-p^2},
+	\label{eq_Theory_T}
 \end{equation}
 and the optimal control function $u^\star(\cdot) (= u^\star(\cdot; p))$ by 
 \begin{equation}
@@ -797,6 +798,7 @@ and the optimal control function $u^\star(\cdot) (= u^\star(\cdot; p))$ by
 		-10  & for \  1- \frac{4}{(10+p)T^\star} \leq t \leq 1 
 	\end{array}
 	\right.
+	\label{eq_Theory_u}
 \end{equation}
 
 In words, we accelerate as strongly as possible (the acceleration value $u^\star(t)=10$) until the velocity $x^\star_2(t;p)=4$, and then keep the velocity $x^\star_2(t;p)$ constant for a certain period of time\footnote{The acceleration value cancels out with a inherent deceleration value so that the velocity can stay constant. The inherent deceleration value can be result of a friction or head wind.}, and eventually decelerate as as strongly as possible until the velocity reaches the state $x_2(1;p) \leq 0$ and $x_1(1;p) \geq 10$. The first moment that these two conditions have been reached, is the moment that we finds the optimal/smallest $T$. 
@@ -861,8 +863,62 @@ The solution of the training approach in this paper is, therefore, also a functi
 \section{Comparison numerical result of classical and training approach}
 \label{Sec_NR}
 
-For both the classical approach and the training approach, after the discretization of the uncertainty set, the problem to be solved becomes a normal optimal control problem and we can use the mutiple shooting and quasi Newton (in the SQP framework) method to solve. We are levaraging open source package Gekko to solve our problem. The implementation deatils and result are as follows.  
+For both the classical approach and the training approach, after the discretization of the uncertainty set, the problem to be solved becomes a normal optimal control problem and we can use the mutiple shooting and quasi Newton (in the SQP framework) method to solve. We are levaraging open source package Gekko\footnote{Please refer the website https://gekko.readthedocs.io/en/latest/ for more information about this open soure package} to solve our problem. The Gekko package can let the user choose different underlying nonlinear programming solver (APOPT, BPOPT, IPOPT, MINOS, SNOPT) and as well as different underlying numerical methods. In our case, we have chosen the sequential quadratic programming. Before we discuss the results from the classic approach and training approach, we discuss our primary analysis of the original problem \ref{rc}. 
 
+First, we show the theoretical solution of $T$ against different $p$ values accross the whole uncertainty set $\subset \mathbb{P} = [0,9]$, as shown in Figure \ref{theory_T_diff_p}. Then, we remove the uncertainty by showing the solution for several chosen $p_i$ values, where $ p_i  \in [p_0, p_1, ..., p_n] \subset \mathbb{P} = [0,9]$, here, we have chosen $p=0$,  $p=5$,  and $p=9$ as the example for illustration.  The $T$ values (rounded to four decimals) and the theoretical  $u(t)$ values corresponding to $p=0$,  $p=5$,  and $p=9$, are shown in Figure \ref{theory_ut_3p}. 
+ \begin{figure}[h!]
+ 	\centerline{\includegraphics[width=10cm]{theory_T_diff_p.png}}
+ 	\caption{The theoretical optimal T values against p values in the uncertainty set, from the formulation \ref{eq_Theory_T}}
+ 	\label{theory_T_diff_p}
+ \end{figure}
+  
+ \begin{figure}[h!]
+ 	\centerline{\includegraphics[width=10cm]{theory_ut_3p.png}}
+ 	\caption{The theoretical u(t) values when p=0, p=5 and p=9, from the formulation \ref{eq_Theory_u}}
+ 	\label{theory_ut_3p}
+ \end{figure}
+
+When $p$ takes fixed values, the OCP under uncertainty becomes a normal OCP problem and we can solve directly with the numerical methods discussed in Chapter \ref{Chapter2}, and no classical or training approach is needed. With the initial value of $u(t)$ set as $u(t_0)=10$ and $500$ subintervals $\mathbb{I}_j = [\tau_{j-1}, \tau_j]$, from the discretizion points $0 = t_0 =  < t_1 < ... < t_m = t_f =1 $, and an error tolerance level as $1e-6$, the result from solving a normal OCP with $p=0$, $p=5$ and $p=9$ are shown in Figure \ref{fig1_org_u10_p0}, Figure \ref{fig1_org_u10_p5} and Figure \ref{fig1_org_u10_p9} respectively. 
+
+\begin{figure}[h!]
+	\centerline{\includegraphics[width=10cm]{original_u10_p0.png}}
+	\caption{Orginal rocket car problem \ref{rc} solution when p=0}
+	\label{fig1_org_u10_p0}
+\end{figure}
+
+
+\begin{figure}[h!]
+	\centerline{\includegraphics[width=10cm]{original_u10_p5.png}}
+	\caption{Orginal rocket car problem \ref{rc} solution when p=5}
+\label{fig1_org_u10_p5}
+\end{figure}
+
+\begin{figure}[h!]
+	\centerline{\includegraphics[width=10cm]{original_u10_p9.png}}
+	\caption{Orginal rocket car problem \ref{rc} solution when p=9}
+\label{fig1_org_u10_p9}
+\end{figure}
+
+Based on these three Figures \ref{fig1_org_u10_p0},  \ref{fig1_org_u10_p5} and \ref{fig1_org_u10_p9}, the results from $p=0$,  $p=5$,  and $p=9$ are consistent with that from the theoretical results in formulation \ref{eq_Theory_T} and \ref{eq_Theory_u}, as shown in Figure \ref{theory_T_diff_p} and Figure \ref{theory_ut_3p}. This confirms two points: first, the theoretical results are correct and second, the numerical methods we have chosen can solve our rocket car case with one fixed $p$ value. These methods can, therefore, be used to solve general OCPs. 
+
+
+%When we plot the optimal $T$ against the uncertain parameter $p$, then we get the result in Figure 
+
+
+
+ 
+
+%The implementation deatils and result are as follows. 
+%\begin{figure}[h!]
+%	\centerline{\includegraphics[width=10cm]{original_u10_p2.png}}
+%	\caption{price and delta from three different methods}
+%	\label{fig:result}
+%\end{figure}
+%\begin{figure}[h!]
+%	\centerline{\includegraphics[width=10cm]{original_u10_p7.png}}
+%	\caption{price and delta from three different methods}
+%	\label{fig:result}
+%\end{figure}
 
 
 

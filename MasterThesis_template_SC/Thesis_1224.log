@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.30)  25 DEC 2022 13:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.30)  27 DEC 2022 00:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -806,27 +806,71 @@ pdfTeX warning (ext4): destination with the same identifier (name{equation.4.3.
 7}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.845 	\begin{align}
+l.847 	\begin{align}
                     
 pdfTeX warning (ext4): destination with the same identifier (name{equation.4.3.
 8}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.845 	\begin{align}
+l.847 	\begin{align}
                     ]
-chapter 5.
+<theory_T_diff_p.png, id=469, 415.5525pt x 331.7193pt>
+File: theory_T_diff_p.png Graphic file (type png)
+<use theory_T_diff_p.png>
+Package pdftex.def Info: theory_T_diff_p.png  used on input line 870.
+(pdftex.def)             Requested size: 284.52756pt x 227.13522pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<theory_ut_3p.png, id=473, 497.9403pt x 325.9377pt>
+File: theory_ut_3p.png Graphic file (type png)
+<use theory_ut_3p.png>
+Package pdftex.def Info: theory_ut_3p.png  used on input line 876.
+(pdftex.def)             Requested size: 284.52756pt x 186.24396pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
 [25
 pdfTeX warning (ext4): destination with the same identifier (name{equation.4.4.
 9}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.975    \newpage
-                 ]
+l.882 
+      ]
+<original_u10_p0.png, id=498, 417.7206pt x 341.1144pt>
+File: original_u10_p0.png Graphic file (type png)
+<use original_u10_p0.png>
+Package pdftex.def Info: original_u10_p0.png  used on input line 884.
+(pdftex.def)             Requested size: 284.52756pt x 232.34508pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<original_u10_p5.png, id=501, 414.8298pt x 341.1144pt>
+File: original_u10_p5.png Graphic file (type png)
+<use original_u10_p5.png>
+Package pdftex.def Info: original_u10_p5.png  used on input line 891.
+(pdftex.def)             Requested size: 284.52756pt x 233.97423pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<original_u10_p9.png, id=504, 414.8298pt x 341.1144pt>
+File: original_u10_p9.png Graphic file (type png)
+<use original_u10_p9.png>
+Package pdftex.def Info: original_u10_p9.png  used on input line 897.
+(pdftex.def)             Requested size: 284.52756pt x 233.97423pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+chapter 5.
+[26 <./theory_T_diff_p.png> <./theory_ut_3p.png>] [27 <./original_u10_p0.png> <
+./original_u10_p5.png>]
 part I.
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `partprefix' that is an alias of element `partnumber'
-(scrkbase)              on input line 976.
-[26]
+(scrkbase)              on input line 1032.
+[28 <./original_u10_p9.png>]
 
 Class scrreprt Warning: You are using `\begin{appendix}...\end{appendix}'.
 (scrreprt)              You should note, that `\appendix' is a mostly globally
@@ -839,25 +883,25 @@ Class scrreprt Warning: You are using `\begin{appendix}...\end{appendix}'.
 (scrreprt)              inconsistent.
 (scrreprt)              Because of this, you should remove `\end{appendix}'
 (scrreprt)              and replace `\begin{appendix}' by command
-(scrreprt)              `\appendix' on input line 977.
+(scrreprt)              `\appendix' on input line 1033.
 
 chapter A.
 (./Thesis_1224.bbl)
 \openout2 = `deposition.aux'.
 
- (./deposition.tex [27]) (./Thesis_1224.aux
+ (./deposition.tex [29]) (./Thesis_1224.aux
 (./titlepages.aux) (./deposition.aux))
 Package rerunfilecheck Info: File `Thesis_1224.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 16923 strings out of 478268
- 306021 string characters out of 5846346
- 759637 words of memory out of 5000000
- 34727 multiletter control sequences out of 15000+600000
+ 16983 strings out of 478268
+ 307173 string characters out of 5846346
+ 760499 words of memory out of 5000000
+ 34773 multiletter control sequences out of 15000+600000
  490469 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,15n,106p,10606b,468s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,15n,106p,10606b,466s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<
 /usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></
@@ -888,10 +932,10 @@ ts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2022/texmf-dist/fonts
 ype1/public/cm-super/sfsx2074.pfb></usr/local/texlive/2022/texmf-dist/fonts/typ
 e1/public/cm-super/sfsx2488.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1
 /public/cm-super/sfti1200.pfb>
-Output written on Thesis_1224.pdf (27 pages, 456617 bytes).
+Output written on Thesis_1224.pdf (29 pages, 610020 bytes).
 PDF statistics:
- 712 PDF objects out of 1000 (max. 8388607)
- 619 compressed objects within 7 object streams
- 166 named destinations out of 1000 (max. 500000)
- 177 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 763 PDF objects out of 1000 (max. 8388607)
+ 653 compressed objects within 7 object streams
+ 174 named destinations out of 1000 (max. 500000)
+ 202 words of extra memory for PDF output out of 10000 (max. 10000000)
 
