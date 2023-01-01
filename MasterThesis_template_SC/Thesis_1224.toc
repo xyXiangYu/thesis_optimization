@@ -16,7 +16,7 @@
 \contentsline {section}{\numberline {4.2}Theoretical solution to rocket car case}{23}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Apply classical (minmax) approach}{28}{section.4.3}%
 \contentsline {section}{\numberline {4.4}Apply training (maxmin) approach}{29}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Comparison numerical result of classical and training approach}{30}{section.4.5}%
+\contentsline {section}{\numberline {4.5}Analysis the numerical results}{30}{section.4.5}%
 \contentsline {chapter}{\numberline {5}Conclusion}{30}{chapter.5}%
 \contentsline {part}{\numberline {I}Appendix}{31}{part.1}%
 \contentsline {chapter}{\numberline {A}Lists}{32}{appendix.A}%

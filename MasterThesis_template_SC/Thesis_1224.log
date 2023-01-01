@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.30)  29 DEC 2022 04:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.30)  1 JAN 2023 21:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -827,40 +827,40 @@ l.830 \end{equation}
 <theory_T_diff_p.png, id=464, 415.5525pt x 331.7193pt>
 File: theory_T_diff_p.png Graphic file (type png)
 <use theory_T_diff_p.png>
-Package pdftex.def Info: theory_T_diff_p.png  used on input line 842.
+Package pdftex.def Info: theory_T_diff_p.png  used on input line 844.
 (pdftex.def)             Requested size: 284.52756pt x 227.13522pt.
 <theory_ut_3p.png, id=468, 497.9403pt x 325.9377pt>
 File: theory_ut_3p.png Graphic file (type png)
 <use theory_ut_3p.png>
-Package pdftex.def Info: theory_ut_3p.png  used on input line 848.
+Package pdftex.def Info: theory_ut_3p.png  used on input line 850.
 (pdftex.def)             Requested size: 284.52756pt x 186.24396pt.
 <original_u10_p0.png, id=477, 417.7206pt x 341.1144pt>
 File: original_u10_p0.png Graphic file (type png)
 <use original_u10_p0.png>
-Package pdftex.def Info: original_u10_p0.png  used on input line 856.
+Package pdftex.def Info: original_u10_p0.png  used on input line 858.
 (pdftex.def)             Requested size: 284.52756pt x 232.34508pt.
  [25
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.1}) 
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.859 \end{figure}
+l.861 \end{figure}
                   
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.2}) 
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.859 \end{figure}
+l.861 \end{figure}
                    <./theory_T_diff_p.png> <./theory_ut_3p.png>]
 <original_u10_p5.png, id=489, 414.8298pt x 341.1144pt>
 File: original_u10_p5.png Graphic file (type png)
 <use original_u10_p5.png>
-Package pdftex.def Info: original_u10_p5.png  used on input line 862.
+Package pdftex.def Info: original_u10_p5.png  used on input line 864.
 (pdftex.def)             Requested size: 284.52756pt x 233.97423pt.
 <original_u10_p9.png, id=492, 414.8298pt x 341.1144pt>
 File: original_u10_p9.png Graphic file (type png)
 <use original_u10_p9.png>
-Package pdftex.def Info: original_u10_p9.png  used on input line 868.
+Package pdftex.def Info: original_u10_p9.png  used on input line 870.
 (pdftex.def)             Requested size: 284.52756pt x 233.97423pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -870,19 +870,19 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.4.3})
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.872 
+l.874 
       
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.4}) 
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.872 
+l.874 
        <./original_u10_p0.png> <./original_u10_p5.png>] [27
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.5}) 
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.885 F
+l.887 F
        or both the classical approach and the training approach, after the d...
  <./original_u10_p9.png>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -893,24 +893,24 @@ pdfTeX warning (ext4): destination with the same identifier (name{equation.4.3.
 7}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.944 
+l.946 
       
 pdfTeX warning (ext4): destination with the same identifier (name{equation.4.3.
 8}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.944 
+l.946 
       
 pdfTeX warning (ext4): destination with the same identifier (name{equation.4.4.
 9}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.944 
+l.946 
       ]
 <numerical_T_p.png, id=570, 416.2752pt x 331.7193pt>
 File: numerical_T_p.png Graphic file (type png)
 <use numerical_T_p.png>
-Package pdftex.def Info: numerical_T_p.png  used on input line 946.
+Package pdftex.def Info: numerical_T_p.png  used on input line 948.
 (pdftex.def)             Requested size: 284.52756pt x 226.74548pt.
 
 chapter 5.
@@ -919,12 +919,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.4.6})
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1088    \newpage
+l.1090    \newpage
                    <./numerical_T_p.png>]
 part I.
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `partprefix' that is an alias of element `partnumber'
-(scrkbase)              on input line 1089.
+(scrkbase)              on input line 1091.
 [31]
 
 Class scrreprt Warning: You are using `\begin{appendix}...\end{appendix}'.
@@ -938,7 +938,7 @@ Class scrreprt Warning: You are using `\begin{appendix}...\end{appendix}'.
 (scrreprt)              inconsistent.
 (scrreprt)              Because of this, you should remove `\end{appendix}'
 (scrreprt)              and replace `\begin{appendix}' by command
-(scrreprt)              `\appendix' on input line 1090.
+(scrreprt)              `\appendix' on input line 1092.
 
 chapter A.
 (./Thesis_1224.bbl)
@@ -952,7 +952,7 @@ Package rerunfilecheck Info: File `Thesis_1224.out' has not changed.
 Here is how much of TeX's memory you used:
  17082 strings out of 478268
  308796 string characters out of 5846346
- 762203 words of memory out of 5000000
+ 762171 words of memory out of 5000000
  34852 multiletter control sequences out of 15000+600000
  490469 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -987,7 +987,7 @@ ts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2022/texmf-dist/fonts
 ype1/public/cm-super/sfsx2074.pfb></usr/local/texlive/2022/texmf-dist/fonts/typ
 e1/public/cm-super/sfsx2488.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1
 /public/cm-super/sfti1200.pfb>
-Output written on Thesis_1224.pdf (32 pages, 638405 bytes).
+Output written on Thesis_1224.pdf (32 pages, 638354 bytes).
 PDF statistics:
  815 PDF objects out of 1000 (max. 8388607)
  700 compressed objects within 7 object streams
