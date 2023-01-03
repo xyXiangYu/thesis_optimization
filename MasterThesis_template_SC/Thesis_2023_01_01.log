@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2022.5.25)  3 JAN 2023 01:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2022.5.25)  3 JAN 2023 01:30
 entering extended mode
 **./Thesis_2023_01_01.tex
 (Thesis_2023_01_01.tex
@@ -887,7 +887,7 @@ er (name{equation.4.1.2}) has been already used, duplicate ignored
                                                   
 l.854 
       ]
-<theory_T_diff_p.png, id=463, 415.5525pt x 331.7193pt>
+<theory_T_diff_p.png, id=459, 415.5525pt x 331.7193pt>
 File: theory_T_diff_p.png Graphic file (type png)
 <use theory_T_diff_p.png>
 Package pdftex.def Info: theory_T_diff_p.png  used on input line 856.
@@ -898,7 +898,7 @@ Package pdftex.def Info: theory_T_diff_p.png  used on input line 856.
                                                   
 l.868 
        <./theory_T_diff_p.png>]
-<theory_ut_3p.png, id=497, 497.9403pt x 325.9377pt>
+<theory_ut_3p.png, id=493, 497.9403pt x 325.9377pt>
 File: theory_ut_3p.png Graphic file (type png)
 <use theory_ut_3p.png>
 Package pdftex.def Info: theory_ut_3p.png  used on input line 870.
@@ -910,12 +910,12 @@ Package pdftex.def Info: theory_ut_3p.png  used on input line 870.
 l.879 W
        e can also numerically verified that the theoretical solution is corr...
  <./theory_ut_3p.png>]
-<original_u10_p0.png, id=527, 417.7206pt x 341.1144pt>
+<original_u10_p0.png, id=523, 417.7206pt x 341.1144pt>
 File: original_u10_p0.png Graphic file (type png)
 <use original_u10_p0.png>
 Package pdftex.def Info: original_u10_p0.png  used on input line 886.
 (pdftex.def)             Requested size: 284.52756pt x 232.34508pt.
-<original_u10_p5.png, id=530, 414.8298pt x 341.1144pt>
+<original_u10_p5.png, id=526, 414.8298pt x 341.1144pt>
 File: original_u10_p5.png Graphic file (type png)
 <use original_u10_p5.png>
 Package pdftex.def Info: original_u10_p5.png  used on input line 892.
@@ -929,7 +929,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
                                                   
 l.896 
        <./original_u10_p0.png>]
-<original_u10_p9.png, id=541, 414.8298pt x 341.1144pt>
+<original_u10_p9.png, id=537, 414.8298pt x 341.1144pt>
 File: original_u10_p9.png Graphic file (type png)
 <use original_u10_p9.png>
 Package pdftex.def Info: original_u10_p9.png  used on input line 898.
@@ -953,7 +953,7 @@ tination with the same identifier (name{equation.4.3.7}) has been already used,
                                                   
 l.950 	\begin{align}
                     ]
-<numerical_T_p.png, id=580, 416.2752pt x 331.7193pt>
+<numerical_T_p.png, id=576, 416.2752pt x 331.7193pt>
 File: numerical_T_p.png Graphic file (type png)
 <use numerical_T_p.png>
 Package pdftex.def Info: numerical_T_p.png  used on input line 965.
@@ -963,22 +963,6 @@ Package pdftex.def Info: numerical_T_p.png  used on input line 965.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 chapter 5.
-[30pdfTeX warning (ext4): destination with the same identifier (name{equation.4
-.4.8}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  
-l.1107    \newpage
-                  ]
-part I.
-Package scrkbase Info: You've told me to use the font selection of the element
-(scrkbase)             `partprefix' that is an alias of element `partnumber'
-(scrkbase)              on input line 1108.
-[31pdfTeX warning (ext4): destination with the same identifier (name{figure.4.6
-}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  
-l.1108   \part{Appendix}
-                         <./numerical_T_p.png>]
 
 Class scrreprt Warning: You are using `\begin{appendix}...\end{appendix}'.
 (scrreprt)              You should note, that `\appendix' is a mostly globally
@@ -993,36 +977,45 @@ Class scrreprt Warning: You are using `\begin{appendix}...\end{appendix}'.
 (scrreprt)              and replace `\begin{appendix}' by command
 (scrreprt)              `\appendix' on input line 1109.
 
-chapter A.
-(Thesis_2023_01_01.bbl)
+[30pdfTeX warning (ext4): destination with the same identifier (name{equation.4
+.4.8}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.1113     \newpage
+                   ] (Thesis_2023_01_01.bbl [31pdfTeX warning (ext4): destinati
+on with the same identifier (name{figure.4.6}) has been already used, duplicate
+ ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.67 
+      <./numerical_T_p.png>]) [32]
 \openout2 = `deposition.aux'.
 
- (deposition.tex [32])
+ (deposition.tex) [33]
 
 LaTeX3 Info: Redefining command \BeforeClosingMainAux with sig. 'm' on line
-(LaTeX3)     1118.
-
-
-LaTeX3 Info: Redefining command \BeforeClosingMainAux with sig. 'm' on line
-(LaTeX3)     1118.
+(LaTeX3)     1121.
 
 
 LaTeX3 Info: Redefining command \BeforeClosingMainAux with sig. 'm' on line
-(LaTeX3)     1118.
+(LaTeX3)     1121.
 
- (Thesis_2023_01_01.aux
-(titlepages.aux) (deposition.aux))
+
+LaTeX3 Info: Redefining command \BeforeClosingMainAux with sig. 'm' on line
+(LaTeX3)     1121.
+
+ (Thesis_2023_01_01.aux (titlepages.aux) (deposition.aux))
 Package rerunfilecheck Info: File `Thesis_2023_01_01.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 16211 strings out of 479300
- 278347 string characters out of 2863761
- 761294 words of memory out of 3000000
- 33219 multiletter control sequences out of 15000+200000
- 424640 words of font info for 73 fonts, out of 3000000 for 9000
+ 16193 strings out of 479300
+ 277902 string characters out of 2863761
+ 761282 words of memory out of 3000000
+ 33203 multiletter control sequences out of 15000+200000
+ 423869 words of font info for 72 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 111i,15n,116p,10614b,465s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 111i,15n,116p,10614b,505s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/cm-super/cm-super-t1.enc}{C:/Pro
 gram Files/MiKTeX 2.9/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<C:/Program Fil
 es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTe
@@ -1048,11 +1041,10 @@ e1/public/cm-super/sfss1728.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
 /cm-super/sfsx1200.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super
 /sfsx1440.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfsx1728
 .pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfsx2074.pfb><C:/
-Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfsx2488.pfb><C:/Program F
-iles/MiKTeX 2.9/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on Thesis_2023_01_01.pdf (32 pages, 711228 bytes).
+Program Files/MiKTeX 2.9/fonts/type1/public/cm-super/sfti1200.pfb>
+Output written on Thesis_2023_01_01.pdf (33 pages, 698714 bytes).
 PDF statistics:
- 803 PDF objects out of 1000 (max. 8388607)
- 194 named destinations out of 1000 (max. 500000)
- 207 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 793 PDF objects out of 1000 (max. 8388607)
+ 193 named destinations out of 1000 (max. 500000)
+ 191 words of extra memory for PDF output out of 10000 (max. 10000000)
 
