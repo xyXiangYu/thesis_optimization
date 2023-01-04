@@ -909,16 +909,16 @@ Because of the simplicity of the rocket car case, we can find the theoretical so
 For both the classical approach and the training approach, after the discretization of the uncertainty set, the problem to be solved becomes a normal optimal control problem and we can use the mutiple shooting and quasi Newton (in the SQP framework) method to solve. We are levaraging open source package Casadi\footnote{Please refer the website https://web.casadi.org for more details} and Gekko\footnote{Please refer the website https://gekko.readthedocs.io/en/latest/ for more information} to solve our problem. These two package can let the user choose different nonlinear programming solver and as well as different underlying numerical methods. In our case, we have chosen the mutiple shooting and sequential quadratic programming, together with Runge–Kutta RK4 method. The numerical result from the classical approach and training approach will be discussed in the next two sections. 
 
 \section{Apply classical (minmax) approach}
-We have explained in Section \ref{Sec:CA} about the classical appraoch. Within this section, we further explain how this classical approach can be used for the chosen case. 
+We have explained in Section \ref{Sec:CA} about the classical appraoch. Within this section, we show the numerical results of applying the classical approach for the chosen rocket car case. 
 % Applying the classical approach to the rocket car case, the problem can be solved as follows. 
 
 First we discretize the whole uncertainty set  $\mathbb{P}$ into multiple points in an increasing order $[p_0, p_1, ..., p_n] \subset \mathbb{P}$ so that $p_i, i =0, 1, ..., n$ can approximately representing the whole set $\mathbb{P}$ when $n$ is large enough. Here $p_0=p_l$ and $p_n= p_u$, with $[p_l, p_u] =[0,9]$, as shown in equation \ref{uncertainP}.  We solve the $minmax$ problem of the following form
 \begin{subequations}
 	\begin{align}
 		\underset{\epsilon, u(\cdot), x(\cdot)}{min}  \ \   &  \underset{p_i \in \mathbb{P}}{max}  \  \epsilon \\ 
-		s.t.  &  \ \ T  \leq \epsilon \\
+		s.t.  &  \ \ T_i  \leq \epsilon \\
 		&  \ \ x = (x_1, x_2),   \label{ca_rc_x} \\ 
-		& \ \  \dot{x} = T  \begin{pmatrix}  x_2(t;p_i) \\ u(t)-p_i   \end{pmatrix}, &  \ \forall \   p_i, \  t \in [0,1],  \label{ca_rc_partial} \\
+		& \ \  \dot{x} = T_i  \begin{pmatrix}  x_2(t;p_i) \\ u(t)-p_i   \end{pmatrix}, &  \ \forall \   p_i, \  t \in [0,1],  \label{ca_rc_partial} \\
 		& \ \ x(0,p_i) = 0, \label{ca_rc_t0}\\
 		& \ \ x_1(1;p_i) \geq 10  & \ \forall \   p_i,   \label{ca_rc_x1_t1} \\
 		& \ \ x_2(t;p_i) \leq 4, &   \ \forall \   p_i,  t \in [0,1] \label{ca_rc_x2_tc} \\
@@ -928,12 +928,71 @@ First we discretize the whole uncertainty set  $\mathbb{P}$ into multiple points
 	\end{align}
 	\label{ca_rc}
 \end{subequations}
-for all $p_i$ where $p_i \in [p_0, p_1, ..., p_n] \subset \mathbb{P}$. Since both $u(\cdot)$ and $x(\cdot)$ are functions of $t$, we also needs to discretize these two varaibles in the time horizon. In this classical approach, the driver has no prior knowledge about the value of the parameter $p$ and gets no feedback during the process and has to set up the driving strategy in advance. The realization of the trajectory of $u(\cdot)$ and $x(\cdot)$ may not be an optimal solution with any given $p$ value. 
-In the end, we get solutions of $x$, $u$ and $ \epsilon$ which are conservative to all the $p_i \in \mathbb{P}$, and does not depend on any parameter $p$. 
+for all $p_i$ where $p_i \in [p_0, p_1, ..., p_n] \subset \mathbb{P}$. Since both $u(\cdot)$ and $x(\cdot)$ are functions of $t$, we also needs to discretize these two varaibles in the time horizon (i.e. $500$ subintevals in the numerical implementation). In this classical approach, the driver has no prior knowledge about the value of the parameter $p$ and gets no feedback during the process and has to set up the driving strategy in advance. The realization of the trajectory of $u(\cdot)$ and $x(\cdot)$ for each $p_i$, therefore, may not be an optimal solution compared to the case when knowing the $p_i$ value in advance.
 
-In the actual implementation, we have take $n=40$, i.e. in total $40 \ p_i$ points ranging the whole uncertainty set $\mathbb{P}=[0,9]$, but here in the graph, we show the result only for $p=0, 1, 2, 3, 4, 5, 6, 7, 8, 9$
+\begin{figure}[H]
+	\centerline{\includegraphics[width=12cm]{ca_result.png}}
+	\caption{Final $\epsilon$ and $T_i$ for different $p_i$ values}
+	\label{fig_ca_result}
+\end{figure}
 
-Numerical result to be added for the classical approach.  
+For each $(p_i, x(t;p_i), (t;p_i))$, we get one $T_i$, which we try to get maximum value, and meanwhile over the $T_i, i =0, 1, ..., n$, we would like to minimize $\epsilon$ ($\epsilon = \underset{i}{max} \ T_i$). In the end, we reach a worst $\epsilon$ over all $T_i, i =0, 1, ..., n$, and for each $i$, we get a trajectory $(p_i, x(t;p_i), (t;p_i))$. 
+
+In the actual implementation, we have take $n=40$, i.e. in total $40 \ p_i$ points ranging the whole uncertainty set $\mathbb{P}=[0,9]$. Nevertheless, we only show the result for $p_i=0, 1, 2, 3, 4, 5, 6, 7, 8, 9$ for the sake of readability. The final time $\epsilon$ and $T_i$  is shown in Figure \ref{fig_ca_result}, where $\epsilon = \underset{i}{max} \ T_i, i = 0, 1, 2, ..., 9$, and $\epsilon$ reaches the maximum value $4.6053$, when $p_i=9$. The differences in $T_i$ arise mainly because of the numerical errors, in our implementation, the number of subinterval is chosen as $500$ and the numerical error tolerance level is set $1e-6$. When we increase the number of subintervals and decrease the tolerance level, the $T_i$ for $p_i\neq =9$ should converge to $T_i, p_i=9$. 
+
+
+The trajectories $(p_i, x(t;p_i), (t;p_i))$ for $p_i=0, 1, 2, 3, 4, 5, 6, 7, 8, 9$ are shown in Figure \ref{fig_ca_ut_pis}, Figure \ref{fig_ca_st_pis} and Figure \ref{fig_ca_vt_pis} respectively. In all the three Figures \ref{fig_ca_ut_pis}, \ref{fig_ca_st_pis} and \ref{fig_ca_vt_pis}, the standardized time $t \in [0,1]$ is used as x-axis. In Figure \ref{fig_ca_ut_pis}, the $u(t)$ acceleration/deceleration Force is shown for each $p_i=0, 1, 2, 3, 4, 5, 6, 7, 8, 9$; in Figure \ref{fig_ca_st_pis}, the position ($x_1(t)$) is shown for each $p_i=0, 1, 2, 3, 4, 5, 6, 7, 8, 9$; and in Figure \ref{fig_ca_vt_pis}, the velocity/speed ($x_2(t)$) is shown for each $p_i=0, 1, 2, 3, 4, 5, 6, 7, 8, 9$. 
+
+We have explained that the trajectories of different $p_i$ from the classical approach may not be optimal, compared to the case when solving the OCP \ref{rc} directly with the known $p_i$. In the following, we compare the trajectories of the result from the classical approach for $p_i=0$, $p_i=5$, and $p_i=9$ to the cases when solving the OCP \ref{rc} directly with $p_i=0$, $p_i=5$, and $p_i=9$ known in advance. The results from solving OCP \ref{rc} directly with $p_i=0$, $p_i=5$, and $p_i=9$ known in advance, are already shown in Figures \ref{fig1_org_u10_p0},  \ref{fig1_org_u10_p5} and \ref{fig1_org_u10_p9}. 
+
+In Figure \ref{fig_ca_compare_p0}, Figure \ref{fig_ca_compare_p5} and Figure \ref{fig_ca_compare_p9}, we show the comparisons for $p_i=0$, $p_i=5$, and $p_i=9$ between results of solving OCP \ref{rc} directly and results applying classical approach to problem \ref{ca_rc}. Obviously, we can see from from Figure \ref{fig_ca_compare_p0} and Figure \ref{fig_ca_compare_p5}, the solution from classical apporoach is more conservative compared to solving OCP \ref{rc} directly for $p=0$ and $p=5$ respectively. When $p=9$, there is only one line in Figure \ref{fig_ca_compare_p9} for the position $x_1(t)$, force $u(t)$ and velocity $x_2(t)$. This confirms that indeed, when $p=9$, the worst case happens, and the corresponding $\epsilon=4.6053$ is equal to result of solving the \ref{rc} directly with $p=9$. For other $p_i \neq 9$, we can always find an feasible solution with a corresponding $T_i$, which will always be less than or equal to $4.6053$. 
+
+%Here, we take the result again  We take the result from solving OCP directly with with $p_i=0$, $p_i=5$, and $p_i=9$ known and the results from classical approach with $p_i=0$, $p_i=5$, and $p_i=9$, and compare the results. The comparsions for  $p_i=0$, $p_i=5$, and $p_i=9$ are shown in Figure \ref{fig_ca_compare_p0}, Figure \ref{fig_ca_compare_p5} and Figure \ref{fig_ca_compare_p9} respectively.
+%and we get t and $\epsilon$ which are conservative to all the $p_i \in \mathbb{P}$, and does not depend on any parameter $p$. 
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=13cm]{ca_ut_pis.png}}
+	\caption{u(t) Force for different $p_i$ values}
+	\label{fig_ca_ut_pis}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=13cm]{ca_st_pis.png}}
+	\caption{$x_1(t)$ Position for different $p_i$ values}
+	\label{fig_ca_st_pis}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=13cm]{ca_vt_pis.png}}
+	\caption{$x_2(t)$: Velocity for different $p_i$ values}
+	\label{fig_ca_vt_pis}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=12cm]{ca_compare_p0.png}}
+	\caption{Compare the results from solving OCP \ref{rc} with $p=0$ and the result of applying the classical approach to problem \ref{ca_rc} with $p=0$}
+	\label{fig_ca_compare_p0}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=12cm]{ca_compare_p5.png}}
+	\caption{Compare the results from solving OCP \ref{rc} with $p=5$ and the result of applying the classical approach to problem \ref{ca_rc} with $p=5$}
+	\label{fig_ca_compare_p5}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=12cm]{ca_compare_p9_old.png}}
+	\caption{Compare the results from solving OCP \ref{rc} with $p=9$ and the result of applying the classical approach to problem \ref{ca_rc} with $p=9$}
+	\label{fig_ca_compare_p9}
+\end{figure}
+
+
+
+
+ 
+
+
+%Numerical result to be added for the classical approach.  
 
 %where $p_i$ is one of the discretized point $p_0, p_1, ..., p_n$  from the  $\mathbb{P}$. Therefore, for each $ p_i \in \mathbb{P}$, we get a corresponding solution. In the end, we get a robustified parameter-dependent varaibles for realizations of the unceretain parameters. The bigger the number $n$, i.e. the more points of $p_i$, the more precise that the obtained solution can represent the whole uncertain set. In this classical approach, the driver has no prior knowledge about the value of the parameter $p$ and gets no feedback during the process and has to set up the driving strategy in advance. The numerical implementation result of the classical approach is shown in section \ref{Sec_NR} when comparing that of the training approach. 
 
@@ -960,12 +1019,22 @@ Contrast to the classical approach, in the training approach it is assumed that 
 	\end{align}
 	\label{TA_rc}
 \end{subequations}
-With a given $p_i$ value, the lower level optimization problem turns out to be a normal OCP. One $p_i$ value will correspond to one optimal $T_i$ values. Among all the optimal $T_i$, we would like to find the worst case, i.e. the largest among all $T_i$ values. Similar to the discretization of the uncertainty set in the classical approach, here we also take $n=40$, i.e. in total $40 p_i$ points ranging the whole uncertainty set $\mathbb{P}=[0,9]$.  The result of $T_i$ against $p_i$ is shown in Figure \ref{fig_ta_numerical_T_p}.  Figure \ref{fig_ta_numerical_T_p} is almost indentical to Figure \ref{theory_T_diff_p}, which confirms again that our numerical result with different $p$ is consistent with the theoretical result. Furthermore, the worst case over all $p_i$ is when $p_i$ takes the biggest value, i.e. $p_i =9$, and in this case $T_i = 4.6053$.  We already shown in Figure \ref{fig1_org_u10_p9} the solution to original problem when $p_i=9$. The worst case, therefore, have the same solution as shown in Figure \ref{fig1_org_u10_p9}, with  $T=4.6053$, which we do not repeat here. 
-\begin{figure}[h]
+
+\begin{figure}[H]
 	\centerline{\includegraphics[width=10cm]{numerical_T_p.png}}
 	\caption{Numerical result: different $T_i$ values against different $p_i$ values, with $p_i=9$ and  $T_i=4.6053$ the worst case}
 	\label{fig_ta_numerical_T_p}
 \end{figure}
+
+With a given $p_i$ value, the lower level optimization problem turns out to be a normal OCP. One $p_i$ value will correspond to one optimal $T_i$ values. Among all the optimal $T_i$, we would like to find the worst case, i.e. the largest among all $T_i$ values. Similar to the discretization of the uncertainty set in the classical approach, here we also take $n=40$, i.e. in total $40$ $p_i$ points ranging the whole uncertainty set $\mathbb{P}=[0,9]$.  The result of $T_i$ against $p_i$ is shown in Figure \ref{fig_ta_numerical_T_p}.  Figure \ref{fig_ta_numerical_T_p} is almost indentical to Figure \ref{theory_T_diff_p}, which confirms again that our numerical result with different $p$ is consistent with the theoretical result. Furthermore, the worst case over all $p_i$ is when $p_i$ takes the biggest value, i.e. $p_i =9$, and in this case $T_i = 4.6053$.  We already shown in Figure \ref{fig1_org_u10_p9} the solution to original problem when $p_i=9$. The worst case, therefore, have the same solution as shown in Figure \ref{fig1_org_u10_p9}, with  $T=4.6053$, which we do repeat here in Figure \ref{fig1_ta_final}. 
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=10cm]{original_u10_p9.png}}
+	\caption{Training approach to problem \ref{TA_rc}, final result, worst case happens when $p=9$}
+	\label{fig1_ta_final}
+\end{figure}
+
+
 
 %From analyzing the theoretical solution, 
 %The solution of the training approach in this paper is, therefore, also a function of the realizations of the uncertain parameters. Since in the 
@@ -973,6 +1042,10 @@ With a given $p_i$ value, the lower level optimization problem turns out to be a
 
 \section{Analysis the numerical results}
 \label{Sec_NR}
+
+As show above, both the classical approach and training approach leads to an identical solution with final time as $T=4.6053$, which is conservative with respective to oiriginal OCP \ref{rc}. The time $T=4.6053$ is conservative because regardless how the uncertain parameter $p$ takes the value in the uncertainty set $\mathbb{P}$, we can always find a feasible solution that leads to a final time that is less than or equal to $T=4.6053$. Neverthless, the classical approach and the training approach do not necessary lead to an identical solution for a general OCP under uncertainty. It happens that both approaches lead to the same solution to our chosen case purely because of the coincidence, and the worst case happens when $p=9$ at the right boundary point. % the classcical approach and training apporach lead 
+
+
 
 
 

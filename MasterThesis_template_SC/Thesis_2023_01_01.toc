@@ -15,8 +15,8 @@
 \contentsline {section}{\numberline {4.1}Introduction to the rocket car case}{23}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Theoretical solution to rocket car case}{24}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Apply classical (minmax) approach}{29}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Apply training (maxmin) approach}{30}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Analysis the numerical results}{30}{section.4.5}%
-\contentsline {chapter}{\numberline {5}Conclusion}{30}{chapter.5}%
-\contentsline {chapter}{Bibliography}{31}{chapter*.2}%
+\contentsline {section}{\numberline {4.4}Apply training (maxmin) approach}{34}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Analysis the numerical results}{35}{section.4.5}%
+\contentsline {chapter}{\numberline {5}Conclusion}{35}{chapter.5}%
+\contentsline {chapter}{Bibliography}{36}{chapter*.2}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
