@@ -1,0 +1,240 @@
+% In the example give above, we have chosen the support function to be a constant value. In practice, the support 
+%We have shown a simple problem where numerical solution can be obtained via the mutilple shooting method. In this examplary problem, the 
+%The example we show is a 
+%$y(\tau_{k+1}; \hat{y}_k) - \hat{y}_{k+1} = 0, \  k = 0, 1, ..., m-1$ and $\hat{y}_{m} - y_f =0$, then stop,
+%% $y(\tau_{k+1}; \hat{y}_k) - \hat{y}_{k+1} = 0, \  k = 0, 1, ..., m-1$ and $\hat{y}_{m} - y_f =0$, then stop,
+
+%\usepackage{enumitem}
+%\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}}
+%\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
+%\renewcommand{\labelenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
+
+%\usepackage{enumitem}
+%\usepackage[shortlabels]{enumitem}
+
+%\usepackage[thmmarks,amsmath]{ntheorem}
+%\usepackage{tikz}
+%\usepackage[inline]{enumitem}
+%\usepackage[thmmarks]{ntheorem}
+%\usepackage{cleveref}
+
+
+
+%where $p^0$ is a fixed value in the feasible uncertainty set $\Omega_P$, where the parameter $p$ can take value from.In the paper \cite{MatSch22}, multiple methods of solving the parametric optimization problem have been discussed. The main focus (of solving the Cerebral Palsy problem) of the paper \cite{MatSch22}, is the "worst-case treatment planning by bilevel optimal control", i.e. a bilevel optimization problem. The bilevel optimisation method in paper \cite{MatSch22} solves the parametric optimization problems, e.g. the Cerebral Palsy problem, in a conservative way.One method of solving the original CP problem in a conservative way is to transform the problem \ref{ParaMin} into another form. 
+
+%Based on theorem \ref{TH_KKT}, We want to solve equation \ref{eq:GradientLagrange}.
+%\begin{align}
+%	\label{eq:GradientLagrange}
+%	\nabla 	\mathcal{L}(w,\lambda, \mu) = 0.
+%\end{align}
+%where its derivatives is as follows
+%\begin{equation}
+%\begin{align}
+%	\nabla \mathcal{L}(w,\lambda, \mu) &= 
+%	\mtrx{
+	%		\nabla_w f(w) +  \nabla_w g(w) \lambda + \nabla_w h(w) \mu  \\
+	%		g(w)    \\
+	%		h(w)
+	%	} 
+%\end{align}
+
+%	\nabla^2 \mathcal{L}(w,\lambda, \mu) &=
+%\mtrx{
+	%	\nabla^2_w f(w) + \nabla^2_w g(w)\lambda  & \nabla_w g(w) & \nabla_w h(w)\\
+	%	\nabla_w g(w) ^\top\\
+	%	\nabla_w h(w)^\top
+	%}
+
+
+%\end{equation}
+% 	\mathcal{L}(w,\lambda, \mu) &= \Phi(w) - \lambda ^\top a(w)-  \mu^\top b(w) \\
+
+
+
+
+%We apply Newton's method and we have to solve for $(w_i,\lambda_i, \mu_i)$ :
+%\begin{align}
+%	\nabla^2 \mathcal{L}(w_i,\lambda_i, \mu_i) \Delta w +  \nabla \mathcal{L}(w_i,\lambda_i, \mu_i) = 0.
+%\end{align}
+
+%Equivalently, the following QP ( Quadratic Programming ) needs to be solved:
+
+
+
+
+% and include the equality
+%\begin{equation}
+%	\mathcal{L}(x,\lambda, \mu) = f(x) + \lambda^\top g(x) +  \mu^\top h(x) 
+%	\label{eq_Lagrangian}
+%\end{equation}
+
+
+
+
+%The optimal control problem (OCP) \ref{P2_OPM} involves constraints in the partial differential equation form and in a time horizon $t \in [t_0, t_f]$. Therefore, we can apply multiple shooting method discretize the original OCP of the whole interval into mutiple OCPs in different subintervals, with the constraints enforced at the boundary of subintervals to guarantee the continuity. Together with the matching conditions, we can then aggregate the subproblems and apply quasi Newton method to get the final optimal solution. The numerical solution, with multilpe shooting and quasi Newton method to solve optimal control problem, will be demnostrated with rocket car case in Chapter \ref{Chapter4}.  
+
+%In the next section, we explain the multilpe shooting method first and in the next chapter we then focus on how th
+
+
+
+
+%The constrained optimization \ref{eq:OCP_discret_compact} can form the Lagrangian function
+%\begin{equation}
+%	 \mathcal{L}(w,\lambda, \mu) = \Phi(w) - \lambda ^\top a(w)-  \mu^\top b(w) 
+%\end{equation}
+
+
+%\definition (Active Constraints and Active Set) An inequality constraint hi(x) ≤ 0 is called active at x∗ 2 Ω
+%iff hi(x∗) = 0 and otherwise inactive. The index set A(x∗) ⊂ f1; : : : ; nhg of active inequality constraint indices
+%is called the ”active set”
+
+
+
+
+%The Karush–Kuhn–Tucker theorem then states the following.
+
+
+%% = \frac{x_2(t_k) + x_2(t_{k-1})}{2} (\tau_k -\tau_{k_1})
+%%%  \frac{x_2(t_k) + x_2(t_{k-1})}{2} (\tau_k -\tau_{k_1}) 
+
+
+
+
+% t&= \frac{\tau}{T} \in [0,1] \quad \tau \in [0, T]
+%\\
+%i.e. \ \begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix} &= \begin{pmatrix} \frac{\partial x_1}{\partial t} \\ \frac{\partial x_2}{\partial t} \end{pmatrix} = 
+%\begin{pmatrix} \frac{\partial x_1}{\partial \tau} \frac{\partial \tau}{\partial t}  \\ \frac{\partial x_2}{\partial \tau} \frac{\partial \tau}{\partial t} \end{pmatrix} 
+
+%\begin{equation*}
+%	\begin{align}
+	%		\dot{x} =  \begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix}  & =  T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix} = \begin{pmatrix}  Tx_2(t;p) \\ T(u(t)-p)   \end{pmatrix} \\
+	%		i.e. \ \begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix} &= \begin{pmatrix} \frac{\partial x_1}{\partial t} \\ \frac{\partial x_2}{\partial t} \end{pmatrix} = 
+	%		\begin{pmatrix} \frac{\partial x_1}{\partial \tau} \frac{\partial \tau}{\partial t}  \\ \frac{\partial x_2}{\partial \tau} \frac{\partial \tau}{\partial t} \end{pmatrix} 
+	%	\end{align}
+%\end{equation*}
+
+   %\include{chapter3}
+%\include{chapter4}
+%\include{chapter5}
+%
+% \include{chapter2}
+%{\let\clearpage\relax \chapter{bar}}
+%% Put your contents here
+
+
+%\usepackage{amsthm}
+%\usepackage{amssymb}
+
+%\usepackage[normalem]{ulem}
+%\usepackage{amssymb}
+%\usepackage{amsfonts}
+%\usepackage[normalem]{ulem}
+%\usepackage                             {amsmath}
+%\usepackage                             {graphicx}
+
+
+%\usepackage{etoolbox}
+%\makeatletter
+%\patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
+%\makeatother
+%\usepackage{mathrsfs}
+
+%\usepackage                             {mathrsfs}
+%\usepackage{dsfont}
+%\usepackage{amsmath}
+%% \usepackage[thmmarks,amsmath]{ntheorem}
+%\usepackage{amsmath}
+%\usepackage{amsthm}
+%\usepackage[thmmarks,amsmath]{ntheorem}
+
+%\newcommand{\attn}[1]{\textbf{#1}}
+%\theoremstyle{definition}
+
+%\newtheorem{example}{Example}
+%\newtheorem*{note}{Note}
+
+%\newcommand{\P}{\mathbb{P}}
+% links
+% used pagages
+%\usepackage     [utf8]                  {inputenc}
+
+% definition given in equation \ref{eq_PW_obj}.
+%% within subinterval $\mathbb{I}_j$ with the solution $x(\tau; x_{j-1}, u_{j-1})$ Within subinterval $\mathbb{I}_j$, with initial guess $X_j = (x_{j-1}, u_{j-1})$,  
+
+
+% discretize the time $t \in [t_0, t_f]$ and the original problem is split into multiple subintervals, with the constraints discretized and applied to each subinterval. We also need to introduce the initial guess for each subinterval and add the matching condition at each boundary. In the end, we turn the original problem in the form of equation  \ref{P2_OPM} into piecewise OCPs with augmented parameters and constraints. 
+%In the numerical implementation for our chosen case, the Runge–Kutta RK4 method will also be used.  
+
+
+%& w = (x_0, u_0, x_1, u_1, ..., x_{m-1}, u_{m-1}) \\
+%     &   t_0 = \tau_0 < \tau_1 < ... <\tau_j < ... < \tau_m = t_f 
+%, \ \ j = 1, 2, ...,m 
+
+%			s.t.\ \ &  \dot{x} (t) = f(x(t), u(t)), \ \ (system \ dynamics)   \label{P2_sd} \\
+%& g(x(t), u(t)) = 0, \ \  (path\  equality\  constraints)  \label{P2_ec}\\
+%& h(x(t), u(t)) \leq 0, \ \ (path\  inequality \ constraints)  \label{P2_inc}\\
+%& x(t_0) = x_0, \ \ (initial \ value) \\
+%& r(x(t_f)) \leq 0, \ \ (terminal \ constraints)  \label{P2_final} \\
+%& x^{lower} \leq x(t) \leq x^{upper}   \label{P2_box_x} \\ 
+%& u^{lower} \leq u(t) \leq u^{upper}   \label{P2_box_u} \\ 
+%& t \in [t_0, t_f]
+
+%where $  (X_j,  x(\tau_j; x_{j-1}, u_{j-1}))  \in \Theta_j $ represents that the initial guess $x_{j-1}, u_{j-1}$  and the solution $x(\tau_j; x_{j-1}, u_{j-1})$  for subinterval $\mathbb{I}_j = [\tau_{j-1}, \tau_j]$ satisfy the constraints  \ref{P2_ec}, \ref{P2_inc}, \ref{P2_final}, \ref{P2_box_x}, and \ref{P2_box_u} within subinterval $\mathbb{I}_j$. The solution $x(\tau_j; x_{j-1}, u_{j-1})$ comes from solving the dynamic system in equation \ref{P2_sd} for the subinterval $\mathbb{I}_j$ with numerical method used. The numerical method can be one of the Runge–Kutta methods as discussed before. The objective function $F_j$ of subinterval is calculated as followin
+
+
+%is a numerical method to solve ordinary differential equations derived from the trapezoidal rule for computing integrals. The
+%\begin{equation}
+%	\int_{t_k}^{t_{k+1}} x_2(t;p) d \tau  \approx \frac{x_2(t_{k+1}) + x_2(t_k)}{2} (\tau_{k+1} -\tau_k)
+%	\label{mid_approx}
+%\end{equation}
+
+
+%There are many methods that can be used to approximate the integrals, one of the widely used method is the Runge–Kutta method. With initial value $x_1(t_k),x_2(t_k), u(t_k)$ given at each subinterval $[t_{k}, t_{k+1}]$, based on the differential equation \ref{ta_rc_partial2}, we can find the (approximation) solution within this subinterval. 
+% However, in order to get the feasible optimal solution for the original problem (i.e. the whole interval), we need to enforce the matching condition at the boundary of each subinterval as well as the constraints defined in equations \ref{ta_rc_t2}-\ref{ta_ut}.  These constraints can be addressed with the KKT method discussed in the next Section \ref{Sec_KKT}.
+
+
+
+%	\begin{subequations}
+	%	\begin{align}
+		%		x_1(t_{k+1}) -  x_1(t_k)  &= \int_{t_k}^{t_{k+1}} x_2(t;p) d \tau \label{eq_x1_int} \\
+		%		x_2(t_{k+1}) -  x_2(t_k)  &= \int_{t_k}^{t_{k+1}} (u(t)-p) d \tau \\
+		%		t \in [t_{k}, t_{k+1}], \  k &= 0, 1, 2, ..., m-1, \  t_0 =0, t_m =1
+		%	\end{align}
+	%\end{subequations}
+	
+	
+	%\begin{equation}
+	%	\int_{t_k}^{t_{k+1}} x_2(t;p) d \tau  \approx \frac{x_2(t_{k+1}) + x_2(t_k)}{2} (\tau_{k+1} -\tau_k)
+	%	\label{mid_approx}
+	%\end{equation}
+	% To solve the IVP, the natural idea to i The solution can be found either numerically or analytically, if analytical solutions exist. Nevertheless,  approximately by nume 
+	%When we $t \in [t_0, t_f]$
+	%But the piecewise OCPs can be aggregated together due to their non-overlapping properties and the same structure, i.e. they can be aggregated to one objective function with the constraints expressed in matrix form. The transformed problem can then be solved with KKT approach and quasi Newton method. In the next two sections, we explain in detail the KKT condition and quasi Netwon method respectively.
+	
+ 
+%Within each discretized subinterval, we form a solution and ensure the continuity for the whole interval by enforcing the matching condition at the boundary of each suninterval. With the same idea, we can use mutiple shooting to solve optimal control problems. For the rocket car problem \ref{TA_rc}
+%, a constant control in each subinterval does not affect our solulation if we  which is easy to implement for our chosen case. 	
+
+	%Define total cost function for all the errors arised from the solutions of the previous step. We use the notation $F_j$ as the cost function for the subinterval $\mathbb{I}_j$, with the sum of $F_j$ over all the subintervals as the total cost function. 
+	
+		% $$ based on some updating  \ref{P2_ec}, \ref{P2_inc}, \ref{P2_final}, \ref{P2_box_x}, and \ref{P2_box_u}, which are applicable in subinterval $\mathbb{I}_j$. %. We use the notation $\Theta_j$ as the collections of contrstraints
+		
+%where $w = (x_0, u_0, x_1, u_1, ..., x_{m-1}, u_{m-1}, u_m) $, and $x_{j-1}, u_{j-1}$ is the initial guess  for interval $\mathbb{I}_j = [\tau_{j-1}, \tau_j]$, 
+
+%	\begin{subequations}
+	%	\begin{align}
+		%		\underset{x(\cdot), u(\cdot)}{\text{min}}   \ &  F(x(\cdot), u(\cdot))  = \int_{t_0}^{t_f}L(x(t), u(t))dt + E (x(t_f)) \label{P2_cost} \\
+		%		s.t.\ \ &  \dot{x} (t) = f(x(t), u(t)), \ \ (system \ dynamics)   \label{P2_sd} \\
+		%		& g(x(t)) = 0 \  or \leq 0, \ t \in [t_0, t_f]\  (path\  equality\ or\ inequality\ constraints)  \label{P2_ec}\\
+		%		& h(x(t), u(t)) =0\  or  \leq 0,\ t \in [t_0, t_f] \ (mixed \ control-state  \ constraints)  \label{P2_inc}\\
+		%		& x(t_0) = x_0, \ \ (initial \ value) \\
+		%		& r(x(t_f)) \leq 0, \ \ (terminal \ constraints)  \label{P2_final} \\
+		%		& u^{lower} \leq u(t) \leq u^{upper}   \label{P2_box_u} \\ 
+		%		& t \in [t_0, t_f]
+		%	\end{align}
+	%	\label{P2_OPM}
+	% \end{subequations} 
+
+%In order to get the feasible solution, we can take the constraints into consideration by Lagrange multipliers with the Karush–Kuhn–Tucker (KKT) condition incorporated. 
+
+ % is one of the widespread and sucessfully used techniques to address the constraints of NLP. 		

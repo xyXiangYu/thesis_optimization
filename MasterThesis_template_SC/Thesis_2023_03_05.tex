@@ -1,0 +1,1211 @@
+%% Template for Master thesis
+%% ===========================
+%%
+\documentclass  [
+  paper    = a4,
+  BCOR     = 10mm,
+  twoside,
+  fontsize = 12pt,
+  fleqn,
+  toc      = bibnumbered,
+  toc      = listofnumbered,
+  numbers  = noendperiod,
+  headings = normal,
+  listof   = leveldown,
+  version  = 3.03
+]                                       {scrreprt}
+
+\usepackage     [T1]                    {fontenc}
+\usepackage                             {color}
+\usepackage     [english]               {babel}
+\usepackage                             {natbib}
+\usepackage                             {hyperref}
+\usepackage{graphicx}
+\usepackage{framed}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+%\usepackage{algcompatible}
+%\usepackage{algorithm2e}
+
+\usepackage{appendix}
+
+\usepackage{float}
+
+
+\newcommand\listappendixname{List of Appendices}
+\makeatletter
+\newcommand\listofappendices{%
+	\chapter*{\listappendixname}\@starttoc{app}
+}
+
+
+\usepackage{enumerate}
+%\usepackage[utf8]{inputenc}
+\usepackage[top=1 in,bottom=1in, left=1 in, right=1 in]{geometry}
+\usepackage[nottoc, notlof, notlot]{tocbibind}
+%\usepackage{dsfont}
+
+\newcommand{\matlab}{{\sc Matlab} }
+\newcommand{\cvec}[1]{{\mathbf #1}}
+\newcommand{\rvec}[1]{\vec{\mathbf #1}}
+\newcommand{\ihat}{\hat{\textbf{\i}}}
+\newcommand{\jhat}{\hat{\textbf{\j}}}
+\newcommand{\khat}{\hat{\textbf{k}}}
+\newcommand{\minor}{{\rm minor}}
+\newcommand{\trace}{{\rm trace}}
+\newcommand{\spn}{{\rm Span}}
+\newcommand{\rem}{{\rm rem}}
+\newcommand{\ran}{{\rm range}}
+\newcommand{\range}{{\rm range}}
+\newcommand{\mdiv}{{\rm div}}
+\newcommand{\proj}{{\rm proj}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\<}{\langle}
+\renewcommand{\>}{\rangle}
+\renewcommand{\emptyset}{\varnothing}
+
+\newcommand{\mtrx}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{exercise}{Exercise}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.4}
+\definecolor{darkgreen}{rgb}{0.0,0.4,0.0}
+\hypersetup{
+    colorlinks,
+    linkcolor=black,
+    citecolor=darkgreen,
+    urlcolor=darkblue
+}
+
+\begin{document}
+  %% title pages similar to providet template instead of maketitle
+  \include{titlepages} 
+   \tableofcontents
+    \let\clearpage\relax
+   \newpage
+   % \include{chapter1}
+   
+   
+ \chapter{Introduction}  
+ \label{Chapter1}
+Many real-life problems can be modeled as an optimal control problem (OCP), for example, launching a rocket to the moon with minimum fuel expenditure as the objective, or maximizing the profit from factory production, with constraints on resources available and uncertain market demand. This paper focuses on solving optimal control problems with numerical approaches, particularly with multiple shooting and (quasi) Newton type methods. 
+
+In general, optimal control deals with the problem of finding control over the state of a dynamic system over a period of time such that an objective function is optimized. Generally, an optimal control problem can be formulized as follows: 
+      \begin{equation}
+   	\begin{aligned}
+   	\underset{x(\cdot), u(\cdot)}{\text{min}}  \ &  F(x(\cdot), u(\cdot)) \\
+   		s.t.\ \  &  \dot{x} (t) = f(x(t), u(t))\\ 
+   		        & x(t) \in \Omega \\
+   		          & u(t) \in \mathbb{U}  \\
+   		          & t \in [t_0, t_f]
+   	\end{aligned}
+   	\label{P1_OPH}
+   \end{equation}
+% Here $t$ is the independent variable (generally speaking, time), usually using $t_0$ and $t_f$ representing the initial and terminal time respectively. $x(t)$ is the state variables, and $u(t)$ is the control variables, $F(\cdot)$ is the objective function, also called the cost function. $\dot{x} (t) = f(x(t), u(t))$ represents the underlying dynamic system,  $x(t) \in \Omega$ and  $ u(t) \in \mathbb{U}$ represent the constraints for which the state variables $x(t)$ and control variable $u(t)$ must satisfy respectively.  Sometimes, the constraints are expressed as functions of $x(t)$ and $u(t)$ together. 
+ 
+ 
+Here $t$ is the independent variable (generally speaking, time), usually using $t_0$ and $t_f$ to represent the initial time and terminal time, respectively. The state variable is $x(t)$, and the control variable is $u(t)$. The objective function, also known as the cost function, is denoted by $F(\cdot)$. The underlying dynamic system is represented by $\dot{x} (t) = f(x(t), u(t))$. $x(t) \in \Omega$ and  $u(t) \in \mathbb{U}$, represent the conditions that state variable $x(t)$ and control variable $u(t)$ must meet. The constraints are sometimes expressed as functions of $x(t)$ and $u(t)$  together.
+
+Generally speaking, there are three basic approaches to address optimal control problems: (a) dynamic programming; (b) indirect approaches; and (c) direct approaches (ref \cite{MHHP05}). This paper focuses on direct approaches, which transform the original infinite optimal control problem into a finite-dimensional nonlinear programming problem (NLP). This NLP can then solved by variants of numerical optimization methods, and the approach is therefore often sketched as "first discretize, then optimize."
+
+The multiple shooting method can be used in the "first discretize" part of the direct approach. The main idea is to transform the original optimal control problem into a nonlinear programming problem by coupling the control parameterization with a discretization of the state variables. The whole interval $[t_0, t_f]$ is, therefore discretized into $m$ subintervals, with $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$. In each subinterval $\mathbb{I}_j = [\tau_{j}, \tau_{j+1}]$, the control variables $u(t)$ can be approximated by piecewise functions, and the state variables $x(t)$ are solved numerically with an initial value of $x(\tau_j)=s_j$ at the shooting node $\tau_i$. The initial value $x(\tau_i)$ for the state variables at nodes $\tau_i$ must be guessed. Then in each subinterval, the state equations must be integrated individually from $\tau_i$ to $\tau_{i+1}$. In addition, the continuity conditions (matching conditions) must be satisfied, which require that on each differential node the values $x(\tau_{i+1})$ should equal the final value of the preceding subinterval.
+
+With multiple shooting methods applied, the optimal control problem is transformed into the NLP with constraints, which can be solved within Newton type framework. Newton type methods are iterative methods based on second order derivatives of the cost function (in the unconstrained case) or Lagrange function (in the constrained case). Newton type methods generally, but not always, converges faster than methods using first-order derivatives (e.g. gradient methods), with respect to computational time. The Newton method needs to calculate the second order derivatives, i.e. the Hessian matrix and its inverse in each iteration, which is very expensive to compute. Quasi Netwon methods employ an approximation to the original Hessian matrix and takes an efficient way to update the approximation matrix. Therefore, quasi Newton method is generally, but not always, faster than Newton method in computational time. For our constrained NLP, we use sequential quadratic programming (SQP), i.e. an iterative method for constrained nonlinear optimization. The SQP methods solve a sequence of optimization subproblems, each of which optimizes a quadratic model of the objective, subject to a linearization of the constraints.
+
+
+
+
+
+%Applying multiple shooting methods, 
+
+%ethods are iterative methods based on second order derivatives of the cost function (in the unconstrained case) or Lagrange function (in the constrained case).
+
+%The main idea is to divide the whole interval $t \in [t_0, t_f]$ into multiple subintervals, introduce an initial guess for each subinterval, discretize control variables at each subinterval, introduce initial guess for state variables solve the problem in each subinterval with the initial guess, and impose additional matching conditions at the boundary of each subinterval to form a solution for the whole interval. In each subinterval, with multiple shooting methods applied, the system of differential equations will be turned into a system of ordinary non-linear algebraic equations. Therefore, the original OCP is converted into a piecewise nonlinear programming problem (NLP). We can use the Karush–Kuhn–Tucker (KKT) approach to combine the constraints and the original objective function into a new Lagrange function. 
+
+%Minimizing this new Lagrange function is then an optimization problem without constraints, and its optimum value can be determined via derivative methods. To solve any unconstrained NLP, we can work within an iterative sequential quadratic programming (SQP), or Newton style framework. Newton style methods are second-order derivatives iterative optimization algorithm and generally, but not always, converges faster than first-order derivatives method (e.g. gradient descent). The Newton method needs to calculate the second order derivatives, i.e. the Hessian matrix and its inverse in each iteration, which is very expensive to compute. Quasi Netwon methods employs an approximation to the original Hessian matrix and takes an efficient way to update the approximation matrix. Therefore, quasi Newton method is generally faster than Newton method. 
+
+% we are actually solving a NLP problem with constraints, i.e. the "then optimize" part of the direct approaches. % whose optimal point, under some conditions (details in Chapter \ref{Chapter3}), can be found via its derivatives. 
+% The multiple shooting method first discretizes the whole interval into subintervals and has initial guess introduced for each subinterval, and solves the problem in each subinterval. Then the solution of each subinterval needs to be updated by iteration so that matching condition can be reached. To update the solution in each subinterval, we can actually aggregate the problems in the subinterval together and form a new objective function with the introduced initial guess in each subinterval as independent variables. By iteration to minimize the objective function, we can update the guess step by step so that the guess can satisfy the matching codition and all other constraints defined in the original problem.  The details of solving optimal control problems with mutiple shooting and quasi Netwon method will be given Chapter \ref{Chapter2}. 
+
+Besides the control variables $u$ and state variables $x$, some optimal control problems may have uncertain parameters whose value are priori unknown, and the optimal objective value depends on the parameter value. This kind of problem is called the parametric optimal control problems and is of the form 
+      \begin{equation}
+	\begin{aligned}
+	\underset{x(\cdot), u(\cdot)}{\text{min}}  \ &  F(x(\cdot), u(\cdot), p) \\
+	s.t.\ \  &  \dot{x} (t) = f(x(t), u(t),p)\\ 
+	& x(t;p) \in \Omega \\
+	& u(t) \in \mathbb{U}  \\
+	& p  \in   \mathbb{P}  \\
+	& t \in [t_0, t_f]
+\end{aligned}
+\label{P3_POP}
+\end{equation}
+%where $p^\star$ is a fixed value in the feasible uncertainty set $ \mathbb{P}$, where the parameter $p$ can take value from. Equation \ref{P3_POP} derives from the equation \ref{P1_OPH}, with the paramter $p$ added.
+%Similarly, Equation \ref{P2_OPM} can be expanded to have parameter $p$ included. 
+  
+The difference between equation \ref{P3_POP} and equation  \ref{P1_OPH}, is that the solution of equation \ref{P3_POP} depends on the $p$ from uncertainty set $ \mathbb{P}$, the solution here refers to the trajectory of $x(t)$ and $u(t)$ as well as the optimal function value $F^\star(p)$, as defined in equation \ref{Eq_optFp}.
+\begin{equation}
+	F^\star(p) = min \{ F(x(\cdot), u(\cdot), p) \}, \ s.t. \  all \ constraints
+	\label{Eq_optFp}
+\end{equation}	
+
+Parametric optimal control problems are very difficult to solve due to the uncertainty in the parameter $p$. The parameter $p$ can take different values, so does the corresponding solution of $u(t), x(t)$ and $F^\star(p)$. Since $p$ is priori unknown, in real life problems, it usually makes sense to solve the parametric optimal control problems in a conservative way, so that a robust solution can be obtained. For example, in the paper \cite{MatSch22}, when modelling the therapy design of Cerebral Palsy (CP) for the patient, a conservative solution is a desirable result. Two different ways of solving the parametric optimal control problem will be discussed in details, i.e. the classical approach and the training approach. Both are in the form of a bilevel optimization problem, i.e. an optimization problem in which another optimization problem enters the constraints. Details about these two approaches will be discussed in Chapter \ref{Chapter3}. The approaches discussed above will be demonstrated with a case study in state constrained rocket car, with the description of the case and its numerical result given in Chapter \ref{Chapter4}.  
+
+%of equation \ref{P3_POP}, i.e. $x(t)$, $u(t)$ and optimal function value 
+%objective function $F(\cdot)$. Then, the solution of \ref{P3_POP},  i.e. $min \  F(\cdot; p)$ can be regarded as a function of parameter $p$. One $p$ value corresponds to one solution, if such solution can be found.
+% The main idea of solving the parametric optimal control problem in a conservative way is to transform the problem \ref{P3_POP} into another form. 
+
+The structure of this paper is as follows. Following this introduction Chapter \ref{Chapter1}, in next Chapter \ref{Chapter2}, we focus on explaining in details how to solve optimal control problems with direct approaches using multiple shooting and quasi Newton method. In Chapter \ref{Chapter3}, we discuss the approaches for solving parametric optimal control problem, i.e. the classic approach and the training approach. In Chapter \ref{Chapter4}, we give the description of our case study, i.e. the state constrained rocket car case and compare the numerical solutions of the classical approach and training approach. In the final Chapter \ref{Chapter5}, we conclude the analysis with the numerical results. 
+
+%Within the training apporach, the knowledge from Chapter \ref{Chapter2} will be utilized. 
+
+
+
+\chapter{Numerical methods}
+\label{Chapter2}
+Optimal control theory deals with systems that can be controlled, i.e. whose evolution can be influenced by some external agent. In this paper we only consider the case that the control variable $u$ is a function of only time $t$, and not function of the state variable $x$. This type of problem is known as open loop, or controllability problem. The system dynamics of the optimal control problem can be generalized as a system of differential equations as
+\begin{equation}
+	  \dot{x} (t) = f(x(t), u(t)), \ x(t_0) = x_0, \ t \in [t_0, t_f]
+\end{equation}	  
+
+We would like to have such a dynamic system run in an optimal way, subject to the constraints that are applicable in real life. This indicates that the problem will have a clearly defined objective function, with the dynamic system and the constraints expressed in an explicit formula. With the example of launching the rocket to the moon, the objective function can be minimizing the fuel used or minimizing the time horizon of the system, subject to the constraints, e.g., gravity, fuel efficiency, speed limitation, etc. Differential equations are used to express the trajectories of the dynamic system. 
+
+In Chapter \ref{Chapter1},  equation \ref{P1_OPH} provides a basic formulation of an optimal control problem. Here we augment equation \ref{P1_OPH}  with mathematical details, with the objective function and the constraints expressed in explicit formulas. For real-life problems, the optimal control formulation can typically be generalized in the following form  
+	\begin{subequations}
+		\begin{align}
+			\underset{x(\cdot), u(\cdot)}{\text{min}}   \ &  F(x(\cdot), u(\cdot))  = \int_{t_0}^{t_f}L(x(t), u(t))dt + E (x(t_f)) \label{P2_cost} \\
+			s.t.\ \ &  \dot{x} (t) = f(x(t), u(t)), \ \ (system \ dynamics)   \label{P2_sd} \\
+			& g(x(t)) = 0 \  or \leq 0, \ t \in [t_0, t_f]\  (path\  equality\ or\ inequality\ constraints)  \label{P2_ec}\\
+			& h(x(t), u(t)) =0\  or  \leq 0,\ t \in [t_0, t_f] \ (mixed \ control-state  \ constraints)  \label{P2_inc}\\
+			& x(t_0) = x_0, \ \ (initial \ value) \\
+			& r(x(t_f)) \leq 0, \ \ (terminal \ constraints)  \label{P2_final} \\
+			& u^{lower} \leq u(t) \leq u^{upper}   \label{P2_box_u} \\ 
+			& t \in [t_0, t_f]
+		\end{align}
+		\label{P2_OPM}
+	\end{subequations}  
+
+Here $L(\cdot)$ and $E(\cdot)$ are called the running cost and end cost, with their sum $F(\cdot)$ the cost/objective function. $g(\cdot)$, $h(\cdot)$ and $r(\cdot)$ are functions representing path constraints, control-state constraints and terminal constraints respectively. The time horizon is $[t_0, t_f]$, with the initial value $x_0$.   
+
+Depending on the nature of the underlying optimal control problems, the mathematical expression can take a modified form of the equation \ref{P2_OPM}. Some of the constraints defined in equation \ref{P2_OPM} may not be applicable to certain problems, while others may require the addition of new constraints or the modification of existing constraints. Nevertheless, equation \ref{P2_OPM} gives us a general mathematical formulation of the typical optimal control problems in real life, and we do not go further into discussion of possible (minor) modifications to equation \ref{P2_OPM}. 
+
+Various methods exist for solving optimal control problems. The paper \cite{MHHP05} summarizes three general approaches to address optimal control problems: (a) dynamic programming, (b) indirect approaches, and (c) direct approaches. The optimality principle is used in dynamic programming to recursively compute a feedback control for all time $t$ and all time $x_0$. Indirect methods use the necessary conditions of optimality of the infinite problem to derive a boundary value problem (BVP) in ordinary differential equations.
+
+
+This paper focuses on direct approaches, which are one of the most widespread and successfully used techniques. Direct approaches transform the original infinite optimal control problem into a finite dimensional NLP. This NLP is then solved by variants of state-of-the-art numerical optimization methods, and this approach is therefore often sketched as "first discretize, then optimize." One of the most important advantages of direct approaches is that they can easily treat inequality constraints, e.g., the (inequality) path constraints as in equation \ref{P2_ec}. This is because structural changes in the active constraints during the optimization procedure are treated by well developed NLP methods, which can deal with inequality constraints and active set changes (ref \cite{MHHP05}).
+
+In the text that follows, we first explain the multiple shooting method, which can be used in the "first discretize" part of the direct approach. Afterwards, we explain the KKT conditions, which can treat equality and inequality constraints in optimal control problems. With the background knowledge of multiple shooting methods and KKT conditions, we continue to explain the Newton type method and sequential quadratic programming. These methods, together, can serve as the "then optimize" part of the direct approach and solve the optimal control problems of the form as in equation \ref{P1_OPH}, or in more mathematical details as in equation \ref{P2_OPM}.
+
+%%However, some modification is necessary so that the multiple shooting method can be applied to solve optimal control problem. I
+
+\section{Multiple shooting}
+The multiple shooting method was initially introduced to solve the boundary value problem (BVP) in differential equation scope (\cite{DJJ62} and \cite{Michael69}). This method, with some adjustment, is therefore well suited for solving optimal control problems with constraints in differential equations. The text that follows will first explain the main idea how to use multiple shooting to solve BVP in the differential equation scope. Following that, we explain how multiple shooting can be used to solve a general optimal control problem and specifically how it can be used to solve an optimal control problem of the form \ref{P2_OPM}. 
+
+To illustrate the concept of the shooting method to solve the boundary value problem (BVP), we use the following example.
+\begin{align*}
+	\dot{x} = x(t), t_0 \leq t \leq t_f 
+\end{align*}
+The analytical solution of above equation is 
+\begin{align*}
+	x(t) = x(t_0)e^{t - t_0}
+\end{align*}
+where $e$ is the exponential number. For a given value $b$, the initial condition $x(t_0) = x_0$ will be determined to satisfy $x(t_f) = b$. As a result, we get the equation $x(t_f)-b = 0$ or $x(t_0)e^{t_f - t_0}-b = 0$. This derivation is called the shooting method. Generally, the shooting method can be summarized as follows
+\begin{description}
+	\item[shooting method] \
+	\begin{itemize}
+		\item Step 1, choose an initial value $x(t_0)=x_0$ 
+		\item Step 2, form a solution of the differential equation from $t_0$ to $t_f$
+		\item Step 3, define a cost function for the error at the boundary and evaluate such cost function, and if the cost function value is below a tolerance level, then stop, otherwise continue to Step 4 
+		\item Step 4, update the guess for $x(t_0)$ based on some updating schema, go to Step 2
+	\end{itemize}
+\end{description}
+In Step 2, with initial value $x(t_0)=x_0$, numerical integration (see appendix \ref{App1}) is used in practice to obtain the solution $x(t), t \in [t_0, t_f]$. The details of the numerical inegration method is given in appendix \ref{App1}. In Step 3, the cost function can be defined as $(x(t_f)-b)^2$, and the tolerance level is set as a reasonable small number, e.g. $1e-8$. The tolenrance level is set based on a balance of accuracy and computation cost (with respect to time). 
+
+In multiple shooting method, the "shooting" interval is partitioned into some short subintervals. We consider a differential equation with boundary value of the following form
+\begin{equation}\label{eqn:ori_dae}
+	\begin{aligned}
+		& \dot{y} = f(t, y) \\ 
+		& y(t_f) = y_f  \\
+	\end{aligned}
+\end{equation}
+Where $y$ denotes the differential variables, $t \in [t_0, t_f]$, $y_f$ is the boundary value at $t_f$. With multiple shooting method, one chooses a suitable grid of multiple shooting nodes $\tau_j \in [t_0,t_f] $, where $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$, i.e. $m$ subintervals covering the whole interval. At the beginning of each subinterval, $[\tau_k, \tau_{k+1}], k = 0, 1, ..., m-1$, we have the initial guess of the starting value $\hat{y}_k$. Then in each subinterval, we have the initial value problem of the following form: 
+\begin{equation}\label{eqn:msh}
+	\begin{aligned}
+		& \dot{y} = f(t, y) , t \in [\tau_k, \tau_{k+1}], \ k = 0, 1, ..., m-1   \\ 
+		& y(\tau_k) = \hat{y}_k, k = 0, 1, ..., m-1  \\
+	\end{aligned}
+\end{equation}
+In each subinterval, we introduce the new unknown parameter $\hat{y}_k$, we solve an initial value problem and will get a solution $y(t), t \in [\tau_k, \tau_{k+1}]$. The piecewise solution is not necessary continuous and also not necessarily satisfy the boundary condition $y(t_f) = y_f$. The continuity has to be enforced by additional matching conditions at each subinterval boundary, i.e. 
+\begin{equation}\label{eqn:mc}
+	\begin{aligned}
+		& y(\tau_{k+1}; \hat{y}_k) = \hat{y}_{k+1}, \  k = 0, 1, ..., m-1  \\
+		& \hat{y}_{m} (i.e. \ \hat{y}_{\tau_m} = \hat{y}_{t_f}) =  y_f 
+	\end{aligned}
+\end{equation}
+
+The procedure of multiple shooting method can then be summarized as
+\begin{description}
+	\item[mutilple shooting method] \
+	\begin{itemize}
+		\item Step 1, choose multiple shooting nodes $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$ 
+		\item Step 2, choose initial guess for $\hat{y}_k, k = 0, 1, ..., m-1$ 
+		\item Step 3, form solutions of the differential equation in each subinterval $[\tau_k, \tau_{k+1}], k = 0, 1, ..., m-1$
+		\item Step 4, define a cost function for the errors at the boundaries of each subinterval. If such cost function value is below a tolerance level, then stop. Otherwise, continue to Step 5
+		\item Step 5, update the guess for $\hat{y}_k, k = 0, 1, ..., m-1$ based on some updating schema, go to Step 3
+	\end{itemize}
+\end{description}
+In Step 4, the cost function can be defined as 
+\begin{equation}
+	\sum_{k=0}^{k=m-1}(y(\tau_{k+1}; \hat{y}_k) - \hat{y}_{k+1})^2
+\end{equation}
+and the tolerance level is set as a reasonable small number, e.g. $1e-8$.
+
+We have summarized the main idea above on how the multiple shooting method can be used to solve a boundary value problem, yet the explanation falls short of mathematical rigor and completeness. In practice, there are many details to be decided when using (multiple) shooting methods. We will discuss these briefly without giving a comprehensive description. In Steps 1 \& 2, when choosing the shooting nodes and the initial guess $\hat{y}_k$, how they are chosen usually depends on the nature of the problem as well as a balance between accuracy and computational cost. For example, the nodes can be equally spaced and the $\hat{y}_k$ can be initialized with the same value, or they can be addressed based on our initial knowledge of the problem. In Step 3, polynomial functions can be used as the approximate solutions, leveraging the fact that Taylor expansion can be used to approximate any continuous function. In Step 4, the cost function is usually defined as the sum of quadratic errors, but it can take other forms as well. In Step 5, the "updating schema" can be defined so that the $\hat{y}_k$ can move in a direction that decreases the cost function. The (quasi) Newton method, for example, can be used as an updating method in Step 5.
+
+
+The multiple shooting method can be used for many problems. For example, it can also be applied to the second order differential system of the following form 
+\begin{equation}
+	y''(t) = f(t, y(t), y'(t))  \quad y(t_0) = y_0, \quad y(t_f) = y_f,  \quad t \in [t_0, t_f]
+	\label{eqn:tdode}
+\end{equation}
+The problem \ref{eqn:tdode} is similar to the problem \ref{eqn:ori_dae}. In each subinterval, a boundary value problem (BVP) is to be solved, and matching conditions at the boundary of each subinterval are to be enforced so that the final solution is continuous and applicable to the whole interval.
+
+In the examples above, no control variables exist, so only an initial guess $\hat{y}_k$ needs to be introduced for each subinterval. For optimal control problems, piecewise local support functions need to be introduced in the mutilphe shooting method to address the control variables, and initial guesses for the state variables need to be provided separately.
+
+\subsection{Mutiple shooting method for OCP}
+\label{Sec_MS_OCP}
+The multiple shooting method is well suited for solving optimal control problems of the form as in the equation \ref{P2_OPM}, as it can serve as the "first discretize" part of the direct approaches. For OCPs in the form of the equation \ref{P2_OPM}, we follow the same idea of how the multiple shooting method can be used to solve boundary value problems. For OCPs, there are both control variables and state variables; therefore, we need to discretize both the control and state variables. For simplicity, we choose the same discretization grid points for the control variables and the state variables. For the control variables in each subinterval, we introduce a 'local support' ansatz function. 
+
+Therefore, the first step remains the same, i.e., choosing the suitable time grid to discretize the whole interval $[t_0, t_f]$ into $m$ subintervals $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$, with the $i$-th subinterval as $\mathbb{I}_j = [\tau_j, \tau_{j+1}]$. In the second step, we define a local support function for the control variables. The local support function for the control variables in subinteval $\mathbb{I}_j$, which is denoted as  $u(t) \mid_{t \in \mathbb{I}_j} = \psi_j(t;w_j), t \in \mathbb{I}_j$  can be of the following type
+
+
+\begin{enumerate}
+	\item piecewise constant controls
+	\begin{align}
+	 u(t) \mid_{t \in \mathbb{I}_j} = \psi_j(t;w_j)= w_j, t \in \mathbb{I}_j
+	 \end{align}
+	\item piecewise linear controls
+		\begin{align}
+		u(t) \mid_{t \in \mathbb{I}_j} &= \psi(t;w_j)= w_j^l (\frac{\tau_{j+1} -t }{\tau_{j+1} - \tau_j}) + w_j^r (\frac{t- \tau_j}{\tau_{j+1} - \tau_j}) , t \in \mathbb{I}_j \\
+		w_j &= (w_j^l, w_j^r)
+	\end{align} 
+\end{enumerate}
+
+where $w_j$ is an introduced variable of the control support function for subinterval $ \mathbb{I}_j$. For piecewise constant controls, $u(t)$ takes a constant value $w_j$ in the subinterval $\mathbb{I}_j$. For the piecewise linear controls, $u(t)$ takes the value from the linear interpolation between the left boundary $w_j^l$ and right boundary $w_j^r$ in the subinterval $\mathbb{I}_j$.  The continuity regarding the control variables can be enforced by additional equality 
+\begin{equation}
+	\psi_j(\tau_{j+1};w_j) =  \psi_{j+1}(\tau_{j+1};w_{j+1})
+\end{equation}
+
+
+
+To solve the OCP as in equation \ref{P2_OPM}, we first discretize the time horizon $ \in [t_0, t_f]$ into multiple subintervals $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$, the time grid will be the same for the control and state variables. Then we choose the support function for the control variables as a constant function, i.e. $ \psi_j(t;w_j)= w_j, t \in \mathbb{I}_j$. We choose a constant control value in each subinterval for two reasons: first, this is easy to implement; and second, we can still get the correct numerical solution fast for our chosen case. Since the control variable support function is chosen to be a constant value for each subinterval, we, therefore, need to introduce the initial guess for $x$ and $u$ in each subinterval, denoted as $x(\tau_j) = s_j$ and $u_j(t) = w_j, t \in \mathbb{I}_j = [\tau_j, \tau_{j+1}]$
+We can the follow the steps
+\begin{itemize}
+	\item Step 1, choose multiple shooting nodes $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$ 
+	\item Step 2, choose the initial guess $s_j$ and $w_j$ for each subinterval $\mathbb{I}_j$, with $x(\tau_j) = s_j, j = 0, 1, ..., m-1$ and $u_j(t) = w_j, t \in \mathbb{I}_j = [\tau_j, \tau_{j+1}], j =0, 1, ..., m-1$ 
+	\item Step 3,  we solve the dynamic system using the Runge–Kutta 4 method (see the appendix \ref{App1}), and obtain a solution $x(t; s_j, w_j), \ t  \in \mathbb{I}_j =[\tau_j, \tau_{j+1}]$  
+	\item Step 4, we check whether the solution is feasible (i.e., satisfying the constraints in each subinterval). If the solution is feasible. We compute a cost of the error for the subinterval $\mathbb{I}_j$, which is denoted as $F_j$. We define the cost function as the sum of $F_j$ over all the subintervals. If the solution is not feasible, we add a penalty term to the cost function for each violation of the constraint. 
+	\item Step 5, we compute the cost function value, and if this value is below some tolerance level, stop; otherwise, we update the guesses $s_j, w_j, j =0, 1, ..., m-1$ and go to Step 3.
+\end{itemize}
+
+
+In Step 3, the result from solving the dynamic system equation \ref{P2_sd} might be an infeasible solution, i.e., a solution that does not satisfy the constraints \ref{P2_ec}, \ref{P2_inc}, \ref{P2_final} and \ref{P2_box_u}. In this case, we can update $s_j$ and $w_j$ iteratively until feasible solutions are found and an optimal solution is reached. In Step 5, we can follow a Newton type method as the updating schema. The solution is optimal if a minimum cost function value in the subinterval $\mathbb{I}_j$  is obtained while satisfying all the constraints  \ref{P2_ec}, \ref{P2_inc}, \ref{P2_final} and \ref{P2_box_u}. In practice, we do not aim to find the optimal solution for each subinterval; instead, we aim to find the optimal solution for the whole interval, i.e., $min  \sum_{j=1}^{m} F_j $. With the matching condition added, the original OCP is transferred into NLP in the following form
+	\begin{subequations}
+	\begin{align}
+		\underset{w}{\text{min}}   \ &  \sum_{j=1}^{m} F_j   \label{P3_obj}   \\
+		s.t. \ \ & x(\tau_{j+1}; s_j, w_j) - s_{j+1} = 0,   \ \  j = 0, 1, ...,m -1 \label{P3_eq}  \\
+		& x(\tau_j) = s_j, \  u(t) = w_j, \ \  t \in \mathbb{I}_j =[\tau_j, \tau_{j+1}], j = 1, 2, ... , m-1 \\
+		 &  g(x(t); s_j, w_j)  = 0 \  or \leq 0,     \ \  t \in \mathbb{I}_j =[\tau_j, \tau_{j+1}], j = 1, 2, ... , m-1 \\
+		 & h(x(t),w_j; s_j, w_j) = 0 \  or \leq 0,    \ \  t \in \mathbb{I}_j =[\tau_j, \tau_{j+1}], j = 1, 2, ... , m-1   \\
+    	& x(t_0) = s_0, \ \ (initial \ value) \\
+	& r(x(t_f)) \leq 0, \ \ (terminal \ constraints) \\
+	& u^{lower} \leq w_j \leq u^{upper} ,   j = 0, 1, ... , m-1 \\ 
+		         &   t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f 
+	\end{align}
+	\label{P3_MSNLP}
+\end{subequations}  
+
+The  solution  $x(t; s_j, w_j)$ comes from solving the dynamic system \ref{P2_sd} numerically for the subinterval  $\mathbb{I}_j =[\tau_j, \tau_{j+1}]$,  and $F_j$ is defined as in \ref{eq_PW_obj}
+\begin{equation}\label{eq_PW_obj}
+	\begin{aligned}
+		F_j &= \int_{\tau_{j}}^{\tau_{j+1}}L(x(t), u(t))dt   &if \ \   j= 0, 1, ..., m-1 \\ 
+		F_j  & = \int_{\tau_{j-1}}^{\tau_j}L(x(t), u(t))dt + E (x(t_f)) &if\ \   j =m  \ (the\  last\  subinterval)
+	\end{aligned}
+\end{equation}
+
+\section{KKT condition}
+\label{Sec_KKT}
+As stated in Chapter \ref{Chapter1}, direct approaches transform the original infinite optimal control problem into a finite dimensional nonlinear programming problem (NLP). We have shown in the previous section \ref{Sec_MS_OCP} that an OCP of the form \ref{P2_OPM} can be transferred into NLP of the form \ref{P3_MSNLP}. This NLP is then solved by variants of numerical optimization methods. The KKT condition is the necessary optimality condition for NLP, and motivates the methods introduced in this paper for solve the NLP. Before we explain the KKT condition, we need to introduce several definitions and theorems. We consider a general NLP of the following form
+ 
+
+\begin{equation}
+	\label{eq:OCP_discret_compact}
+	\begin{aligned}
+		\underset{x \in \mathbb{R}^n}{\text{min}} \qquad &f(x)\\
+		\qquad \text{s.t.}\qquad&  g(x) = 0   \\
+		&  h(x)\leq 0 
+	\end{aligned}
+\end{equation}
+where $f: \mathbb{R}^n \rightarrow \mathbb{R}, g: \mathbb{R}^n \rightarrow \mathbb{R}^{n_g}$ and $h: \mathbb{R}^n \rightarrow \mathbb{R}^{n_h}$ are assumed to be twice continuously differentiable.
+
+\begin{definition}(Feasible set) The feasible set $\Omega$ is the set 
+	\begin{align}
+		\Omega:= \{x \in \mathbb{R}^n \ | \ g(x)= 0 , \ h(x)\leq 0 \}
+	\end{align}
+\end{definition}
+
+\begin{definition}(Local minimum and local minimizer) The point $x^\star \in \mathbb{R}^n$ is a local minimizer iff $x^\star \in  \Omega$ and there exists a neighborhood $\mathbb{N}$ (e.g. an open ball around $x^\star$) so that $ \forall \ x \in \Omega \cap \mathbb{N}: f(x) \geq f(x^\star)$. The value $f(x^\star)$ is a local minimum.
+\end{definition}
+
+\begin{definition}(Active constraints and active set) An inequality constraint $h_i(x) \leq 0$ is called active at $x^\star \in  \Omega$  iff  $h_i(x^\star) = 0$ and otherwise inactive. The index set $\mathcal{A}(x^\star) \subset \{1, ..., n_h\}$  of active inequality constraint indices is called the "active set".
+\end{definition}
+Often, the name active set also includes all equality constraint indices, as equality could be considered to be always active. 
+\begin{definition} (LICQ) The linear independence constraint qualification (LICQ) holds at $x^\star \in  \Omega $ iff all vectors $\nabla g_i(x^\star)$ for $i \in \{1, ..., n_g \}$ and $\nabla h_i(x^\star)$ for  $i \in \mathcal{A}(x^\star)$ are linearly independent.
+	\label{df_LICO}
+\end{definition}
+To give further meaning to the LICQ condition, let us combine all active inequalities with all equalities in a map $\tilde{g}$ defined by stacking all functions on top of each other in a column vector as follows:
+\begin{equation}
+	\tilde{g}(x) =  \begin{pmatrix} g(x) \\ h_i(x), \ i \in \mathcal{A}(x^\star)    \end{pmatrix}
+\end{equation}
+
+
+With the definitions above, we are ready to formulate the KKT conditions.
+\begin{theorem}(KKT Conditions)
+	If $x^\star$ is a local minimizer of the problem \ref{eq:OCP_discret_compact} and the LICQ holds at $x^\star$, then there exists
+	so called multiplier vectors $\lambda \in \mathbb{R}^{n_g}$ and $\mu \in \mathbb{R}^{n_h}$ with 
+	\begin{subequations}
+		\begin{align}
+			\nabla f(x^\star) + \nabla g(x^\star) \lambda^\star +  \nabla h(x^\star) \mu^\star &= 0 \\
+			g(x^\star) &= 0   \\
+			h(x^\star)&\leq 0  \label{kkt_smaller}\\
+			\mu^\star & \geq 0 \\
+			\mu_i^\star  h_i(x^\star) &=0 , \  i = 1, ..., n_h \label{kkt_active}
+		\end{align}
+	\end{subequations}
+	\label{TH_KKT}
+\end{theorem}
+The "KKT Conditions" are also known as "First Order Necessary Conditions (FONC)" for constrained optimization, and are thus the equivalent to $\nabla f(x^\star)=0$ in unconstrained optimization.
+
+
+\begin{theorem} Regard a convex NLP and a point $x^\star$ at which LICQ holds. Then \\
+	$x^\star$ is a global minimizer $\Longleftrightarrow \  \	\exists \ \lambda ,\  \mu $ so that the KKT conditions hold.
+\end{theorem}
+
+A convex optimization problem is an optimization problem in which the objective function is a convex function and the feasible set is a convex set (ref \cite{JorSte06} for more details). 
+\begin{definition}(KKT Point)
+	We call a triple $(x^\star, \lambda^\star; \mu^\star)$ a "KKT point" if it satisfies LICQ (Definition \ref{df_LICO}) and the KKT conditions (Theorem \ref{TH_KKT}).
+\end{definition}
+
+
+\begin{definition}
+Regard a KKT point $(x^\star, \lambda^\star; \mu^\star)$. For $i \in \mathcal{A}(x^\star)$, we say the constraint $h_i$ is weakly active if $u_i^\star=0$, otherwise if  $u_i^\star>0$, we call it strictly active. 	
+\end{definition}	
+
+\begin{definition}(Lagrange Function)
+	We define the "Lagrange function" as
+	\begin{equation}
+		\mathcal{L}(x,\lambda, \mu) = f(x) + \lambda^\top g(x) +  \mu^\top h(x) 
+		\label{eq_Lagrangian}
+	\end{equation}
+\end{definition}
+Here, we have used the "Lagrange multipliers" $\lambda \in \mathbb{R}^{n_g}$ and $\mu \in \mathbb{R}^{n_h}$. 
+The last three KKT conditions \ref{kkt_smaller} - \ref{kkt_active} are called the complementarity conditions.  
+If  $h_i(x^\star)=0$ and also $\mu_i^\star = 0$, this is a weakly active constraint, and often we want to exclude this case. On the other hand, an active constraint with $\mu_i^\star > 0$ is called strictly active.
+
+\begin{definition}
+	Regard a KKT point $(x^\star, \lambda^\star; \mu^\star)$. We say that strict complementarity holds at this KKT point iff all active constraints are strictly active.
+\end{definition}
+
+\begin{theorem}(Second Order Optimality Conditions) Let us regard a point $x^\star$ at which LICQ holds together with
+	multipliers $\lambda^\star, \mu^\star$ so that the KKT conditions are satisfied and let strict complementarity hold. Regard a basis matrix $\mathbb{Z} \in  \mathbb{R}^{n*(n-n_g)}$ of the null space of $\frac{\partial \tilde{g}}{\partial x} (x^\star) \in \mathbb{R}^{n_{\tilde{g}} *n}$, i.e., $\mathbb{Z}$ has full column rank and $\frac{\partial \tilde{g}}{\partial x} (x^\star)\mathbb{Z} =0$. Then the following two statements hold:
+\end{theorem}
+\begin{itemize}
+	\item  If $x^\star$ is a local minimizer, then $\mathbb{Z}^\top \nabla_x^2 \mathcal{L}(x^\star, \lambda^\star, \mu^\star)\mathbb{Z} \succeq 0 $. (Second Order Necessary Condition (SONC))
+	\item  If $\mathbb{Z}^\top \nabla_x^2 \mathcal{L}(x^\star, \lambda^\star, \mu^\star)\mathbb{Z} \succ 0 $, then $x^\star$ a local minimizer. This minimizer is unique in its neighborhood, i.e., a strict local minimizer, and stable against small differentiable perturbations of the problem data. (Second Order Sufficient Condition (SOSC)).
+\end{itemize}
+
+
+The matrix $\nabla_x^2 \mathcal{L}(x^\star, \lambda^\star, \mu^\star)$ plays an important role in optimization algorithms and is called the Hessian of the Lagrange, while its projection on the null space of the Jacobian, $\mathbb{Z}^\top \nabla_x^2 \mathcal{L}(x^\star, \lambda^\star, \mu^\star)\mathbb{Z}$, is called the reduced Hessian. 
+
+For an optimization problem, if we can start with an initial guess of $x_0$ and find an updating schema that decreases the objective value while maintaining the Hessian matrix positive, if such an updating schema can converge, it will converge to a local minimizer. If the original problem is convex, the local minimizer is, therefore, the global minimizer. Taking advantage of these properties, with the multiple shooting method applied, the OCP can be transferred into NLP, which can then be solved by the Newton type method.
+
+
+\section{Newton type methods}
+As explained in Section \ref{Sec_KKT}, KKT condition is the first order necessary optimal condition for constrained optimization, and if the Larange function is twice continuous differentiable and the Second Order Optimality Conditions hold, an updating schema can be applied to an initial guess to find a local minimizer (i.e., a local optimal solution). If such NLP is a convex problem, then the local minimizer is the global minimizer.
+The Newton and quasi Newton methods can be used as the updating method to find the (local) optimal solution. For the sake of simplicity, in this section, we first explain how the Newton and quasi Newton methods can be applied to problems without constraints. In the section that follows, we expand our explanation on how the Newton type method can be used to solve NLP with constraints.
+
+\subsection{Newton method}
+\label{Sec:NewtonMethod}
+A general optimization problem typically takes the form of 
+\begin{equation}
+	\begin{aligned}
+		\    min &\ \   f(x) \\
+		s.t.  & \ \ x \in \Omega
+	\end{aligned}
+	\label{OptGen}
+\end{equation}
+Here $x \in \Omega$ represents the constraints for which $x$ must satisfy, it may be in the form of $\{g(x) = 0,  h(x)  \leq  0 \}$ as in the equation \ref{eq:OCP_discret_compact}, i.e. the feasible set $\Omega = \underset{x}{arg} \ \{ g(x) = 0,  h(x)  \leq  0 \}$. 
+In this section, we only focus on the problems without constraints, i.e., the problems of the form
+\begin{equation}
+	\underset{x \in \mathbb{R}^n}{\text{min}} \qquad f(x)
+	\label{Opt_withoutContr}
+\end{equation}
+The problem \ref{Opt_withoutContr} can be solved via Newton's method, by constructing a sequence $\{x_k\}$ from an initial guess (starting point) $x_0$ that converges towards a minimizer $x^\star$ of $f(x)$, using a sequence of second-order Taylor approximations of $f(x)$ around the iterates. The second-order Taylor expansion of $f(x)$ around $x_k$ is
+
+
+\begin{align*}
+	f(x_k + \delta_x) \approx h(x_k) : = f(x_k) + f'(x_k)\delta(x_k) +\frac{1}{2}f''(x_k)\delta(x_k)^2 
+\end{align*}
+where $\delta$ represents a small change (with respect to $x$), and $f', f''$ are the first and second order derivatives of the original function $f(x)$. The notations $f', f''$ are usually expressed as $\nabla f$ and  $H$ (the Hessian matrix), respectively, when $x$ is a vector of variables. In the text that follows, we will use the symbols $\nabla f$ and $H$ directly. Therefore, the Talyor expansion can be written as 
+\begin{align*}
+	f(x_k + \delta_x) \approx h(x_k) : = f(x_k) + \nabla f(x_k)^T\delta(x_k) +\frac{1}{2}\delta(x_k) ^TH(x_k)\delta(x_k) 
+\end{align*}
+The next iteration, $x_{k+1}$ is defined so as to minimize this quadratic approximation $h(\cdot)$. The function $h(\cdot)$ is a quadratic function of $\delta(x)$, and is minimized by solving $\nabla h(\cdot) = 0$. The gradient of $h(\cdot)$ with respect to $\delta(x_k)$ at point $x_k$ is
+\begin{align*}
+	\nabla h(x_k) = \nabla f(x_k) + H(x_k) \delta(x_k) 
+\end{align*}
+We are motivated to solve $\nabla h(x_k) =0$, which turns out to solve a linear system
+
+%\begin{align*}
+\begin{equation}
+	\nabla f(x_k) + H(x_k) \delta(x_k) =0
+	\label{HessianEq}
+\end{equation}
+%\end{align*}
+Therefore, for the next iteration point $x_{k+1}$, we can just add the small change $\delta(x_k)$ to the current iterate, i.e. 
+\begin{align*}
+	x_{k+1}  = x_k + \delta(x_k) = x_k - H^{-1}(x_k)\nabla f(x_k), 
+\end{align*}
+here $ H^{-1}(\cdot)$ represents the inverse of the Hessian matrix $H(\cdot)$. The Newton method performs the iteration until the convergence, i.e. $x_k$ and $f(x_k)$ converge to $x^\star$ and $f(x^\star)$, respectively\footnote{In another word, the Newton method has converged when the change $\delta(x_k)$ is equal to zero or below a tolerance level, such that the change in the objective function is below a pre-defined tolerance level.}. The details of the Newton method are as follows
+\begin{description}
+	\item[Newton method]\ 
+	\begin{itemize}
+		\item Step 0, $k=0$, choose an initial value $x_0$ 
+		\item Step 1, $\delta(x_k)  =- H^{-1}(x_k)\nabla f(x_k)$, if $\delta(x_k) =0$, then stop
+		\item Step 2, choose a step-size $\alpha_k$ (typically $\alpha_k =1$)
+		\item Step 3, set $x_{k+1}  = x_k + \alpha_k \delta(x_k) $, let $k= k+1$. Go to Step 1
+	\end{itemize}
+\end{description}
+
+The parameter $\alpha_k$ is introduced to augment the Newton method such that a line-search of $f(x_k + \alpha_k \delta(x_k))$ is applied to find an optimal value of the step size parameter $\alpha_k$. 
+
+Though the Newton method is straightforward and easy to understand, it has two main limitations. Firstly, it is sensitive to initial conditions. This is especially apparent if the objective function is non-convex. Depending on the choice of the starting point $x_0$, the Newton method may converge to a local minimum, a saddle point or may not converge at all. In other words, because of the sensitivity of initialization, the Newton method may fail to find the local solution. Secondly, the Newton method can be computationally expensive (with respect to time), with the second-order derivatives, aka the Hessian matrix $H(\cdot)$ and its inverse being very expensive to compute. It may also happen that the Hessian matrix is not positive definite, therefore, the Newton method cannot be used at all for solving the optimization problem. Due to these limitations of the Newton method, the quasi Newton method is, therefore, usually preferred for solving optimal control or general optimization problems.
+
+
+\subsection{Quasi Newton method}
+We have stated that one limitation or the downside of the Newton method is that it can be computationally expensive when calculating the Hessian (i.e., second-order derivative)  matrix and its inverse, especially when the dimensions get large. The quasi Newton methods are a class of optimization methods that attempt to address this issue. More specifically, any modification of the Newton methods employing an approximation matrix $B$ to the original Hessian matrix $H$ can be classified as a quasi Newton method. 
+
+The first quasi Newton algorithm, i.e., the Davidon–Fletcher–Powell (DFP) method, was proposed by William C. Davidon in 1959 \cite{WilDav59}, which was later popularized by Fletcher and Powell in 1963 \cite{FlePow63}. Some of the most commonly used quasi-Newton algorithms currently are the symmetric rank-one (SR1) method (\cite{ANP91}) and the Broyden–Fletcher–Goldfarb–Shanno(BFGS) method. The family of quasi Newton algorithms is similar in nature, with most of the differences arising in how the approximation Hessian matrix is decided and the updating distance $\delta(x_k) $ is calculated. One of the main advantages of the quasi Newton methods over the Newton method is that the approximation Hessian matrix $B$ can be chosen in such a way that no matrix needs to be directly inverted. The Hessian approximation $B$ is chosen to satisfy the equation \ref{HessianEq}, with the approximation matrix $B$ replacing the original Hessian matrix $H$, i.e.
+
+
+\begin{equation}
+	\nabla f(x_k) +B_k\delta(x_k) =0
+	\label{HessianAppro}
+\end{equation}
+
+In the text that follows, we explain how iteration is performed in the BFGS method as an example illustrating the quasi Newton method. In the BFGS method, instead of computing $B_k$ afresh at every iteration, it has been proposed to update it in a simple manner to account for the curvature measured during the most recent step. To determine an update scheme for $B$, we need to impose additional constraints. One such constraint is the symmetry and positive-definiteness of $B$, which are to be preserved in each update for $k = 1,2, 3, ...$. Another desirable property is that $B_{k+1}$ is sufficiently close to $B_k$ at each update $k+1$, and such closeness can be measured by the matrix norm, i.e., the quantity $\Vert B_{k+1} - B_{k} \Vert$. We can, therefore, formulate our problem during the $k+1$ update as 
+\begin{equation}
+	\begin{aligned}
+		\underset{B_{k+1}}{min} \  &  \Vert B_{k+1} - B_{k} \Vert\\
+		s.t.\ \  & B_{k+1}= B_{k+1}^T, \ B_{k+1}\delta(x_k)  = y_k \\
+	\end{aligned}
+	\label{BFGSB}
+\end{equation}
+where $\delta(x_k) = x_{k+1} -x_k$ and $y_k = \nabla f(x_{k+1}) - \nabla f(x_k)$. In the BFGS method, the norm is chosen to be the Frobenius norm:
+\begin{align*}
+	\Vert B \Vert_F = \sqrt{\sum_{i}^{m} \sum_{j}^{n} |b_{ij}|^2} 
+\end{align*}
+Solving the problem \ref{BFGSB} directly is not trivial, but it has been proved (ref \cite{JorSte06}) that problem  \ref{BFGSB} ends up being equivalent to updating our approximate Hessian $B$ at each iteration by adding two symmetric, rank-one matrices $U$ and $V$:
+
+\begin{align*}
+	B_{k+1} = B_k + U_k + V_k
+\end{align*}
+where the update matrices can then be chosen of the form $U = a u u^T$ and $V = b v v^T$, where $u$ and $v$ are linearly independent non-zero vectors, and $a$ and $b$ are constants.  The outer product of any two non-zero vectors is always rank one, i.e., $U_k$ and $V_k$ are rank-one. Since $u$ and $v$ are linearly independent, the sum of $U_k$ and $V_k$ is rank-two, and an update of this form is known as a rank-two update. The rank-two condition guarantees the "closeness" of $B_k$ and $B_{k+1}$ at each iteration.
+
+Besides, the condition $B_{k+1}\delta(x_k) = y_k$ has to be imposed.
+\begin{align*}
+	B_{k+1}\delta(x_k) = B_k\delta(x_k)  + a u u^T\delta(x_k) + b v v^T\delta(x_k) = y_k
+\end{align*}
+
+Then, a natural choice of $u$ and $v$ would be $u=y_k$ and $v=B_k\delta(x_k)$, we then have
+
+\begin{align*}
+	B_k\delta(x_k) + a y_ky^T_k\delta(x_k) + bB_k\delta(x_k) \delta(x_k)^TB_k^T\delta(x_k) = y_k  \\
+	y_k(1-ay_k^T\delta(x_k) ) = B_k\delta(x_k)(1+ b \delta(x_k)^TB_k^T\delta(x_k)) \\
+	\Rightarrow a = \frac{1}{y_k^T\delta(x_k)}, \  b= - \frac{1}{\delta(x_k)^TB_k\delta(x_k)}
+\end{align*}
+
+Given that $B_k$ is  positive definite, by enforcing the curvature condition $\delta(x_k)^Ty_k >0$, then the update $B_{k+1}$ will also be positive definite.  Finally, we get the update formula as follows: 
+\begin{align*}
+	B_{k+1} = B_k +  \frac{y_ky_k^T}{y_k^T\delta(x_k)}  - \frac{B_k\delta(x_k)\delta(x_k)^TB_k}{\delta(x_k)^TB_k\delta(x_k)}
+\end{align*}
+
+With the starting matrix $B_1$ initialized as positive definite, and the curvature condition ($\delta(x_k)^Ty_k >0$) and closeness condition satisfied in each update step, then $B_k$ will remain positive definite for all $k = 1,2, 3, ...$. Instead of updating $B_k$ directly, we can actually minimize the change in the inverse $B^{-1}$ at each iteration, subject to the (inverted) quasi Newton condition and the requirement that it be symmetric. Applying the Woodbury formula (ref \cite{Wood50} for more details), we can show that the updating formula of inverse $B^{-1}$ is as follows
+
+\begin{equation}
+	B_{k+1}^{-1} = (I - \frac{\delta(x_k)y_k^T}{y_k^T\delta(x_k)})B_k^{-1}(I - \frac{y_k\delta(x_k)^T}{y_k^T\delta(x_k)}) +  \frac{\delta(x_k)\delta(x_k)^T}{y_k^T\delta(x_k)} 
+	\label{eq_updateB_}
+\end{equation}
+As shown in the formula \ref{eq_updateB_}, at each iteration, we update $B^{-1}$ by using  $\delta(x_k) = x_{k+1} -x_k$ and $y_k = \nabla f(x_{k+1}) - \nabla f(x_k)$. Since an update of $B^{-1}$ depends on the previous value, we need to initialize $B^{-1}$, either as an identity matrix or based on the true Hessian matrix $H(x_0)$, calculated with the starting point $x_0$. If necessary, we can adjust $H(x_0)$ slightly to ensure the starting matrix is positive definite.
+
+We have shown that with the quasi Newton method, with an initial guess of $x_0$,  we can iteratively update $x_k$ until convergence, so that an optimal solution to the unconstrained optimization problem as in \ref{Opt_withoutContr} can be obtained. In the next section, we explain how the quasi Netwon method can be applied to NLP with constraints, i.e. the problem \ref{P3_MSNLP}.
+
+
+
+\section{Sequential quadratic programming}
+As explained in Section \ref{Sec_MS_OCP}, the original OCP \ref{P2_OPM} can be transferred into a NLP \ref{P3_MSNLP}. Such a NLP \ref{P3_MSNLP} can then be solved with the sequential quadratic programming (SQP) method. 
+
+%With all the background knowledge of multiple shooting, KKT conditions, and the Newton type method, we are ready to explain how to solve the NLP \ref{P3_MSNLP}. Therefore, by solving the NLP \ref{P2_OPM}, we are solving the original OCP within an iterative sequential quadratic programming (SQP) approach. 
+
+For the NLP \ref{P3_MSNLP}, the independent variables are the initial guess
+for $x$ and $u$ in each subinterval, denoted as $x(\tau_j) = s_j$ and $u_j(t) = w_j, t \in \mathbb{I}_j = [\tau_j, \tau_{j+1}]$. The constraints in the NLP \ref{P3_MSNLP} are applied to the independent variables $s_j, w_j, j =0, 1, ..., m-1$. Together with the matching condition \ref{P3_eq}, the NPL \ref{P3_MSNLP} is in fact with the form as in the NLP \ref{eq:OCP_discret_compact}, with the $x$ in NLP \ref{eq:OCP_discret_compact} replaced by $(s_j, w_j), j =0, 1, ..., m-1$.
+
+SQP is one of the most successful methods for the numerical solution of constrained NLP. For the NLP \ref{eq:OCP_discret_compact}, SQP is an iterative procedure that models the NLP for a given iterate $x_k, k =1, 2, 3, ...$, by a quadratic programming (QP) subproblem, solves that QP subproblem, and then uses the solution to construct a new iterate $x_{k+1}$. This is done so that the sequence $x_k, k =1, 2, 3,...$ converges to a local minimum $x^\star$ of the NLP  \ref{eq:OCP_discret_compact} as $k \rightarrow \infty$. In this sense, the NLP resembles the Newton and quasi Newton methods for the numerical solution of the NLP without constriants. However, the presence of constraints makes both the analysis and the implementation of SQP methods more complicated. A major advantage of SQP is that the iterates $x_k$ need not to be feasible points, since the computation of feasible points in case of nonlinear constraint functions may be as difficult as the solution of the NLP itself.
+
+To solve NLP of the form  \ref{eq:OCP_discret_compact}, we need to use the KKT conditions and introduce the Lagrange function as \ref{eq_Lagrangian}, which we re-rewrite here 
+\begin{equation}
+	\mathcal{L}(x,\lambda, \mu) = f(x) + \lambda^\top g(x) +  \mu^\top h(x) 
+\end{equation}
+
+The QP subproblems that have to be solved in each iteration step should reflect the local properties of the NLP with respect to the current iteration $x_k$. Therefore, a natural idea is to replace the
+\begin{itemize}
+	\item objective functional $f$ by its local quadratic approximation\\
+	$f(x_k + \delta_x) \approx f(x_k) + \nabla f(x_k)^T\delta(x_k) +\frac{1}{2}\delta(x_k) ^TH(x_k)\delta(x_k) $
+	\item constraint functions $g$ and $h$ by their local affine approximations \\
+	$g(x_k + \delta_x) \approx  g(x_k) + \nabla g(x_k)\delta(x_k) $ \\
+	$h(x_k + \delta_x) \approx  h(x_k) + \nabla h(x_k)\delta(x_k)$
+\end{itemize}
+
+where the definitions of $\nabla f(x_k), \delta(x_k) , H(x_k)$ and the notation $\nabla$ are given in Section \ref{Sec:NewtonMethod}. This leads to the following form of the QP subproblem
+\begin{subequations}
+	\label{eq:ocp_QP}
+	\begin{align}
+		\underset{\delta(x_k) }{\text{min}} \qquad & \frac{1}{2} \delta(x_k)^\top \nabla^2 \mathcal{L}(\cdot)\delta(x_k) +\delta(x_k) f(x_k)^T \delta(x_k)	\\
+		\qquad \text{s.t.}\qquad	& g(x_k) + \nabla g(x_k)^T\delta(x_k) = 0 \\
+		& h(x_k) + \nabla h(x_k)^T\delta(x_k) \leq 0
+	\end{align}
+	\label{P4_QP}
+\end{subequations}
+where $\nabla^2 \mathcal{L}(\cdot)$ is the Hessian matrix of function $\mathcal{L}(\cdot)$, whose updating can follow the quasi Newton method. With a solution $\delta(x_k), \lambda_k^{QP}, \mu_k^{QP}$ found from the subproblem \ref{P4_QP}, we can therefore update the $x, \lambda, \mu$ as 
+\begin{subequations}
+	\begin{align}
+		x_{k+1} &= x_k + \delta(x_k) \\
+		\lambda_{k+1} &= \lambda_k^{QP} \\ 
+		\mu_{k+1}&= \mu_k^{QP} 
+	\end{align}
+\end{subequations}
+until convergence. 
+
+%The algorithm of SQP with line search and quasi Newton method for solving NLP with constraints can be summarized as follows 
+
+%\begin{algorithm}
+%	\caption{SQP algorithm}\label{alg:cap}
+%	\begin{algorithmic}
+%		\Require Conduct a preliminary analyis of the problem and have a reasonable initialization for the variable $x, \lambda, \mu$ as $x_1, \lambda_1, \mu_1$. Evaluate the function $f, \nabla f, $
+%		\Ensure $y = x^n$
+%		\State $y \gets 1$
+%		\State $X \gets x$
+%		\State $N \gets n$
+%		\While{$N \neq 0$}
+%		\If{$N$ is even}
+%		\State $X \gets X \times X$
+%		\State $N \gets \frac{N}{2}$  \Comment{This is a comment}
+%		\ElsIf{$N$ is odd}
+%		\State $y \gets y \times X$
+%		\State $N \gets N - 1$
+%		\EndIf
+%		\EndWhile
+%	\end{algorithmic}
+% \end{algorithm}
+
+We have shown that the original OCP of the form \ref{P2_OPM} can be transferred into a NLP of the form \ref{P3_MSNLP} using the multiple shooting method. The NLP \ref{P3_MSNLP} can then be re-written in the form  \ref{eq:OCP_discret_compact}, and can be solved using the Netwon type method, i.e. sequential quadrative programming approach with the quasi Netwon method as the updating schema. The numerical implementation details for a case study of a rocket car will be given in Chapter \ref{Chapter4}.
+		
+
+\chapter{Optimal control under uncertainty}
+\label{Chapter3}
+Besides the form \ref{P2_OPM}, some OCP may have uncertain parameters whose value is a priori unknown, and the optimal objective value depends on the parameter value, as shown in the formulation \ref{P3_POP} in Chapter \ref{Chapter1}. This kind of problem is called the parametric optimization problem, and the formulation \ref{P3_POP}  can be augmented with mathematical details as well, leading to an OCP under uncertainty of the following form
+	\begin{subequations}
+	\begin{align}
+		\underset{x(\cdot), u(\cdot)}{\text{min}}   \ &  F(x(\cdot), u(\cdot), p)  = \int_{t_0}^{t_f}L(x(\cdot), u(\cdot), p)dt + E (x(t_f),p)) \label{P4_cost} \\
+		s.t.\ \ &  \dot{x} (t) = f(x(t), u(t), p), \ \ (system \ dynamics)   \label{P4_sd} \\
+		& g(x(t), p) = 0 \  or \leq 0, \ t \in [t_0, t_f]\  (path\  equality\ or\ inequality\ constraints)   \label{P4_ec}\\
+		&  h(x(t), u(t), p) =0\  or  \leq 0,\ t \in [t_0, t_f] \ (mixed \ control-state  \ constraints)   \label{P4_inc}\\
+		& x(t_0) = x_0, \ \ (initial \ value) \\
+		& r(x(t_f), p) \leq 0, \ \ (terminal \ constraints)  \label{P4_final} \\
+		& u^{lower} \leq u(t) \leq u^{upper}   \label{P4_box_u} \\ 
+		& p  \in   \mathbb{P}  \\
+		& t \in [t_0, t_f] 
+	\end{align}
+	\label{P4_OCPPara}
+\end{subequations}
+
+
+In other words, the state $x(t)$ depends not only on the system dynamics \ref{P4_sd} and the control $u(t)$, but also on an uncertain parameter $p$. Parametric optimization problems are very difficult to solve due to the uncertainty in the parameter $p$. Since different parameter $p$ will lead to different solutions, it makes sense to solve the parametric optimal control problems in a conservative way. For simplicity and the sake of generalization, we use the more compact formulation \ref{P3_POP} in Chapter \ref{Chapter1} as the representation of a parametric optimal control problem for our subsequent discussion, which we show here
+      \begin{equation}
+	\begin{aligned}
+	\underset{x(\cdot), u(\cdot)}{\text{min}}  \ &  F(x(\cdot), u(\cdot), p) \\
+	s.t.\ \  &  \dot{x} (t) = f(x(t), u(t), p)\\ 
+	& x(t) \in \Omega \\
+	& u(t) \in \mathbb{U}  \\
+	& p  \in   \mathbb{P}  \\
+	& t \in [t_0, t_f]
+\end{aligned}
+	\label{P5_POP}
+\end{equation}
+
+In the paper \cite{MatSch22}, multiple methods of solving the parametric optimal control problem have been discussed. The main idea of solving the parametric optimal control problem \ref{P5_POP}  in a conservative way is to transform the problem into another form. Two different ways of solving the parametric optimal control problem will be discussed in detail in the following sections, i.e., the classical approach and the training approach.
+
+\section{Classical approach}
+\label{Sec:CA}
+
+The classical approach belongs to the family of robust optimization. Robust optimization is an important subfield of optimization that deals with optimization problems under uncertainty. These uncertainties may influence the feasibility under constraints as well as the objective function value. The aim of robust optimization is to robustify or immunize a solution against uncertainty in terms of feasibility and optimality.  In this paper, we focus on problems with deterministic uncertainty, i.e., the uncertain parameters lie in a so-called uncertainty set. For deterministic uncertain problems, robustifying the solution of the considered problem means that the solution yields feasible parameter-dependent variables for all possible realizations of the uncertain parameters, and the robustified solution is optimal with regard to the worst possible value the objective function can take due to uncertainty. Therefore, the robustified solution is conservative. The dominant paradigm in this area of robust optimization is $minmax$ model, namely
+\begin{equation}
+	\underset{x \in \mathbb{R}^n}{min} \   \underset{p \in \mathbb{P}}{max}  \  f(x,p) 
+\end{equation}
+This is the classic format of the generic model and is often referred to as $minmax$ approach, also called the "classical approach." In this paper, we are particularly interested in the robustness of OCP under uncertainty. In our chosen case, the uncertainty appears in the form of an uncertain parameter that enters the differential equations.
+
+For the original problem \ref{P5_POP}, the parameter $p$ lies in an uncertainty set $ \mathbb{P}$, we can firstly reach one objective, i.e., obtain one solution with respect to one particular $p$, say $p^\star$, i.e., solve a lower level problem. We continue solving many lower level problems with different $p$ values, and after identifying these solutions, we identify the worst possible solution. Based on the results of the lower level, we can continue to find the best solution with respect to $x$, i.e., solving an upper level problem. "Worst-case treatment planning by bilevel optimal control" is a bilevel optimization problem, which is an optimization problem in which another optimization problem enters the constraints. Mathematically, the problem \ref{P5_POP} is transformed into another form, as follows
+
+\begin{equation}
+	\begin{aligned}
+		\underset{x(\cdot), u(\cdot)}{min} \   \underset{p  \in   \mathbb{P} }{max} & \ \ F(x(\cdot), u(\cdot), p)\\ 
+	s.t.\ \   &  \dot{x} (t) = f(x(t), u(t), p)\\ 
+& x(t) \in \Omega \\
+& u(t) \in \mathbb{U}  \\
+& p  \in   \mathbb{P}  \\
+& t \in [t_0, t_f]
+	\end{aligned}
+	\label{minmax}
+\end{equation}
+
+The set of feasible controllable variables is given by $u(\cdot) \in \mathbb{U}$ in the classical approach, which yields feasible trajectories $x(cdot)$ for $p in mathbbP$.The value of the objective function at the lower level does not depend on $p$ and $x(\cdot)$. In other words, in this approach, the dynamic system has no prior knowledge about the value of the parameter $p$ and gets no feedback during the process, and has to decide the control strategy in advance. In some OCP, under conditions of uncertainty, it is not possible to find a unified control $u(\cdot)$ that has feasable solutions for all $p \in  \mathbb{P}$. In this case, we may need to find the pair for $x(\cdot;p), u(\cdot;p)$ for different $p$, and among the pairs, we find the worst solution.
+
+
+In the papers \cite{Mas14} and \cite{KM16}, methods of solving bilevel problems have been discussed. In paper \cite{KM16}, the lower level problem is a bang-bang control problem, and a theoretical solution can be derived. The original bilevel problem then turns into a single-level problem, which can be solved with the numerical methods discussed in Chapter \ref{Chapter2}. In paper \cite{Mas14}, a general algorithm has been proposed for solving the robust optimization or $minmax$ problem. Basically, the idea is to break the bilevel problem into two parts and solve them collaboratively, one after another.
+\begin{equation}
+	   p^\star = \underset{p \in  \mathbb{P} }{arg\ max}   \ \ F(x^\star(\cdot), u^\star(\cdot), p)
+\end{equation}
+where $x^\star(\cdot), u^\star(\cdot)$ comes from the solution of 
+\begin{equation}
+	x^\star(\cdot), u^\star(\cdot) = \underset{\ x(\cdot), u(\cdot)}{arg\ min}   \ \ F(x(\cdot), u(\cdot), p^\star)
+\end{equation}
+Such an algorithm can be used to solve a general $minmax$ problem. Details on the implementation can be found in the paper \cite{Mas14}.
+
+
+\section{Training approach}
+The paper \cite{MatSch22} introduces the "Training Approach".  It is based on the idea that in the real world, during the training period, an intervention is introduced and a certain, but a priori unknown, parameter $p \in \mathbb{P}$ is realized. What follows the training period (during which the parameter $p$ is realized), the dynamic system is able to react to it in an optimal manner, i.e., an optimal value of $ F(\cdot)$ will be obtained given the realized parameter $p$. The paper \cite{MatSch22} calls this approach "worst case modeling training approach", and it can be written as
+\begin{equation}
+	\begin{aligned}
+		\underset{p  \in   \mathbb{P}}{max} \ \underset{x(\cdot), u(\cdot)}{min} &  \ \ F(x(\cdot), u(\cdot), p)\\ 
+	s.t.\ \    &  \dot{x} (t) = f(x(t), u(t), p)\\ 
+& x(t) \in \Omega \\
+&  u(t) \in \mathbb{U}  \\
+& p  \in   \mathbb{P}  \\
+& t \in [t_0, t_f]
+	\end{aligned}
+	\label{maxmin}
+\end{equation}
+
+Due to the $max mix$ notation, this approach to solving the bilevel problem can also be called the $max min$ approach. The solution of the training approach in the paper \cite{MatSch22} is given by a gradient free method; more precisely, a so-called model based derivative free optimization (DFO) approach for box-constrained optimization problems is used. The BOBYQA algorithm is chosen for such an approach to solve problems of the form
+\begin{equation}
+	\begin{aligned}
+		\underset{x \in \mathcal{R}^n}{min} & \  F(x)  \\ 
+		s.t.  & \ a_i \leq x_i \leq b_i, i = 1, ..., n \\
+	\end{aligned}
+	\label{DFO_bc}
+\end{equation}
+
+The name BOBYQA is an acronym for "Bound Optimization By Quadratic Approximation", and is used to solve the lower level problem of \ref{maxmin}. In the general DFO method, the objective function $F(\cdot)$ is considered a black box. For a given $p$, the lower-level parametric OCP of the training approach \ref{maxmin} is solved with a direct DFO approach, and the resulting (finite dimensional) solution is viewed as a dependent variable. Furthermore, the uncertain set $\mathbb{P}$ is chosen to be box-shaped, and hence the BOBYQA algorithm is applicable to the problem in the training approach. The BOBYQA algorithm has been introduced in detail in the paper \cite{MicPow09}, and we reiterate the main idea in the text that follows.
+
+The method of BOBYQA is iterative, with $k$ and $n$ being reserved for the iteration number and the number of variables, respectively. Further, $m$ is reserved for the number of interpolation conditions that are imposed on a quadratic approximation $Q_k(x) \xrightarrow{} F(x), \ x \in  \mathcal{R}^n$, with $m$ being a chosen constant  integer from the interval $[n+2, \frac{1}{2}(n+1)(n+2)]$. 
+
+The approximation is available at the beginning of the $k$-th iteration, and the interpolation equations have the form
+\begin{equation}
+	Q_k(y_j)= F(y_j),\   j = 1, 2, ..., m.
+\end{equation}
+
+We let $x_k$ be the point in the set $\{y_j : j = 1, 2, ... , m\}$ that has the property
+\begin{equation}
+	F(x_k)= min\ \{F(y_j), \  j = 1, 2, ..., m\}, 
+\end{equation}
+
+with any ties being broken by giving priority to an earlier evaluation of the least function value $F(x_k)$. A positive number $\Delta_k$, called the "trust region radius", is also available at the beginning of the $k$-th iteration. If a termination condition\footnote{Typically, a termination condition is satisfied when the objective value cannot be improved further after some iterations. If the termination condition of the BOBYQA algorithm, please refer to the paper \cite{MicPow09} for more details.} is satisfied, then the iteration stops. Otherwise, a step $d_k$ from $x_k$ is constructed such that $ \Vert d_k \Vert \leq \Delta_k $ holds, $x = x_k+d_k$ is within the bounds of equation \ref{DFO_bc}, and $x_k+d_k$ is not one of the interpolation points $y_j : j = 1, 2, ... , m$. Then the new function value $F(x_k+d_k)$ is calculated, and one of the interpolation points, say $y_t$, is replaced by $x_k+d_k$, where $y_t$ is different from $x_k$. It follows that $x_{k+1}$ is defined by the formula
+
+\begin{equation}
+	x_{k+1} =
+	\begin{cases}
+		x_k, & F(x_k+d_k) \geq F(x_k) \\
+		x_k+d_k  , & F(x_k+d_k) < F(x_k) 
+	\end{cases}
+\end{equation}
+
+Further, $\Delta_{k+1}$ and $Q_{k+1}$ are generated for the next iteration, with $Q_{k+1}$ being subject to the constraints
+\begin{equation}
+	Q_{k+1}(\hat{y}_j)= F(\hat{y}_j), \  j = 1, 2, ..., m, 
+\end{equation}
+at the new interpolation points
+\begin{equation}
+	\hat{y}_j =
+	\begin{cases}
+		y_j, & j \neq t, \\
+		x_k+d_k  , & j =t 
+	\end{cases},  \  j = 1, 2, ..., m.
+\end{equation}
+
+The operations of the BOBYQA algorithm require the user to provide an initial vector of variables $x_0 \in \mathcal{R}^n$, the initial trust region $\Delta_1$, and the number $m$ of interpolation conditions where $n+2 \leq m \leq \frac{1}{2}(n+1)(n+2)$. Two different ways have been proposed for constructing the step $d_k$ from $x_k$ and updating procedures from the $k$-th iteration to the $k+1$ -th iteration in the paper \cite{MicPow09}, with both methods having utilized the "quadratic" nature of the approximation function $Q(\cdot)$.
+
+The BOBYQA algorithm can solve the lower level OCP of the Training Approach \ref{maxmin} for a given $p$ because the lower level problem can be re-written into the form of \ref{DFO_bc} and the uncentainty set $\mathbb{P}$ is chosen to be box-shaped. With the BOBYQA algorithm computing local extrema, the upper level problem still needs to be solved globally. This is straightforward in our rocket car case in \ref{Chapter4}, i.e. maximizing over all $p$.
+
+
+Nevertheless, the BOBYQA algorithm has limitations, with several strong assumptions being made. Firstly, it has been assumed that the uncertainty set is of moderate size and is box-shaped. Secondly, it has been assumed that there is only one local extremum, i.e., the lower level problem has only one solution for each $p \in \mathbb{P}$. In general, we cannot expect the second assumption to be valid. Although the BOBYQA algorithm is a gradient-free method with respect to the objective function $F(\cdot)$, it still utilizes the gradient of the approximation function $Q(\cdot)$ while updating the iteration. Therefore, this BOBYQA algorithm, or a general DFO approach, is still subject to numerical errors and computational costs while calculating the gradients of the approximation function $Q(\cdot)$  and updating them in each iteration.
+
+
+
+This paper, instead, utilizes the gradient of the objective function $F(\cdot)$ directly, with some approximation applied as well. We have used the multiple shooting and Newton type framework for solving the lower level problem of the training approach \ref{maxmin} with a specific $p_i$ value. We discretize the whole uncertainty set  $\mathbb{P}$ into multiple points in an increasing order $[p_0, p_1, ..., p_n] \subset \mathbb{P}$ so that $p_i, i =0, 1, ..., n$ can approximately represent the whole set  $\mathbb{P}$ when $n$ is large enough. Then we take the $max$ over all the lower level solutions (i.e., one $T_i$ corresponding to one $p_i$).
+
+We discuss in detail in the following Chapter \ref{Chapter4} how the numerical methods discussed in Chapter \ref{Chapter2} can be used to solve the bilevel problem in the classical and training approaches, using a case study (i.e., a state constrained rocket car) as an example.
+
+\chapter{Numerical solution}
+\label{Chapter4}
+In this chapter, we use a case study as an example to illustrate how the numerical methods discussed before can be used for solving OCPs and OCPs under uncertainty. In the next section we first give a description of the case we have chosen, the state constrained rocket car. After that, we present how the numerical methods are implemented for the chosen case and the numeric results.  
+
+\section{Introduction to the rocket car case}
+
+The description of the rocket car case is mostly coming from the paper \cite{MatSch22}, with content either verbatim or in a modified form. We consider the rocket car case with state constraints, i.e. the one-dimensional movement of a mass point under the influence of some constant acceleration/deceleration, e.g. modeling head-wind or sliding friction, which can accelerate and decelerate in order to reach a desired position. The mass of the car is normalized to 1 unit\footnote{We do not specify the unit on purpose since the actual unit, either one kilogram or meter, does not play a role in the modeling. We are more concerned about the scale.} and the constant acceleration/deceleration enters the model, suffering from uncertainty in form of an unknown parameter $p \in  \mathbb{P} \subset \mathbb{R}$, with the uncertainty set $ \mathbb{P}$ convex and compact. We consider a problem in which the rocket car shall reach a final feasible position and velocity in a minimum time: 
+
+
+
+\begin{subequations}
+	\begin{align}
+		\underset{T, u(\cdot), x(:,p)}{min} \   & \  T \\ 
+		s.t.  & \ \ x = (x_1, x_2),   \label{rc_x} \\ 
+		& \ \  \dot{x} = T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix}, & \ t \in [0,1],  \label{rc_partial} \\
+		& \ \ x(0,p) = 0, \label{rc_t0}\\
+		& \ \ x_1(1;p) \geq 10, \label{rc_x1_t1} \\
+		& \ \ x_2(t;p) \leq 4, & t \in [0,1], \label{rc_x2_tc} \\
+		& \ \ x_2(1;p) \leq 0, \label{rc_x2_T}  \\
+		& \ \ T \geq 0, \\
+		& \ \ u(t) \in [-10, 10], & t \in [0,1]. 
+	\end{align}
+	\label{rc}
+\end{subequations}
+
+where $x$ represents the variables of the rocket car, and it has two components $ x = (x_1, x_2)$. The first component $x_1$ is the (time-transformed) position of the rocket car. The second component $x_2$ is (time-transformed) velocity of the rocket car. The control function $ u: [0,1] \rightarrow \mathbb{R}$ in equation \ref{rc} represents the acceleration/deceleration value. The condition \ref{rc_t0}, i.e. $x(0,p) = 0$, indicates that at starting time $t=0$, both the position and velocity of the car is $0$. The condition \ref{rc_x1_t1}, i.e. $x_1(1;p) \geq 10$, indicates that the position of the car at $t=1$ must be greater than or equal to $10$. The condition \ref{rc_x2_tc}, i.e. $x_2(t;p) \leq 4$, indicates that the velocity of the car is always smaller or equal to 4 across the whole period. The condition \ref{rc_x2_T}, i.e. $x_2(1;p) \leq 0$, indicates that the velocity of the car at ending time $t=1$ is always smaller or equal to $0$.  Here, a negative velocity means that the car is moving in a direction that decreases the position.  To make the rocket car case even simpler, we can limit the size of the uncertainty set, as following
+\begin{equation}
+	p \in \mathbb{P} = [p_l, p_u] = [0,9],
+	\label{uncertainP}
+\end{equation}
+where $p_l < p_u$, with $p_l$ and $p_u$ the lower and upper boundary of the parameter $p$. 
+
+
+Because our objective is to minimize the time between starting state and ending state, i.e. the variable $T$, which is unknown, we cannot define a time horizon over which we will discretize and optimize. Therefore, a new variable $t$, as in the problem \ref{rc}, is defined as follows: 
+\begin{equation}
+	t= \frac{\tau}{T} \in [0,1] \quad \tau \in [0, T]
+	\label{eqn:timet}
+\end{equation}
+
+where $\tau$ is the real time between starting time $0$ and ending time $T$, and $t$ is the relative time between $0$ and $1$.  The equation \ref{rc_partial} can be also written as 
+
+\begin{subequations}
+	\begin{align}
+		\dot{x} =  \begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix}  & =  T  \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix} = \begin{pmatrix}  Tx_2(t;p) \\ T(u(t)-p)   \end{pmatrix} \label{eq_difT} \\ 
+		\begin{pmatrix} \dot{x_1} \\ \dot{x_2} \end{pmatrix} &= \begin{pmatrix} \frac{\partial x_1}{\partial t} \\ \frac{\partial x_2}{\partial t} \end{pmatrix} = \begin{pmatrix} \frac{\partial x_1}{\partial \tau} \frac{\partial \tau}{\partial t} \\ \frac{\partial x_2}{\partial \tau} \frac{\partial \tau}{\partial t} \end{pmatrix} =  \begin{pmatrix} \frac{\partial x_1}{\partial \tau} T \\ \frac{\partial x_2}{\partial \tau}T \end{pmatrix} =     \begin{pmatrix}  Tx_2(t;p) \\ T(u(t)-p)   \end{pmatrix} \\
+		\begin{pmatrix} \frac{\partial x_1}{\partial \tau}  \\ \frac{\partial x_2}{\partial \tau} \end{pmatrix} & =     \begin{pmatrix}  x_2(t;p) \\ u(t)-p   \end{pmatrix} \label{eq_difTau}
+	\end{align}
+	\label{partialX}
+\end{subequations}
+
+The equation $\frac{\partial x_1}{\partial \tau}= x_2(t;p) $ means the change in the position in real time is proportional to the speed/velocity at that moment. The equation $\frac{\partial x_2}{\partial \tau} = u(t)-p $ means the change in speed is proportional to the acceleration/deceleration value at that moment. 
+%The decision variable in the problem \ref{rc} is the controllable parameter T, which encodes the process duration of the corresponding problem with free end time.  , and is dependent on the unknown parameter $p$, as shown in the condition \ref{rc_partial}The second component of the condition \ref{rc_partial}, i.e. $\dot{x_2} = T (u(t)-p)$, indicates the change in the velocity of the car at time $t$ is subject to the value of $T, u(t)$ and $p$. The first component of the condition \ref{rc_partial}, i.e. $\dot{x_1} = Tx_2(t;p)$, indicates the position of the car at time $t$ is subject to the value of $T$ and the velocity $x_2(t;p)$ at time $t$. The control function $ u: [0,1] \rightarrow \mathbb{R}$ in equation \ref{rc} represents the acceleration/deceleration value. 
+The variable $x(t;p)$ is a dependent variable, and is uniquely determined by $T, u(\cdot)$ and $p$. The goal is to minimize $T$ such that the variable $x(t;p)$ satisfies all the conditions in \ref{rc}. 
+
+ % and the existence of theoretical solution. When we evluate the The existence of theoretical solution is important when we evaluate the solution  of  which will be shown in this section. 
+%There are three optimization variables in the optimization problem \ref{rc}, i.e. $T, u$ and $x$, and they belong to the following normed space
+%\begin{equation}
+%	(T, u(\cdot), x(:,p)) \in \mathbb{R} \times \mathbb{L}^\infty([0,1], \mathbb{R}) \times  \mathbb{W}^{1,\infty}([0,1], \mathbb{R}^2)
+%\end{equation}
+\section{Theoretical solution to rocket car case}
+ We have chosen the rocket car case for two main reasons. First, this case is easy to understand, and second a theoretical solution exists, which is useful for evaluating the result of the numerical methods. The optimization problem \ref{rc} has a unique global solution, and no further local solution exists. The optimal solution based on the uncertain parameter $p$ is given by 
+\begin{equation}
+	T^\star = T^\star(p) = 2.5 + \frac{40}{100-p^2},
+	\label{eq_Theory_T}
+\end{equation}
+and the optimal control function $u^\star(\cdot) (= u^\star(\cdot; p))$ by 
+\begin{equation}
+	u^\star(\cdot) =     \left\{
+	\begin{array}{ll}
+		10, & for \  0 \leq t <  \frac{4}{(10-p)T^\star}\\
+		p  &  for \ \frac{4}{(10-p)T^\star} \leq t < 1- \frac{4}{(10+p)T^\star} \\
+		-10  & for \  1- \frac{4}{(10+p)T^\star} \leq t \leq 1 
+	\end{array}
+	\right.
+	\label{eq_Theory_u}
+\end{equation}
+
+In words, we accelerate as strongly as possible (the acceleration value $u^\star(t)=10$) until the velocity $x^\star_2(t;p)=4$, and then keep the velocity $x^\star_2(t;p)$ constant for a certain period of time\footnote{The acceleration value cancels out with a inherent deceleration value so that the velocity can stay constant. The inherent deceleration value can be result of a friction or head wind.}, and eventually decelerate as as strongly as possible until the velocity reaches the state $x_2(1;p) \leq 0$ and $x_1(1;p) \geq 10$. The first moment that these two conditions have been reached, is the moment that we finds the optimal/smallest $T$.
+
+
+
+
+Our rocket car problem is a typical bang-bang control problem, its optimal solution is obtained when the trajectory takes the extreme points whenever possible. This means acceleration, speed and deceleration take the maximum value whenever possible. A more theorectical proof of general bang-bang control problem needs background knowledge in calculus of variations, Hamilton–Jacobi–Bellman equation, and the Pontryagin Maximum Principle etc. The paper \cite{KM16} gives a proof and explanation of the solution to the bang bang problem within a bilevel OCP. We refrain from diving deep into these theories, readers can refer to papers \cite{EJ89}, \cite{RV99} and \cite{BD05} for more information. 
+ 
+The theoretical solution (equations \ref{eq_Theory_T} and \ref{eq_Theory_u}) to our problem \ref{rc} can also be obtained by solving the underlying partial differential equation \ref{rc_partial} directly, while taking the constraints into consideration. The proof are given in Appendix B of \cite{MatSch22}. The proof is tedious in detail, yet the underlying idea is simple and straightforward. Here we will briefly explain the idea behind the proof given in the paper \cite{MatSch22} and show with one example that the theoretical solution in formulation \ref{eq_Theory_T} and \ref{eq_Theory_u} is indeed correct. We take a fixed parameter value $p=0$ as an example for the explanation.
+
+Because the objective is to minimize the time between the starting state and ending state, then it is optimal to run at the maximum allowable speed whenever possible, i.e with $x_2 =4$ as in the constraint \ref{rc_x2_tc}. Otherwise, time is wasted if a car is running at a speed that is less than the maximum allowable speed, i.e. $x_2=4$. Since the starting state is at position $0$ and speed $0$, to reach the maximum allowable speed as soon as possible, the car should be accelerated as strongly as possible at the begining until the speed reaches $x_2 =4$. Then the car should be running at this maximum speed for a certain period. After this period, the car should be decelerated as strongly as possible until the speed decreases to $0$, and exactly at the moment that the speed reaches $0$, the position should reach $10$. It is this moment that the optimal/smallest $T$ is achieved. How long the period should be running at maximum speed, depends on the acceleration/deceleration distance, which in turn depends on  starting/ending position (in our case, it is $0$ and $10$ respectively) and starting/ending speed (in our case, both are $0$). 
+
+
+
+
+This is a qualitative explanation why the solution from formulation \ref{eq_Theory_T} and \ref{eq_Theory_u} is correct. Now, we show that with $p=0$, the optimal time is indeed $T=2.9$. At the beginning $\tau_0 = 0$,  we should accelerate as much as possible until the real time $\tau_1=0.4$ (i.e. $t= \frac{\tau}{T} = 0.137931$). This number $\tau_1=0.4$ can be obtained by solving the partial differential equation \ref{rc_partial} with boundary conditions $x_2(\tau_0)=0$ and $x_2(\tau_1)=4$. At $\tau_1=0.4$, the car speed reaches $4$, and it keeps running at this speed $x_2=4$ till $\tau_2=2.5$. From $\tau=2.5$, the car starts to decelerate as strongly as possible, and at $T=\tau_3=2.9$, the speed reaches $0$ and the total distance traveled is exactly $10$. Then all the contraints are satisfied, and the optimal time is $T=2.9$. 
+
+We can prove that $T=2.9$ is indeed the optimal solution when $p=0$ by using the method proof by contradiction. In the optimal strategy above, it has three stages $[\tau_0, \tau_1]$, $[\tau_1, \tau_2]$, and $[\tau_2, \tau_3]$, corresponding to acceleration, constant and deceleration stages. We assume there is another strategy that differs the one we have described above, yet leading to a less time while satisfying all the constraints. First, we assume the alternative strategy does not accelerate as strong as possible before $\tau_1$, this means within this alternative strategy, the speed of the car is always less or equal to the speed of our optimal strategy before $\tau_1=0.4$. This means that before $\tau_1=0.4$, the travel distance in the alternative strategy is less than our optimal strategy, and therefore, it will takes more time for car to cover the remaining distance in the alternative strategy. This alternative strategy, therefore, can not take less time compared to the optimal strategy. Similarly, we can prove that any modication to the optimal strategy will lead a bigger $T$ value. Therefore, by using the example of $p=0$, we have shown the solution \ref{eq_Theory_T} and \ref{eq_Theory_u} is indeed optimal with respect to different $p$ for all the $p$ in the uncertainty set $ \mathbb{P}=[p_l, p_u] =[0,9]$. The details of such proof can be found in paper \cite{MatSch22}. 
+
+
+\begin{figure}[h]
+	\centerline{\includegraphics[width=12cm]{theory_T_diff_p.png}}
+	\caption{The theoretical optimal T values against p values in the uncertainty set, from the formulation \ref{eq_Theory_T}}
+	\label{theory_T_diff_p}
+\end{figure}
+
+
+
+We can also numerically verified that the theoretical solution is correct. First, we show the theoretical solution of $T$ against different $p$ values accross the whole uncertainty set $\subset \mathbb{P} = [0,9]$, as shown in Figure \ref{theory_T_diff_p}. Then, we remove the uncertainty by showing the solution to the original problem \ref{rc} for several chosen $p_i$ values, where $ p_i  \in [p_0, p_1, ..., p_n] \subset \mathbb{P} = [0,9]$. Here, we have chosen $p=0$,  $p=5$,  and $p=9$ as the example for illustration.  The $T$ values and the theoretical  $u(t)$ values corresponding to $p=0$,  $p=5$,  and $p=9$, are shown in Figure \ref{theory_ut_3p}. 
+
+\begin{figure}[h]
+	\centerline{\includegraphics[width=12cm]{theory_ut_3p.png}}
+	\caption{The theoretical u(t) values when p=0, p=5 and p=9, from the formulation \ref{eq_Theory_u}}
+	\label{theory_ut_3p}
+\end{figure}
+
+When $p$ takes fixed values, the OCP under uncertainty becomes a normal OCP problem and we can solve directly with the numerical methods discussed in Chapter \ref{Chapter2}, and no bilevel optimisation is needed. With $[0,1]$ discretized into $500$ subintervals $\mathbb{I}_j = [\tau_{j-1}, \tau_j]$, i.e. the discretizion points as $0 = t_0 =  < t_1 < ... < t_m = t_f =1 $, and an error tolerance level as $1e-6$, and Runge-Kutta RK4 method used,  the result from solving a normal OCP with $p=0$, $p=5$ and $p=9$ are shown in Figure \ref{fig1_org_u10_p0}, Figure \ref{fig1_org_u10_p5} and Figure \ref{fig1_org_u10_p9} respectively. 
+
+Based on these three Figures \ref{fig1_org_u10_p0},  \ref{fig1_org_u10_p5} and \ref{fig1_org_u10_p9}, the results from $p=0$,  $p=5$,  and $p=9$ are consistent with that from the theoretical results in formulation \ref{eq_Theory_T} and \ref{eq_Theory_u}, as shown in Figure \ref{theory_T_diff_p} and Figure \ref{theory_ut_3p}. This confirms two points: first, the theoretical results are correct and second, the numerical methods we have chosen can solve our rocket car case with one chosen fixed $p$ value. These methods can, therefore, be used to solve general OCPs.
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=10cm]{original_u10_p0.png}}
+	\caption{Orginal rocket car problem \ref{rc} solution when p=0}
+	\label{fig1_org_u10_p0}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=10cm]{original_u10_p5.png}}
+	\caption{Orginal rocket car problem \ref{rc} solution when p=5}
+	\label{fig1_org_u10_p5}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=10cm]{original_u10_p9.png}}
+	\caption{Orginal rocket car problem \ref{rc} solution when p=9}
+	\label{fig1_org_u10_p9}
+\end{figure}
+
+% By ananlyzing the optimal strHere we discuss several strategies. First assume at the ve
+% and the ending state must be at a position larger than $10$ and speed smaller than $0$. To reach the maximum speed, from the starting state, we should accelerate as fast as possible until we reach the speed of $x_2 =4$, and then keep the car running at this speed until we need to decelerate as strongly as possible. The moment we start to decelerate is decided by how fast we can decelerate the speed decreases to exact $0$ is just the moment that the position reaches
+%The proof is very tedious, but the idea is straightforward.
+
+Because of the simplicity of the rocket car case, we can find the theoretical solution of the nominal/original problem for our case \ref{rc}. But for many real life problems, it is very difficult to find a direct solution to the original problem, and for some cases not feasible, due to the uncertainty in the parameter $p$. That is why in the paper \cite{MatSch22}, a classical (in the form $minmax$) approach and a training (in the form $maxmin$) approach have been discussed, and both approaches will lead to a conservative solution to the original problem. A conservative solution to the problem in the paper \cite{MatSch22}, or to general problems,  is a acceptable (or desired) result since less risk is taken and the result is more robust. %In the next chapter, we discuss, in details, the classical approach and training approach for the rocket car problem. %After that, we focus on the quasi-Newton and multi shooting approach to the same problem.  
+
+For both the classical approach and the training approach, after the discretization of the uncertainty set, the problem to be solved becomes a normal optimal control problem and we can use the mutiple shooting and quasi Newton (in the SQP framework) method to solve. We are levaraging open source package Casadi\footnote{Please refer the website https://web.casadi.org for more details} and Gekko\footnote{Please refer the website https://gekko.readthedocs.io/en/latest/ for more information} to solve our problem. These two package can let the user choose different nonlinear programming solver and as well as different underlying numerical methods. In our case, we have chosen the mutiple shooting and sequential quadratic programming, together with Runge–Kutta RK4 method. We have also discretized $t \in [0,1]$ into $500$ subintervals $\mathbb{I}_j = [\tau_{j-1}, \tau_j]$, i.e. the discretizion points as $0 = t_0 =  < t_1 < ... < t_m = t_f =1 $, and an error tolerance level as $1e-6$. The numerical result from the classical approach and training approach will be discussed in the next two sections. 
+
+\section{Apply classical (minmax) approach}
+We have explained in Section \ref{Sec:CA} about the classical appraoch. Within this section, we show the numerical results of applying the classical approach for the chosen rocket car case. 
+% Applying the classical approach to the rocket car case, the problem can be solved as follows. 
+
+First we discretize the whole uncertainty set  $\mathbb{P}$ into multiple points in an increasing order $[p_0, p_1, ..., p_n] \subset \mathbb{P}$ so that $p_i, i =0, 1, ..., n$ can approximately representing the whole set $\mathbb{P}$ when $n$ is large enough. Here $p_0=p_l$ and $p_n= p_u$, with $[p_l, p_u] =[0,9]$, as shown in equation \ref{uncertainP}.  We solve the $minmax$ problem of the following form
+\begin{subequations}
+	\begin{align}
+		\underset{\epsilon, u(\cdot), x(\cdot)}{min}  \ \   &  \underset{p_i \in \mathbb{P}}{max}  \  \epsilon \\ 
+		s.t.  &  \ \ T_i  \leq \epsilon \\
+		&  \ \ x = (x_1, x_2),   \label{ca_rc_x} \\ 
+		& \ \  \dot{x} = T_i  \begin{pmatrix}  x_2(t;p_i) \\ u(t)-p_i   \end{pmatrix}, &  \ \forall \   p_i, \  t \in [0,1],  \label{ca_rc_partial} \\
+		& \ \ x(0,p_i) = 0, \label{ca_rc_t0}\\
+		& \ \ x_1(1;p_i) \geq 10  & \ \forall \   p_i,   \label{ca_rc_x1_t1} \\
+		& \ \ x_2(t;p_i) \leq 4, &   \ \forall \   p_i,  t \in [0,1] \label{ca_rc_x2_tc} \\
+		& \ \ x_2(1;p_i) \leq 0,   & \ \forall \   p_i,  \label{ca_rc_x2_t1}  \\
+		& \ \ T \geq 0, \\
+		& \ \ u(t) \in [-10, 10], & \ \ t \in [0,1]. 
+	\end{align}
+	\label{ca_rc}
+\end{subequations}
+for all $p_i$ where $p_i \in [p_0, p_1, ..., p_n] \subset \mathbb{P}$. Since both $u(\cdot)$ and $x(\cdot)$ are functions of $t$, we also needs to discretize these two varaibles in the time horizon (i.e. $500$ subintevals). In this classical approach, the driver has no prior knowledge about the value of the parameter $p$ and gets no feedback during the process and has to set up the driving strategy in advance. The realization of the trajectory of $u(\cdot)$ and $x(\cdot)$ for each $p_i$, therefore, may not be an optimal solution compared to the case when knowing the $p_i$ value in advance.
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=12cm]{ca_result.png}}
+	\caption{Final $\epsilon$ and $T_i$ for different $p_i$ values}
+	\label{fig_ca_result}
+\end{figure}
+
+For each $(p_i, x(t;p_i), (t;p_i))$, we get one $T_i$, which we try to get maximum value, and meanwhile over the $T_i, i =0, 1, ..., n$, we would like to minimize $\epsilon$ ($\epsilon = \underset{i}{max} \ T_i$). In the end, we reach a worst $\epsilon$ over all $T_i, i =0, 1, ..., n$, and for each $i$, we get a trajectory $(p_i, x(t;p_i), (t;p_i))$. 
+
+In the actual implementation, we have take $n=40$, i.e. in total $40 \ p_i$ points ranging the whole uncertainty set $\mathbb{P}=[0,9]$. Nevertheless, we only show the result for $p_i=0, 1, 2, 3, 4, 5, 6, 7, 8, 9$ for the sake of readability. The final time $\epsilon$ and $T_i$  is shown in Figure \ref{fig_ca_result}, where $\epsilon = \underset{i}{max} \ T_i, i = 0, 1, 2, ..., 9$, and $\epsilon$ reaches the maximum value $4.6053$, when $p_i=9$. The differences in $T_i$ arise mainly because of the numerical errors, in our implementation, the number of subinterval is chosen as $500$ and the numerical error tolerance level is set $1e-6$. When we increase the number of subintervals and decrease the tolerance level, the $T_i$ of $p_i\neq 9$ should converge to $T_i$ of $p_i=9$. 
+
+
+The trajectories $(p_i, x(t;p_i), (t;p_i))$ for $p_i=0, 1, 2, 3, 4, 5, 6, 7, 8, 9$ are shown in Figure \ref{fig_ca_ut_pis}, Figure \ref{fig_ca_st_pis} and Figure \ref{fig_ca_vt_pis} respectively. In all the three Figures \ref{fig_ca_ut_pis}, \ref{fig_ca_st_pis} and \ref{fig_ca_vt_pis}, the standardized time $t \in [0,1]$ is used as x-axis. In Figure \ref{fig_ca_ut_pis}, the $u(t)$ acceleration/deceleration Force is shown for each $p_i=0, 1, 2, 3, 4, 5, 6, 7, 8, 9$; in Figure \ref{fig_ca_st_pis}, the position ($x_1(t)$) is shown for each $p_i=0, 1, 2, 3, 4, 5, 6, 7, 8, 9$; and in Figure \ref{fig_ca_vt_pis}, the velocity/speed ($x_2(t)$) is shown for each $p_i=0, 1, 2, 3, 4, 5, 6, 7, 8, 9$. 
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=13cm]{ca_ut_pis.png}}
+	\caption{u(t) Force for different $p_i$ values}
+	\label{fig_ca_ut_pis}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=13cm]{ca_st_pis.png}}
+	\caption{$x_1(t)$ Position for different $p_i$ values}
+	\label{fig_ca_st_pis}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=13cm]{ca_vt_pis.png}}
+	\caption{$x_2(t)$: Velocity for different $p_i$ values}
+	\label{fig_ca_vt_pis}
+\end{figure}
+
+
+We have explained that the trajectories of different $p_i$ from the classical approach may not be optimal, compared to the case when solving the OCP \ref{rc} directly with the known $p_i$. In the following, we compare the trajectories of the result from the classical approach for $p_i=0$, $p_i=5$, and $p_i=9$ to the cases when solving the OCP \ref{rc} directly with $p_i=0$, $p_i=5$, and $p_i=9$ known in advance. The results from solving OCP \ref{rc} directly with $p_i=0$, $p_i=5$, and $p_i=9$ known in advance, are already shown in Figures \ref{fig1_org_u10_p0},  \ref{fig1_org_u10_p5} and \ref{fig1_org_u10_p9}. 
+
+In Figure \ref{fig_ca_compare_p0}, Figure \ref{fig_ca_compare_p5} and Figure \ref{fig_ca_compare_p9}, we show the comparisons for $p_i=0$, $p_i=5$, and $p_i=9$ between results of solving OCP \ref{rc} directly and results applying classical approach to problem \ref{ca_rc}. Obviously, we can see from from Figure \ref{fig_ca_compare_p0} and Figure \ref{fig_ca_compare_p5}, the solution from classical apporoach is more conservative compared to solving OCP \ref{rc} directly for $p=0$ and $p=5$ respectively. When $p=9$, there is only one line in Figure \ref{fig_ca_compare_p9} for the position $x_1(t)$, force $u(t)$ and velocity $x_2(t)$. This confirms that indeed, when $p=9$, the worst case happens, and the corresponding $\epsilon=4.6053$ is equal to result of solving the \ref{rc} directly with $p=9$. For other $p_i \neq 9$, we can always find an feasible solution with a corresponding $T_i$, which will always be less than or equal to $4.6053$. 
+
+%Here, we take the result again  We take the result from solving OCP directly with with $p_i=0$, $p_i=5$, and $p_i=9$ known and the results from classical approach with $p_i=0$, $p_i=5$, and $p_i=9$, and compare the results. The comparsions for  $p_i=0$, $p_i=5$, and $p_i=9$ are shown in Figure \ref{fig_ca_compare_p0}, Figure \ref{fig_ca_compare_p5} and Figure \ref{fig_ca_compare_p9} respectively.
+%and we get t and $\epsilon$ which are conservative to all the $p_i \in \mathbb{P}$, and does not depend on any parameter $p$. 
+
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=12.5cm]{ca_compare_p0.png}}
+	\caption{Compare the results from solving OCP \ref{rc} with $p=0$ and the result of applying the classical approach to problem \ref{ca_rc} with $p=0$}
+	\label{fig_ca_compare_p0}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=12.5cm]{ca_compare_p5.png}}
+	\caption{Compare the results from solving OCP \ref{rc} with $p=5$ and the result of applying the classical approach to problem \ref{ca_rc} with $p=5$}
+	\label{fig_ca_compare_p5}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=12.5cm]{ca_compare_p9_old.png}}
+	\caption{Compare the results from solving OCP \ref{rc} with $p=9$ and the result of applying the classical approach to problem \ref{ca_rc} with $p=9$}
+	\label{fig_ca_compare_p9}
+\end{figure}
+
+
+
+
+ 
+
+
+%Numerical result to be added for the classical approach.  
+
+%where $p_i$ is one of the discretized point $p_0, p_1, ..., p_n$  from the  $\mathbb{P}$. Therefore, for each $ p_i \in \mathbb{P}$, we get a corresponding solution. In the end, we get a robustified parameter-dependent varaibles for realizations of the unceretain parameters. The bigger the number $n$, i.e. the more points of $p_i$, the more precise that the obtained solution can represent the whole uncertain set. In this classical approach, the driver has no prior knowledge about the value of the parameter $p$ and gets no feedback during the process and has to set up the driving strategy in advance. The numerical implementation result of the classical approach is shown in section \ref{Sec_NR} when comparing that of the training approach. 
+
+% \ \forall \   \hat{p}_i,
+%As stated in the introduction part, the classical approach is consistent with the $minmax$ approach, during which, two level optimization problems are solved. In the lower level, we solve an optimization problem ($max \  f(x,p)$) with respect to $p$, and in the upper level, we continue to find the best solution with respect to $x$, as shown in \ref{minmax}. In the case of the rocket car, the classical approach will be expressed in the following form
+
+%In the classical approach, the set of feasible controllable parameters and control functions are given by those $T$ and $u(\cdot)$, which yield feasible trajectories $x(\cdot, p)$ for all $p \in \mathbb{P}$. The value of the objective function in the lower level does not depend on $p$ and $x(\cdot, p)$. In other words, in this approach, the driver has no prior knowledge about the value of the parameter $p$ and gets no feedback during the process and has to set up the driving strategy in advance.  
+
+% \section{The Training Approach}
+
+\section{Apply training (maxmin) approach}
+Contrast to the classical approach, in the training approach it is assumed that the driver of the rocket car is able to perform optimally for every $p$ because of a preceding training period. We discretize the uncertainty set $\mathbb{P}$ the same as in the classical approach, i.e. we take the discretized points $p_0, p_1, ..., p_n$ which cover the whole uncertainty set $\mathbb{P}$.  For each $ p_i  \in [p_0, p_1, ..., p_n] \subset \mathbb{P}$, we solve the problem 
+\begin{subequations}
+	\begin{align}
+		 \underset{p_i \in \mathbb{P}}{max}  \ \underset{T, u(\cdot), x(\cdot)}{min}  \ \   &   T  \\ 
+		s.t.  & \ \ x = (x_1, x_2),   \label{ta_rc_x} \\ 
+		& \ \  \dot{x} = T  \begin{pmatrix}  x_2(t;p_i) \\ u(t)-p_i   \end{pmatrix}, & \ t \in [0,1],  \label{ta_rc_partial} \\
+		& \ \ x(0,p) = 0, \label{ta_rc_t0}\\
+		& \ \ x_1(1;p_i) \geq 10, \label{ta_rc_x1_t1} \\
+		& \ \ x_2(t;p_i) \leq 4, & t \in [0,1], \label{ta_rc_x2_tc} \\
+		& \ \ x_2(1;p_i) \leq 0, \label{ta_rc_x2_t1}  \\
+		& \ \ T \geq 0, \\
+		& \ \ u(t) \in [-10, 10], & t \in [0,1]. 
+	\end{align}
+	\label{TA_rc}
+\end{subequations}
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=10cm]{numerical_T_p.png}}
+	\caption{Numerical result: different $T_i$ values against different $p_i$ values, with $p_i=9$ and  $T_i=4.6053$ the worst case}
+	\label{fig_ta_numerical_T_p}
+\end{figure}
+
+With a given $p_i$ value, the lower level optimization problem turns out to be a normal OCP. One $p_i$ value will correspond to one optimal $T_i$ values. Among all the optimal $T_i$, we would like to find the worst case, i.e. the largest among all $T_i$ values. Similar to the discretization of the uncertainty set in the classical approach, here we also take $n=40$, i.e. in total $40$ $p_i$ points ranging the whole uncertainty set $\mathbb{P}=[0,9]$.  The result of $T_i$ against $p_i$ is shown in Figure \ref{fig_ta_numerical_T_p}.  Figure \ref{fig_ta_numerical_T_p} is almost indentical to Figure \ref{theory_T_diff_p}, which confirms again that our numerical result with different $p$ is consistent with the theoretical result. Furthermore, the worst case over all $p_i$ is when $p_i$ takes the biggest value, i.e. $p_i =9$, and in this case $T_i = 4.6053$.  We already shown in Figure \ref{fig1_org_u10_p9} the solution to original problem when $p_i=9$. The worst case, therefore, have the same solution as shown in Figure \ref{fig1_org_u10_p9}, with  $T=4.6053$, which we do repeat here in Figure \ref{fig1_ta_final}. 
+
+\begin{figure}[h]
+	\centerline{\includegraphics[width=10cm]{original_u10_p9.png}}
+	\caption{Training approach to problem \ref{TA_rc}, final result, worst case happens when $p=9$}
+	\label{fig1_ta_final}
+\end{figure}
+
+
+
+%From analyzing the theoretical solution, 
+%The solution of the training approach in this paper is, therefore, also a function of the realizations of the uncertain parameters. Since in the 
+ %The numerical result will be shown in the next section \ref{Sec_NR}.
+
+\section{Analysis the numerical results}
+\label{Sec_NR}
+
+Besides, the numerical results discussed above, in this section we perform some additional numerical analysis and discuss the numerical results altogether. 
+
+\subsection{Sensitivity with initial value}
+In this part, we show that our numerical implementation is stable with different initial values $u(t_0) \in [0,10]$. As explained before, the car should accelerate as fast as possible at the begining, i.e. $u(t_0)$ should take maximum allowable value $10$ at the begining in order to have the optimal/smallest $T$. With different $u(t_0) \in [0,10]$, the control variables $u(t)$ moves towards $10$ at the acceleration stage, as shown in the first subplot of Figure \ref{fig1_initialUt}. In this plot, we have chosen only $100$ subintervals for $[0,1]$. As shown in the second subplot of Figure \ref{fig1_initialUt}, when the initial value of $u(t_0)$ deviates with the ideal initial value $u(t_0)=10$, it takes most time $T$, compared to other initial values. When the number of subintervals is increased, then the $T$ with initial value other than $u(t_0)=10$ will converge to the $T^\star(u(t_0)=10)$. The result in this section again confirms with the background knowledge discussed in this paper and the theorectical solution. 
+
+ \begin{figure}[h]
+	\centerline{\includegraphics[width=12cm]{initial_value.png}}
+	\caption{Results of solving OCP directly, with $p=0$ and different initial values $u(t_0)$ in the set [0,10]. }
+	\label{fig1_initialUt}
+\end{figure}\textbf{}
+
+
+
+\subsection{Shared control $u(t)$ for classical approach}
+\label{Sec_ShareUt}
+In the classical approach, when finding the solution of the lower level part for each $p$, we can find a feasiable solution $u(:,p), x(:,p)$ for each $p$. However, if we force a unified $u(t)$ for all $p$ in the uncertainty set, we cannot find a fesiable $u(t)$ for all the $p$ values if the uncertainty set is too big.  When we narrow the uncertainty set, for example, if we narrow the uncertainty set to $\mathbb{P}=[0,1]$, we can still find fesiable solution, with shared control states (i.e. $u(t)$) for all the parameters within this uncertainty set $\mathbb{P}=[0,1]$, as shown in Figure \ref{fig1_ca_unifiedUt}. In Figure  \ref{fig1_ca_unifiedUt}, we have plot the $x$ and the unified/shared $u(t)$ for the parameter at the boundary $p=0$ and $p=1$. Clearly, as shown in the subplot for $x_1:$ Position and $x_2:$ Velocity, both trajectories satisfiy the constraints with the unified $u(t)$ in the third subplot. However, if we increase the uncertainty set, we fail to find a shared $u(t)$ which leads to fesiable solutions for all $p$ in $\mathbb{P}=[0,9]$.  This is consistent with the theoretical analysis discussed in the next section \ref{Comparison}, that the classical approach will lead to a solution that is not better than the training approach. 
+
+ \begin{figure}[H]
+  	\centerline{\includegraphics[width=10cm]{aunified_ut.png}}
+  	\caption{Results from classical approach with a unified $u(t)$ with uncertainty set  $ \mathbb{P}=[0,1]$, with $T=2.9495636746$ when $p=0$, and $T=3.9240282505$ when $p=1$. }
+  	\label{fig1_ca_unifiedUt}
+  \end{figure}
+  
+  
+\subsection{Comparison between classical approach and training approach]}
+\label{Comparison}
+
+In theory, the classical approach will lead to a solution that is worse than the training approach. Within training approach, the $p$ value is known beforehand and worst solution is obtained by maximizing over all $p \in \mathbb{P}$. While in the classical approach the $p$ value is priori unknown, and we need to find solutions that yield parameter-dependent variables for all possible realizations of the uncertain parameters, and among them find the optimal solution. We do not dive deep into the proof (ref \cite{MatSch22} for details), here we show the concusion in Theorem \ref{Theorem_compare} directly and one example to support the idea. 
+
+\begin{theorem} Let $\Omega_x \subset \mathbb{R}^{n_x}$ and $\Omega_p \subset \mathbb{R}^{n_p}$ be compact subsets and $f : \Omega_x *  \Omega_p \  \rightarrow \mathbb{R}$ a continuous function. Then we have
+	\begin{equation}
+	\underset{p \in \Omega_p}{max}\ \underset{x \in \Omega_x}{min}\ f (x,p) \leq \underset{x \in \Omega_x}{min}\ \ \underset{p \in \Omega_p}{max}\ f (x,p)
+	\end{equation}
+\label{Theorem_compare}
+\end{theorem}
+
+The optimal objective function value of the $max\  min$ problem (training approach) over estimates the one of the $min\ max$ problem (classical approach). It is easy to find examples in which the gap is indeed greater than zero. For example, let $\Omega_x=[-5,5],\Omega_p=[-1,1]$ and consider the function
+$$
+f : \Omega_x *  \Omega_p \  \rightarrow \mathbb{R}, \ (x,p) \rightarrow (x-p)^2 + p
+$$
+Then\footnote{The proof that $max\ min$  (training) approach over estimates that of $min \ max$ approach is given in paper \cite{MatSch22}}
+
+$$	\underset{p \in \Omega_p}{max}\ \underset{x \in \Omega_x}{min}\ f (x,p) =1 \leq \frac{5}{4} = \underset{x \in \Omega_x}{min}\ \ \underset{p \in \Omega_p}{max}\ f (x,p)
+$$
+
+
+As show above, both the classical approach and training approach leads to an identical solution with final time as $T=4.6053$, which is conservative with respect to original OCP \ref{rc}. The time $T=4.6053$ is conservative, regardless how the uncertain parameter $p$ takes a value in the uncertainty set $\mathbb{P}$, we can always find a feasible solution that leads to a final time that is less than or equal to $T=4.6053$. Neverthless, the classical approach and the training approach do not necessary lead to an identical solution for a general OCP under uncertainty. In general, classical approach should lead to a worse solution compared to training approach. In our case, it just happens that both approaches lead to the same solution, and the worst case happens when $p=9$ at the right boundary point. % the classcical approach and training apporach lead 
+
+%Before we discuss the results from the classic approach and training approach, we discuss our primary analysis of the original problem \ref{rc}. 
+%We can further prove the theoretical solution in formulation \ref{eq_Theory_T} and \ref{eq_Theory_u} by showing the following facts. First, with more time steps
+%When we plot the optimal $T$ against the uncertain parameter $p$, then we get the result in Figure  
+%The implementation deatils and result are as follows. 
+%\begin{figure}[h!]
+%	\centerline{\includegraphics[width=10cm]{original_u10_p2.png}}
+%	\caption{price and delta from three different methods}
+%	\label{fig:result}
+%\end{figure}
+%\begin{figure}[h!]
+%	\centerline{\includegraphics[width=10cm]{original_u10_p7.png}}
+%	\caption{price and delta from three different methods}
+%	\label{fig:result}
+%\end{figure}
+\chapter{Conclusion}
+\label{Chapter5}
+In this paper, we have explained in theory how direct approaches can be used for solving optimal control problems. Within direct apporaches, mutiple shooting method is used to discretize the whole interval into subintervals, with the objective functions and constraints also discretized and applied piecewise for each subinterval. Matching condition is enforced at the boundary of each subinterval. With numerical methods such as Runge–Kutta method applied to the underlying dynamics system (i.e. differential equation) in each subinterval, the original OCP is turned into a piecewise nonlinear optimisation problem. We can, therefore, apply the KKT condition to incorporate the constraints and the objective function into a new Lagrange function, whose optimal solution can be found via its derivatives. Newton and quasi Newton is used and the Lagrange function optimal is found via the sequential quadrative approach. 
+
+In real life, some OCPs may have uncertainty, in the form of unknown parameters $p$ in the uncertainty set  $\mathbb{P}$. Such problems is even harder to solve due to the uncertainty. In this case, we would like to have a conservative solution, which is worse than the optimal solution for a particular $p$ value regardless how the unknown parameter take values in the uncertainty set $\mathbb{P}$. There are two aproaches to reach the conservative solution, the classical approach and the training approach. 
+
+For the numerical methods disscussed in this paper, their application is demostrated with a case study in state constrainted rocket car. When the unknown parameter $p$ takes a fixed value in the uncertainty set  $\mathbb{P}$, the OCP under uncertainty degenerates into a normal OCP problem and the solution can be obtained via mutiple shooting and quasi Netwon style method. The result have been shown in e.g.  Figure  \ref{fig1_org_u10_p0},  \ref{fig1_org_u10_p5} and \ref{fig1_org_u10_p9}. We have also perform a sensitivity analysis with respect to to the initial value, as shown in Figure \ref{fig1_initialUt}. The results confirms with our analysis that the numerical method we are using are stable and roubust.
+
+
+We further continue the numerical implementation with classical approach and training approach, and both leads to a conservative solution. For our particular case, the conservative solutions from both approach are  the same. This is not contracdictory to our analysis that classical approach leads to a worse solution compared to traning approach. Actually, if we force the same control trajectory $u(t)$ for all the parameters $p \in \mathbb{P}$, no fesiable $u(t)$ can be found as explained in section \ref{Sec_ShareUt}, indicating the optimal $T$ is infinity. 
+
+Therefore, we can conclude that our numerical results are consistent with our theorectical knowledge in the numerical methods discussed in this paper. These method can, therefore, be applied to more general optimal control problems and optimal control problems under uncertainty.  
+   
+\appendix
+\chapter{Appendix  Runge–Kutta method}
+  	\label{App1}
+  	
+  	The dynamic systems of the OCP in eqation \ref{P2_OPM} is defined in the subequation 
+  	\ref{P2_sd}, which we show here independently
+  	\begin{equation}
+  		\dot{x} (t) = f(x(t), u(t)), \ \   t \in [t_0, t_f]
+  		\label{eq_DS}
+  	\end{equation}
+  	If the initial value $x_0$ for \ref{eq_DS} is known, then equation \ref{eq_DS} becomes an initial value problem (IVP) and the solution can be found via numerical method. If analytical solutions exist for equation \ref{eq_DS}, then we can use the analytical solution directly. Nevertheless, for most real-life problems, the analytical solution either does not exist or is very difficult to find, and numerical method is the only practical way to find the solution. Given the initial value $x_0$, equation \ref{eq_DS} will have solution as 
+  	%\begin{equation}
+  	%	%	\begin{aligned}
+  		%	x(t) -  x_0  &= \int_{t_0}^{t}  f(x(\tau), u(\tau)) d \tau,   \ \ t \in [t_0, t_f] \\ 
+  		%	x(t) & = x_0  + \int_{t_0}^{t}  f(x(\tau), u(\tau)) d \tau,   \ \ t \in [t_0, t_f] 
+  		%	\end{{aligned}
+  	%	\label{eq_diffSolution}
+  	%\end{equation}
+  	\begin{equation}\label{eq_diffSolution}
+  		\begin{aligned}
+  			x(t) -  x_0  &= \int_{t_0}^{t}  f(x(\tau), u(\tau)) d \tau,   \ \ t \in [t_0, t_f] \\ 
+  			x(t) & = x_0  + \int_{t_0}^{t}  f(x(\tau), u(\tau)) d \tau,   \ \ t \in [t_0, t_f] 
+  		\end{aligned}
+  	\end{equation}
+  	
+  	The integral in equation \ref{eq_diffSolution} can be approximated by numerical methods, and one simple approximation to the integral in equation \ref{eq_diffSolution} can be obtained via Euler method. The Euler method (also called forward Euler method) is a first-order numerical procedure for solving ordinary differential equations (ODEs) with a given initial value. Using a step size equal to 1, the approximation to equation \ref{eq_diffSolution} via Euler method is of the form
+  	\begin{equation}
+  		x(t)  = x_0  + \int_{t_0}^{t}  f(x(\tau), u(\tau)) d \tau \ \approx \   x_0  + t f(x(t_0), u(t_0))
+  		\label{eq_Euler_approx}
+  	\end{equation}
+  	
+  	Euler method is a first order and explicit method for approximating integrals, another widely used method is the trapezoidal rule, which is an implicit second-order method. The trapezoidal rule can approximate equation \ref{eq_diffSolution} as 
+  	\begin{equation}
+  		x(t)  = x_0  + \int_{t_0}^{t}  f(x(\tau), u(\tau)) d \tau \ \approx \   x_0  + \frac{t}{2}[f(x(t_0), u(t_0)) + f(x(t), u(t))]  
+  		\label{eq_trapezoidal_approx}
+  	\end{equation}
+  	Notice, the soultion $x(t)$ becomes an input in the approximation in equation \ref{eq_trapezoidal_approx}, and that is why this method is classified as an implicit method. The trapezoidal rule belongs to the family of Runge–Kutta method, which is a family of implicit and explicit iterative methods, with various order of derivatives used. Among them, the Runge–Kutta  RK4 is the most widely used, which we describe in the following text. Let an initial value problem be specified as follows:
+  	\begin{equation}\label{eqn:RK4_diff}
+  		\dot{y} = f(t, y) , \ \  y(t_0) = y_0  
+  	\end{equation}
+  	
+  	Here $y$ is an unknown function (scalar or vector) of time $t$, which we would like to approximate; we are told that $\dot{y} = \frac{dy}{dt}$, the rate at which $y$ changes, is a function of $t$ and of $y$ itself. At the initial time $t_0$ the corresponding $y$ value is $y_0$. The function $f$ and the initial conditions $t_0$, $y_0$ are given. Now we pick a step-size $h>0$ and define:
+  	\begin{align}
+  		y_{n+1} &= y_n + \frac{1}{6}\left(k_1 + 2k_2 + 2k_3 + k_4 \right)h,\\
+  		t_{n+1} &= t_n + h
+  	\end{align}
+  	for $n = 0, 1, 2, 3, ...,$ using
+  	\begin{align}
+  		k_1 &= \ f(t_n, y_n), \\
+  		k_2 &= \ f\!\left(t_n + \frac{h}{2}, y_n + h\frac{k_1}{2}\right), \\ 
+  		k_3 &= \ f\!\left(t_n + \frac{h}{2}, y_n + h\frac{k_2}{2}\right), \\
+  		k_4 &= \ f\!\left(t_n + h, y_n + hk_3\right).
+  	\end{align}
+  	
+  	Here $y_{n+1}$ is the RK4 approximation of $y(t_{n+1})$, and the next value ($y_{n+1}$) is determined by the present value $(y_n)$ plus the weighted average of four increments, where each increment is the product of the size of the interval, $h$, and an estimated slope specified by function $f$ on the right-hand side of the differential equation.
+  	\begin{itemize}
+  		\item  $k_1$ is the slope at the beginning of the interval, using $y$  (Euler's method);
+  		\item  $k_2$ is the slope at the midpoint of the interval, using $y$ and $k_1$;
+  		\item  $k_3$ is again the slope at the midpoint, but now using $y$ and $k_2$;
+  		\item $k_4$ is the slope at the end of the interval, using $y$ and $k_3$.
+  	\end{itemize}
+  	
+  	
+   % \chapter{Lists}
+    %\listoffigures
+    %\listoftables
+    \newpage
+    \bibliography{references}{}
+     \newpage
+    \citestyle{egu}
+    \bibliographystyle{plainnat}
+    \include{deposition}
+  %\end{appendix}
+ \newpage
+\end{document}
+

@@ -1,0 +1,26 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {1}Introduction}{4}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Numerical methods}{6}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Multiple shooting}{7}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Mutiple shooting method for OCP}{10}{subsection.2.1.1}%
+\contentsline {section}{\numberline {2.2}KKT condition}{11}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Newton type methods}{14}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Newton method}{14}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Quasi Newton method}{15}{subsection.2.3.2}%
+\contentsline {section}{\numberline {2.4}Sequential quadratic programming}{17}{section.2.4}%
+\contentsline {chapter}{\numberline {3}Optimal control under uncertainty}{18}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Classical approach}{20}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Training approach}{21}{section.3.2}%
+\contentsline {chapter}{\numberline {4}Numerical solution}{23}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Introduction to the rocket car case}{23}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Theoretical solution to rocket car case}{25}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Apply classical (minmax) approach}{30}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Apply training (maxmin) approach}{35}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Analysis the numerical results}{36}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Sensitivity with initial value}{36}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Shared control $u(t)$ for classical approach}{37}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Comparison between classical approach and training approach]}{38}{subsection.4.5.3}%
+\contentsline {chapter}{\numberline {5}Conclusion}{39}{chapter.5}%
+\contentsline {chapter}{\numberline {A}Appendix Runge–Kutta method}{40}{appendix.A}%
+\contentsline {chapter}{Bibliography}{42}{chapter*.2}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

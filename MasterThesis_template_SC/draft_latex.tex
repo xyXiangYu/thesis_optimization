@@ -1,4 +1,102 @@
 
+%Nevertheless, the BOBYQA algorithm has limitations with several strong assumptions being made. Firstly, it has been assumed the uncertainty set is of moderate size and is box-shaped. Secondly, it has been assumed that there is only one local extrema, i.e. the lower level problem has only one solution for each $p \in \mathbb{P}$. In general, we cannot expect the second assumption to be valid. The BOBYQA algorithm is a gradient-free method with repect to the objective function $F(\cdot)$, it still utilizes the gradient of the approximation function $Q(\cdot)$ while updating the iteration. Therefore, this BOBYQA algorithm, or a general DFO approach, is still subject to the numerical errors and computational costs while calculating the gradients of the approximation function $Q(\cdot)$  and updating them in each iteration.  
+
+
+% The lower level OCP of the Training Approach \ref{maxmin} can be solved with the BOBYQA algorithm for a given $p$, since the lower level problem can be re-written into the form of \ref{DFO_bc} and the uncentainty set $\mathbb{P}$ is chosen to be box-shaped. With the BOBYQA algorithm computing local extrema, the upper level problem still needs to be solved globally. In our rocket car case in Chapter \ref{Chapter4}, this is straight-forward, i.e. maximizing over all $p$. 
+
+%		\underset{x(\cdot), u(\cdot)}{min} \   \underset{p  \in   \mathbb{P} }{max} & \ \ F(x(\cdot), u(\cdot), p)\\ 
+%s.t.\ \   &  \dot{x} (t) = f(x(t), u(t), p)\\ 
+%& x(t) \in \Omega \\
+%& u(t) \in \mathbb{U}  \\
+%& p  \in   \mathbb{P}  \\
+%& t \in [t_0, t_f]
+
+%In the classical approach, the set of feasible controllable variables are given by $u(\cdot)$, which yield feasible trajectories $x(\cdot, p)$ for all $p  \in   \mathbb{P}$. The value of the objective function in the lower level does not depend on $p$ and $x(\cdot, p)$. In other words, in this approach, the dynamic system has no prior knowledge about the value of the parameter $p$ and gets no feedback during the process and has to decide the control strategy in advance.  In some OCP under uncertainty, it is not possible to find a unified control $u(\cdot)$ which have fesiable solutions for all $p  \in   \mathbb{P}$. In this case, we may need to find the pair for $x(\cdot;p), u(\cdot;p)$ for different $p$, and among the pairs, we find the worst solution.
+
+
+
+%			s.t.\ \ &  \dot{x} (t) = f(x(t), u(t)), \ \ (system \ dynamics)   \label{P2_sd} \\
+%& g(x(t)) = 0 \  or \leq 0, \ t \in [t_0, t_f]\  (path\  equality\ or\ inequality\ constraints)  \label{P2_ec}\\
+%& h(x(t), u(t)) =0\  or  \leq 0,\ t \in [t_0, t_f] \ (mixed \ control-state  \ constraints)  \label{P2_inc}\\
+%& x(t_0) = x_0, \ \ (initial \ value) \\
+%& r(x(t_f)) \leq 0, \ \ (terminal \ constraints)  \label{P2_final} \\
+%& u^{lower} \leq u(t) \leq u^{upper}   \label{P2_box_u} \\ 
+%& t \in [t_0, t_f]
+
+%In a simplified notation, the problem can be written as 
+
+
+%Due to the $min \ max$ notation, this classical approach of solving the bilevel problem can also be called $min max$ approach. 
+
+Based on our discussion regarding Newton-style method, to find the minimum of $	\mathcal{L}(w,\lambda, \mu) $, we are motivated to solve a linear system as in equation \ref{HessianEq}, where the first order derivatives and Hessian matrix is calculated for the objective function $\mathcal{L}(w,\lambda, \mu)$. Starting with an initial guess of $(w_0, \lambda_0, \mu_0)$, then we are motivated to update  $(w,\lambda, \mu)$ so as to decrease the objective function $\mathcal{L}(\cdot)$ by solving a subproblem of quadrative programming of the following form
+
+
+\begin{subequations}
+	\label{eq:ocp_QP}
+	\begin{align}
+		\underset{\Delta w }{\text{min}} \qquad & \frac{1}{2} \Delta w^\top \nabla^2_w \mathcal{L}(\cdot)\Delta w +\nabla_w f(w_i)^T \Delta w	\\
+		\qquad \text{s.t.}\qquad	& g(w_i) + \nabla g(w_i)^T \Delta w = 0 \\
+		& h(w_i) + \nabla h(w_i)^T \Delta w \leq 0
+	\end{align}
+	\label{P4_QP}
+\end{subequations}
+where $\nabla^2_w \mathcal{L}(\cdot)$ is the Hessian matrix of function $\mathcal{L}(\cdot)$, whose updating can be calculated with quasi Newton method. With a solution $\Delta w_k, \lambda_k^{QP}, \mu_k^{QP}$ found from the subproblem \ref{P4_QP}, we can therefore update the $w, \lambda, \mu$ as 
+\begin{subequations}
+	\begin{align}
+		w_{k+1} &= w_k + \Delta w_k \\
+		\lambda_{k+1} &= \lambda_k^{QP} \\ 
+		\mu_{k+1}&= \mu_k^{QP} 
+	\end{align}
+\end{subequations}
+until convergence. 
+
+%This construction is done in such a way that the sequence $x_k, k =1, 2, 3, ...$ converges to a local minimum $x^\star$ of the NLP \ref{eq:OCP_discret_compact} as $k \approx \infty$.
+
+%$w = (x_0, u_0, x_1, u_1, ..., x_{m-1}, u_{m-1}, u_m)$ piecewise, and they are  in the form of equality constraints or inequality constraints. 
+
+
+%the initial guess of $x$ and $u$ for each subinterval $\mathbb{I}_j = [\tau_{j-1}, \tau_j]$ and the final control value $u_m$, i.e. $w = (x_0, u_0, x_1, u_1, ..., x_{m-1}, u_{m-1}, u_m)$. The constraints in formulation \ref{P3_MSNLP} are applied to the independent variables $w = (x_0, u_0, x_1, u_1, ..., x_{m-1}, u_{m-1}, u_m)$ piecewise, and they are  in the form of equality constraints or inequality constraints. Together with the matching condition \ref{P3_eq}, the NPL problem  \ref{P3_MSNLP} can be re-written as the form in NLP \ref{eq:OCP_discret_compact}, with the $x$ in NLP \ref{eq:OCP_discret_compact} replaced by $w = (x_0, u_0, x_1, u_1, ..., x_{m-1}, u_{m-1}, u_m)$. -
+
+% , i.e. including the constraints and the original objective function into a new objective function, defined as a
+
+   %i.e. we have $x_0, x_1, ..., x_{m-1}$ and $u_0, u_1, ..., u_m$. Then in each subinterval $\mathbb{I}_j = [\tau_j, \tau_{j+1}]$, the following step should be taken: 
+%, with the equality constraints $g(x)=0$ coming from the matching codition \ref{P3_eq} and the original equality constraints \ref{P2_ec} of OCP \ref{P2_OPM}. The other constraints of  OCP \ref{P2_OPM}, as in \ref{P2_inc}, \ref{P2_final}, \ref{P2_box_x}, and \ref{P2_box_u} can be written into the $h(x) \leq 0$ part of  NLP \ref{eq:OCP_discret_compact}. 
+%\ref{P3_constraint} refers to equation  \ref{P2_ec}, \ref{P2_inc}, \ref{P2_final}, \ref{P2_box_x}, and \ref{P2_box_u}, which are applied 
+
+
+% Since this NLP transformed from the original OCP  \ref{P2_OPM}, we are solving the original OCP within an iterative sequential quadratic programming (SQP) approach.
+
+% with  transferred OCP (), i.e. the problem  \ref{P3_MSNLP} with the form \ref{P2_OPM} in details, i.e. working 
+
+
+%Solving the problem \ref{BFGSBUp} directly is not trivial, but we can prove that problem ends up being equivalent to updating our approximate Hessian $B$ at each iteration by adding two symmetric, rank-one matrices $U$ and $V$:
+
+%\begin{align*}
+%\begin{multline*}
+% in this section, as we can apply KKT condition to incorporate constraints into a new objective function.
+% How the quasi Newton method, together with multiple shooting, can be used to solve optimal control problem, will be exlained in more details in Chapter \ref{Chapter4} when we discuss our numerical solutions for the rocket car case. 
+
+%can be expanded for problems with constraints, will be explained in the more details in Section \ref{Sec_KKT}. 
+
+%transform the constrained problem into an unconstrained form, we can, therefore, directly apply algorithms that are suitable for unconstrained minimization. 
+
+% then we can find a local mininizer for the NLP. If such NLP is a convex problem, then the local minimizer will be the global mininizer.  
+%KKT condition can be applied to include the constraints into a Lagrange function, and we can employ an updating schema with an initial guess to solve NLP as in equation \ref{eq:OCP_discret_compact} and optimal control problem as in equation \ref{P2_OPM}. 
+
+%we can, reformulate the NLP as in equation \ref{eq:OCP_discret_compact} as well as the optimal control problem as in equation \ref{P2_OPM}, and then re-write in the Lagrange form \ref{eq_Lagrangian}, optimize the (objective) Lagrange function with quasi Newton method. 
+%The Karush–Kuhn–Tucker (KKT) approach to NLP can include both equality constraints and inequality constraints, together with the original objective function,
+%The gradient descent method starts with an initial guess and follows a direction opposite the gradient, which decreases the Lagrange function to reach the optimal point. Therefore, gradient descent method is a first-order iterative optimization algorithm, but often suffers slow convergence. Instead,
+
+%  In another word, for any $p$, its corresponding solution $min \  F(\cdot; p)$  should smaller or equal to the conservative solution. 
+
+%For each index $i$, they define an $L-$shaped set in the $(h_i, \mu_i)$ space. This set is not a smooth manifold but has a non-differentiability at the origin, i.e.  
+
+%\begin{definition}(Feasible set) The feasible set $\Omega$ is the set 
+%	\begin{align}
+	%		\Omega:= \{x \in \mathbb{R}^n \ | \ g(x)= 0 , \ h(x)\leq 0 \}
+	%	\end{align}
+%\end{definition}
+
 %Since the approaches we are going to use in this paper will be demonstrated with the case of rocket car, we decide to describe the rocket car case first. So that, when we are discussing our approaches, we can directly describe how they can be used in solving the rocket car case. 
 
 %The main focus (of solving the Cerebral Palsy problem) of the paper \cite{MatSch22}, is the "worst-case treatment planning by bilevel optimal control", i.e. a bilevel optimization problem. The bilevel optimisation method in paper \cite{MatSch22} solves the parameterized optimization problems, e.g. the Cerebral Palsy problem, in a conservative way.
