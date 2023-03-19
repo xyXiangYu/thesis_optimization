@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.30)  19 MAR 2023 10:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.30)  19 MAR 2023 17:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -520,14 +520,7 @@ Package hyperref Info: Option `colorlinks' set `true' on input line 93.
 File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count307
 \l__pdf_internal_box=\box56
-) (./Thesis_2023_03_05.aux (./titlepages.aux)
-
-LaTeX Warning: Label `eq_PW_obj' multiply defined.
-
-
-LaTeX Warning: Label `eq_PW_obj@cref' multiply defined.
-
-(./deposition.aux))
+) (./Thesis_2023_03_05.aux (./titlepages.aux) (./deposition.aux))
 \openout1 = `Thesis_2023_03_05.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 95.
@@ -726,308 +719,323 @@ pdfTeX warning (ext4): destination with the same identifier (name{equation.2.1.
 3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.379 	\end{align}
+l.371 	\end{align}
                   
 pdfTeX warning (ext4): destination with the same identifier (name{equation.2.1.
 4}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.379 	\end{align}
+l.371 	\end{align}
                   
 pdfTeX warning (ext4): destination with the same identifier (name{equation.2.1.
 5}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.379 	\end{align}
+l.371 	\end{align}
                   
 pdfTeX warning (ext4): destination with the same identifier (name{equation.2.1.
 6}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.379 	\end{align}
+l.371 	\end{align}
                   
 pdfTeX warning (ext4): destination with the same identifier (name{equation.2.1.
 7}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.379 	\end{align}
+l.371 	\end{align}
                   
 pdfTeX warning (ext4): destination with the same identifier (name{equation.2.1.
 8}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.379 	\end{align}
+l.371 	\end{align}
                   
 pdfTeX warning (ext4): destination with the same identifier (name{equation.2.1.
 9}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.379 	\end{align}
-                   [11] [12] [13] [14] [15] [16] [17] [18]
+l.371 	\end{align}
+                  
+Underfull \vbox (badness 2635) has occurred while \output is active []
+
+ [11]
+[12] [13] [14] [15] [16] [17] [18]
 chapter 3.
 [19
 pdfTeX warning (ext4): destination with the same identifier (name{equation.2.4.
 1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.699       \begin{equation}
-                            
+l.665 \chapter{Optimal control under uncertainty}
+                                                 
 pdfTeX warning (ext4): destination with the same identifier (name{equation.2.4.
 2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.699       \begin{equation}
-                            
+l.665 \chapter{Optimal control under uncertainty}
+                                                 
 pdfTeX warning (ext4): destination with the same identifier (name{equation.2.4.
 3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.699       \begin{equation}
-                            
+l.665 \chapter{Optimal control under uncertainty}
+                                                 ] [20
 pdfTeX warning (ext4): destination with the same identifier (name{equation.3.0.
 1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.699       \begin{equation}
-                            ] [20
+l.698 
+      
 pdfTeX warning (ext4): destination with the same identifier (name{equation.3.0.
 2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.723 
-      ] [21] [22]
+l.698 
+      ] [21] [22] [23]
 chapter 4.
-[23] [24
+[24]
+Overfull \hbox (18.57063pt too wide) in paragraph at lines 839--840
+\T1/cmr/m/n/12 un-der the in-flu-ence of some con-stant ac-cel-er-a-tion/decele
+ration. The ac-cel-er-a-tion/deceleration
+ []
+
+[25
 pdfTeX warning (ext4): destination with the same identifier (name{equation.4.1.
 1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.849 \begin{equation}
+l.864 \begin{equation}
                       ]
 pdfTeX warning (ext4): destination with the same identifier (name{equation.4.1.
 3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.857 \begin{equation}
+l.872 \begin{equation}
                       
 pdfTeX warning (ext4): destination with the same identifier (name{equation.4.1.
 4}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.864 \begin{subequations}
+l.879 \begin{subequations}
                           
 pdfTeX warning (ext4): destination with the same identifier (name{equation.4.1.
 1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.869 	\end{align}
+l.884 	\end{align}
                   
 pdfTeX warning (ext4): destination with the same identifier (name{equation.4.1.
 2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.869 	\end{align}
+l.884 	\end{align}
                   
 pdfTeX warning (ext4): destination with the same identifier (name{equation.4.1.
 3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.869 	\end{align}
-                   [25
+l.884 	\end{align}
+                   [26
 pdfTeX warning (ext4): destination with the same identifier (name{equation.4.1.
 2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.898 \end{equation}
-                    ] [26]
-<theory_T_diff_p.png, id=502, 415.5525pt x 331.7193pt>
+l.918 
+      ] [27]
+<theory_T_diff_p.png, id=509, 415.5525pt x 331.7193pt>
 File: theory_T_diff_p.png Graphic file (type png)
 <use theory_T_diff_p.png>
-Package pdftex.def Info: theory_T_diff_p.png  used on input line 920.
+Package pdftex.def Info: theory_T_diff_p.png  used on input line 934.
 (pdftex.def)             Requested size: 341.43306pt x 272.5633pt.
-<theory_ut_3p.png, id=509, 497.9403pt x 325.9377pt>
+<theory_ut_3p.png, id=516, 497.9403pt x 325.9377pt>
 File: theory_ut_3p.png Graphic file (type png)
 <use theory_ut_3p.png>
-Package pdftex.def Info: theory_ut_3p.png  used on input line 930.
+Package pdftex.def Info: theory_ut_3p.png  used on input line 943.
 (pdftex.def)             Requested size: 341.43306pt x 223.48978pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[27
+[28
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.1}) 
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.936 
+l.949 
        <./theory_T_diff_p.png>]
-<original_u10_p0.png, id=530, 417.7206pt x 341.1144pt>
+<original_u10_p0.png, id=537, 417.7206pt x 341.1144pt>
 File: original_u10_p0.png Graphic file (type png)
 <use original_u10_p0.png>
-Package pdftex.def Info: original_u10_p0.png  used on input line 940.
+Package pdftex.def Info: original_u10_p0.png  used on input line 954.
 (pdftex.def)             Requested size: 284.52756pt x 232.34508pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [28
+<original_u10_p5.png, id=540, 414.8298pt x 341.1144pt>
+File: original_u10_p5.png Graphic file (type png)
+<use original_u10_p5.png>
+Package pdftex.def Info: original_u10_p5.png  used on input line 960.
+(pdftex.def)             Requested size: 284.52756pt x 233.97423pt.
+ [29
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.2}) 
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.944 
-       <./theory_ut_3p.png>]
-<original_u10_p5.png, id=541, 414.8298pt x 341.1144pt>
-File: original_u10_p5.png Graphic file (type png)
-<use original_u10_p5.png>
-Package pdftex.def Info: original_u10_p5.png  used on input line 946.
-(pdftex.def)             Requested size: 284.52756pt x 233.97423pt.
-<original_u10_p9.png, id=544, 414.8298pt x 341.1144pt>
-File: original_u10_p9.png Graphic file (type png)
-<use original_u10_p9.png>
-Package pdftex.def Info: original_u10_p9.png  used on input line 952.
-(pdftex.def)             Requested size: 284.52756pt x 233.97423pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [29
+l.964 
+      
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.3}) 
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.956 
-      
+l.964 
+       <./theory_ut_3p.png> <./original_u10_p0.png>]
+<original_u10_p9.png, id=552, 414.8298pt x 341.1144pt>
+File: original_u10_p9.png Graphic file (type png)
+<use original_u10_p9.png>
+Package pdftex.def Info: original_u10_p9.png  used on input line 966.
+(pdftex.def)             Requested size: 284.52756pt x 233.97423pt.
+ [30
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.4}) 
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.956 
-       <./original_u10_p0.png> <./original_u10_p5.png>] [30
+l.974 
+      
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.5}) 
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.971 	\begin{align}
-                     <./original_u10_p9.png>]
-<ca_result.png, id=569, 1142.2675pt x 570.13pt>
+l.974 
+       <./original_u10_p5.png> <./original_u10_p9.png>]
+<ca_result.png, id=567, 1142.2675pt x 570.13pt>
 File: ca_result.png Graphic file (type png)
 <use ca_result.png>
-Package pdftex.def Info: ca_result.png  used on input line 988.
-(pdftex.def)             Requested size: 341.43306pt x 170.41396pt.
+Package pdftex.def Info: ca_result.png  used on input line 998.
+(pdftex.def)             Requested size: 369.88582pt x 184.6202pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
  [31
 pdfTeX warning (ext4): destination with the same identifier (name{equation.4.3.
 7}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.996 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{figure.4.6}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.996 
-       <./ca_result.png>]
-<ca_ut_pis.png, id=597, 1437.37pt x 1148.29pt>
+l.1002 
+       ]
+<ca_ut_pis.png, id=592, 1437.37pt x 1148.29pt>
 File: ca_ut_pis.png Graphic file (type png)
 <use ca_ut_pis.png>
-Package pdftex.def Info: ca_ut_pis.png  used on input line 1001.
-(pdftex.def)             Requested size: 369.88582pt x 295.49962pt.
-<ca_st_pis.png, id=598, 1437.37pt x 1148.29pt>
-File: ca_st_pis.png Graphic file (type png)
-<use ca_st_pis.png>
-Package pdftex.def Info: ca_st_pis.png  used on input line 1007.
+Package pdftex.def Info: ca_ut_pis.png  used on input line 1013.
 (pdftex.def)             Requested size: 369.88582pt x 295.49962pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [32
+pdfTeX warning (ext4): destination with the same identifier (name{figure.4.6}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.1017 
+        <./ca_result.png>]
+<ca_st_pis.png, id=602, 1437.37pt x 1148.29pt>
+File: ca_st_pis.png Graphic file (type png)
+<use ca_st_pis.png>
+Package pdftex.def Info: ca_st_pis.png  used on input line 1019.
+(pdftex.def)             Requested size: 369.88582pt x 295.49962pt.
+<ca_vt_pis.png, id=603, 1437.37pt x 1148.29pt>
+File: ca_vt_pis.png Graphic file (type png)
+<use ca_vt_pis.png>
+Package pdftex.def Info: ca_vt_pis.png  used on input line 1025.
+(pdftex.def)             Requested size: 369.88582pt x 295.49962pt.
+
+Underfull \vbox (badness 2310) has occurred while \output is active []
+
+ [33
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.7}) 
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1011 
-        <./ca_ut_pis.png>]
-<ca_vt_pis.png, id=607, 1437.37pt x 1148.29pt>
-File: ca_vt_pis.png Graphic file (type png)
-<use ca_vt_pis.png>
-Package pdftex.def Info: ca_vt_pis.png  used on input line 1013.
-(pdftex.def)             Requested size: 369.88582pt x 295.49962pt.
- [33
+l.1029 
+       
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.8}) 
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1020 
-       
-pdfTeX warning (ext4): destination with the same identifier (name{figure.4.9}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1020 
-        <./ca_st_pis.png> <./ca_vt_pis.png>]
-<ca_compare_p0.png, id=630, 1460.45625pt x 1194.4625pt>
+l.1029 
+        <./ca_ut_pis.png> <./ca_st_pis.png>]
+<ca_compare_p0.png, id=625, 1460.45625pt x 1194.4625pt>
 File: ca_compare_p0.png Graphic file (type png)
 <use ca_compare_p0.png>
-Package pdftex.def Info: ca_compare_p0.png  used on input line 1028.
-(pdftex.def)             Requested size: 355.65944pt x 290.86884pt.
-<ca_compare_p5.png, id=635, 1460.45625pt x 1194.4625pt>
-File: ca_compare_p5.png Graphic file (type png)
-<use ca_compare_p5.png>
-Package pdftex.def Info: ca_compare_p5.png  used on input line 1034.
+Package pdftex.def Info: ca_compare_p0.png  used on input line 1040.
 (pdftex.def)             Requested size: 355.65944pt x 290.86884pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [34
+pdfTeX warning (ext4): destination with the same identifier (name{figure.4.9}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.1044 
+        <./ca_vt_pis.png>]
+<ca_compare_p5.png, id=639, 1460.45625pt x 1194.4625pt>
+File: ca_compare_p5.png Graphic file (type png)
+<use ca_compare_p5.png>
+Package pdftex.def Info: ca_compare_p5.png  used on input line 1046.
+(pdftex.def)             Requested size: 355.65944pt x 290.86884pt.
+<ca_compare_p9_old.png, id=644, 1460.45625pt x 1194.4625pt>
+File: ca_compare_p9_old.png Graphic file (type png)
+<use ca_compare_p9_old.png>
+Package pdftex.def Info: ca_compare_p9_old.png  used on input line 1052.
+(pdftex.def)             Requested size: 355.65944pt x 290.86884pt.
+ [35
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.10})
  has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1038 
-        <./ca_compare_p0.png>]
-<ca_compare_p9_old.png, id=649, 1460.45625pt x 1194.4625pt>
-File: ca_compare_p9_old.png Graphic file (type png)
-<use ca_compare_p9_old.png>
-Package pdftex.def Info: ca_compare_p9_old.png  used on input line 1040.
-(pdftex.def)             Requested size: 355.65944pt x 290.86884pt.
- [35
+l.1056 
+       
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.11})
  has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1065 	\begin{align}
-                     
+l.1056 
+        <./ca_compare_p0.png> <./ca_compare_p5.png>]
+<numerical_T_p.png, id=655, 416.2752pt x 331.7193pt>
+File: numerical_T_p.png Graphic file (type png)
+<use numerical_T_p.png>
+Package pdftex.def Info: numerical_T_p.png  used on input line 1084.
+(pdftex.def)             Requested size: 284.52756pt x 226.74548pt.
+ [36
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.12})
  has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1065 	\begin{align}
-                      <./ca_compare_p5.png> <./ca_compare_p9_old.png>]
-<numerical_T_p.png, id=660, 416.2752pt x 331.7193pt>
-File: numerical_T_p.png Graphic file (type png)
-<use numerical_T_p.png>
-Package pdftex.def Info: numerical_T_p.png  used on input line 1080.
-(pdftex.def)             Requested size: 284.52756pt x 226.74548pt.
- [36
+l.1088 
+       
 pdfTeX warning (ext4): destination with the same identifier (name{equation.4.4.
 8}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1086 
-       
+l.1088 
+        <./ca_compare_p9_old.png>]
+File: original_u10_p9.png Graphic file (type png)
+<use original_u10_p9.png>
+Package pdftex.def Info: original_u10_p9.png  used on input line 1092.
+(pdftex.def)             Requested size: 284.52756pt x 233.97423pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[37
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.13})
  has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1086 
+l.1106 
         <./numerical_T_p.png>]
-File: original_u10_p9.png Graphic file (type png)
-<use original_u10_p9.png>
-Package pdftex.def Info: original_u10_p9.png  used on input line 1088.
-(pdftex.def)             Requested size: 284.52756pt x 233.97423pt.
-<initial_value.png, id=686, 623.6901pt x 424.2249pt>
+<initial_value.png, id=688, 623.6901pt x 424.2249pt>
 File: initial_value.png Graphic file (type png)
 <use initial_value.png>
-Package pdftex.def Info: initial_value.png  used on input line 1108.
+Package pdftex.def Info: initial_value.png  used on input line 1110.
 (pdftex.def)             Requested size: 341.43306pt x 232.23691pt.
 
 
@@ -1035,40 +1043,39 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1115.
+(hyperref)                removing `math shift' on input line 1117.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1115.
+(hyperref)                removing `math shift' on input line 1117.
 
-[37
-pdfTeX warning (ext4): destination with the same identifier (name{figure.4.14})
- has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1118 
-       ]
-<aunified_ut.png, id=697, 729.927pt x 563.706pt>
+<aunified_ut.png, id=691, 729.927pt x 563.706pt>
 File: aunified_ut.png Graphic file (type png)
 <use aunified_ut.png>
-Package pdftex.def Info: aunified_ut.png  used on input line 1120.
+Package pdftex.def Info: aunified_ut.png  used on input line 1125.
 (pdftex.def)             Requested size: 284.52756pt x 219.73264pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [38
+pdfTeX warning (ext4): destination with the same identifier (name{figure.4.14})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.1129 
+       ] [39
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.15})
  has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1124 
-        <./initial_value.png>] [39
+l.1134 
+       
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.16})
  has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1149 
-        <./aunified_ut.png>]
+l.1134 
+        <./initial_value.png> <./aunified_ut.png>]
 chapter 5.
 [40]
 chapter A.
@@ -1077,53 +1084,48 @@ chapter A.
 
  (./deposition.tex) [44]
 (./Thesis_2023_03_05.aux (./titlepages.aux) (./deposition.aux))
-
-LaTeX Warning: There were multiply-defined labels.
-
 Package rerunfilecheck Info: File `Thesis_2023_03_05.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 17604 strings out of 478268
- 316997 string characters out of 5846346
- 760358 words of memory out of 5000000
- 35302 multiletter control sequences out of 15000+600000
+ 17620 strings out of 478268
+ 317127 string characters out of 5846346
+ 761414 words of memory out of 5000000
+ 35304 multiletter control sequences out of 15000+600000
  491243 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,15n,106p,10612b,489s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,15n,106p,10612b,459s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<
 /usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></
 usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></u
 sr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></us
 r/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/
-local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/lo
-cal/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/loca
-l/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/
-texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/te
-xlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texli
-ve/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/
-2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2
-022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/202
-2/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2022/
-texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2
-022/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/202
-2/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/2022/
-texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2022/te
-xmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2022/texm
-f-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2022/texmf-
-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/2022/texmf-di
-st/fonts/type1/public/cm-super/sfss1440.pfb></usr/local/texlive/2022/texmf-dist
-/fonts/type1/public/cm-super/sfss1728.pfb></usr/local/texlive/2022/texmf-dist/f
-onts/type1/public/cm-super/sfsx1200.pfb></usr/local/texlive/2022/texmf-dist/fon
-ts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2022/texmf-dist/fonts
-/type1/public/cm-super/sfsx1728.pfb></usr/local/texlive/2022/texmf-dist/fonts/t
-ype1/public/cm-super/sfsx2074.pfb></usr/local/texlive/2022/texmf-dist/fonts/typ
-e1/public/cm-super/sfti1200.pfb>
-Output written on Thesis_2023_03_05.pdf (44 pages, 1661820 bytes).
+local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/lo
+cal/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/loca
+l/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/t
+exlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texl
+ive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texli
+ve/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive
+/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2
+022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texli
+ve/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive
+/2022/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/2
+022/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/202
+2/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2022/
+texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2022/te
+xmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/2022/texm
+f-dist/fonts/type1/public/cm-super/sfss1440.pfb></usr/local/texlive/2022/texmf-
+dist/fonts/type1/public/cm-super/sfss1728.pfb></usr/local/texlive/2022/texmf-di
+st/fonts/type1/public/cm-super/sfsx1200.pfb></usr/local/texlive/2022/texmf-dist
+/fonts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2022/texmf-dist/f
+onts/type1/public/cm-super/sfsx1728.pfb></usr/local/texlive/2022/texmf-dist/fon
+ts/type1/public/cm-super/sfsx2074.pfb></usr/local/texlive/2022/texmf-dist/fonts
+/type1/public/cm-super/sfti1200.pfb>
+Output written on Thesis_2023_03_05.pdf (44 pages, 1647678 bytes).
 PDF statistics:
- 1011 PDF objects out of 1200 (max. 8388607)
- 859 compressed objects within 9 object streams
- 240 named destinations out of 1000 (max. 500000)
+ 1002 PDF objects out of 1200 (max. 8388607)
+ 854 compressed objects within 9 object streams
+ 254 named destinations out of 1000 (max. 500000)
  268 words of extra memory for PDF output out of 10000 (max. 10000000)
 

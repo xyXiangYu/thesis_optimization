@@ -1,4 +1,168 @@
 
+As show above, both the classical approach and training approach leads to an identical solution with final time as $T=4.6053$, which is conservative with respect to original OCP \ref{rc}. The time $T=4.6053$ is conservative, regardless how the uncertain parameter $p$ takes a value in the uncertainty set $\mathbb{P}$, we can always find a feasible solution that leads to a final time that is less than or equal to $T=4.6053$. Neverthless, the classical approach and the training approach do not necessary lead to an identical solution for a general OCP under uncertainty. In general, classical approach should lead to a worse solution compared to training approach. In our case, it just happens that both approaches lead to the same solution, and the worst case happens when $p=9$ at the right boundary point.  
+
+% the classcical approach and training apporach lead
+
+%Before we discuss the results from the classic approach and training approach, we discuss our primary analysis of the original problem \ref{rc}. 
+%We can further prove the theoretical solution in formulation \ref{eq_Theory_T} and \ref{eq_Theory_u} by showing the following facts. First, with more time steps
+%When we plot the optimal $T$ against the uncertain parameter $p$, then we get the result in Figure  
+%The implementation deatils and result are as follows. 
+%\begin{figure}[h!]
+%	\centerline{\includegraphics[width=10cm]{original_u10_p2.png}}
+%	\caption{price and delta from three different methods}
+%	\label{fig:result}
+%\end{figure}
+%\begin{figure}[h!]
+%	\centerline{\includegraphics[width=10cm]{original_u10_p7.png}}
+%	\caption{price and delta from three different methods}
+%	\label{fig:result}
+%\end{figure}
+
+The optimal objective function value of the $max\  min$ problem (training approach) over estimates the one of the $min\ max$ problem (classical approach). It is easy to find examples in which the gap is indeed greater than zero. For example, let $\Omega_x=[-5,5],\Omega_p=[-1,1]$ and consider the function
+
+In theory, the classical approach will lead to a solution that is worse than the training approach. Within training approach, the $p$ value is known beforehand and worst solution is obtained by maximizing over all $p \in \mathbb{P}$. While in the classical approach the $p$ value is priori unknown, and we need to find solutions that yield parameter-dependent variables for all possible realizations of the uncertain parameters, and among them find the optimal solution. We do not dive deep into the proof (ref \cite{MatSch22} for details), here we show the concusion in Theorem \ref{Theorem_compare} directly and one example to support the idea. 
+
+%In the classical approach, when finding the solution of the lower level part for each $p$, we can find a feasiable solution $u(:,p), x(:,p)$ for each $p$. However, if we force a unified $u(t)$ for all $p$ in the uncertainty set, we cannot find a fesiable $u(t)$ for all the $p$ values if the uncertainty set is too big.  When we narrow the uncertainty set, for example, if we narrow the uncertainty set to $\mathbb{P}=[0,1]$, we can still find fesiable solution, with shared control states (i.e. $u(t)$) for all the parameters within this uncertainty set $\mathbb{P}=[0,1]$, as shown in Figure \ref{fig1_ca_unifiedUt}. In Figure  \ref{fig1_ca_unifiedUt}, we have plot the $x$ and the unified/shared $u(t)$ for the parameter at the boundary $p=0$ and $p=1$. Clearly, as shown in the subplot for $x_1:$ Position and $x_2:$ Velocity, both trajectories satisfiy the constraints with the unified $u(t)$ in the third subplot. However, if we increase the uncertainty set, we fail to find a shared $u(t)$ which leads to fesiable solutions for all $p$ in $\mathbb{P}=[0,9]$.  This is consistent with the theoretical analysis discussed in the next section \ref{Comparison}, that the classical approach will lead to a solution that is not better than the training approach. 
+
+%In this part, we show that our numerical implementation is stable with different initial values $u(t_0) \in [0,10]$. As explained before, the car should accelerate as fast as possible at the begining, i.e. $u(t_0)$ should take maximum allowable value $10$ at the begining in order to have the optimal/smallest $T$. With different $u(t_0) \in [0,10]$, the control variables $u(t)$ moves towards $10$ at the acceleration stage, as shown in the first subplot of Figure \ref{fig1_initialUt}. In this plot, we have chosen only $100$ subintervals for $[0,1]$. As shown in the second subplot of Figure \ref{fig1_initialUt}, when the initial value of $u(t_0)$ deviates with the ideal initial value $u(t_0)=10$, it takes most time $T$, compared to other initial values. When the number of subintervals is increased, then the $T$ with initial value other than $u(t_0)=10$ will converge to the $T^\star(u(t_0)=10)$. The result in this section again confirms with the background knowledge discussed in this paper and the theorectical solution. 
+
+
+
+%From analyzing the theoretical solution, 
+%The solution of the training approach in this paper is, therefore, also a function of the realizations of the uncertain parameters. Since in the 
+%The numerical result will be shown in the next section \ref{Sec_NR}.
+
+%Numerical result to be added for the classical approach.  
+
+%where $p_i$ is one of the discretized point $p_0, p_1, ..., p_n$  from the  $\mathbb{P}$. Therefore, for each $ p_i \in \mathbb{P}$, we get a corresponding solution. In the end, we get a robustified parameter-dependent varaibles for realizations of the unceretain parameters. The bigger the number $n$, i.e. the more points of $p_i$, the more precise that the obtained solution can represent the whole uncertain set. In this classical approach, the driver has no prior knowledge about the value of the parameter $p$ and gets no feedback during the process and has to set up the driving strategy in advance. The numerical implementation result of the classical approach is shown in section \ref{Sec_NR} when comparing that of the training approach. 
+
+% \ \forall \   \hat{p}_i,
+%As stated in the introduction part, the classical approach is consistent with the $minmax$ approach, during which, two level optimization problems are solved. In the lower level, we solve an optimization problem ($max \  f(x,p)$) with respect to $p$, and in the upper level, we continue to find the best solution with respect to $x$, as shown in \ref{minmax}. In the case of the rocket car, the classical approach will be expressed in the following form
+
+%In the classical approach, the set of feasible controllable parameters and control functions are given by those $T$ and $u(\cdot)$, which yield feasible trajectories $x(\cdot, p)$ for all $p \in \mathbb{P}$. The value of the objective function in the lower level does not depend on $p$ and $x(\cdot, p)$. In other words, in this approach, the driver has no prior knowledge about the value of the parameter $p$ and gets no feedback during the process and has to set up the driving strategy in advance.  
+
+% \section{The Training Approach}
+
+
+We have explained that the trajectories of different $p_i$ from the classical approach may not be optimal, compared to the case when solving the OCP \ref{rc} directly with the known $p_i$. In the following, we compare the trajectories of the result from the classical approach for $p_i=0$, $p_i=5$, and $p_i=9$ to the cases when solving the OCP \ref{rc} directly with $p_i=0$, $p_i=5$, and $p_i=9$ known in advance. The results from solving OCP \ref{rc} directly with $p_i=0$, $p_i=5$, and $p_i=9$ known in advance, are already shown in Figures \ref{fig1_org_u10_p0},  \ref{fig1_org_u10_p5} and \ref{fig1_org_u10_p9}. 
+
+In Figure \ref{fig_ca_compare_p0}, Figure \ref{fig_ca_compare_p5} and Figure \ref{fig_ca_compare_p9}, we show the comparisons for $p_i=0$, $p_i=5$, and $p_i=9$ between results of solving OCP \ref{rc} directly and results applying classical approach to problem \ref{ca_rc}. Obviously, we can see from from Figure \ref{fig_ca_compare_p0} and Figure \ref{fig_ca_compare_p5}, the solution from classical apporoach is more conservative compared to solving OCP \ref{rc} directly for $p=0$ and $p=5$ respectively. When $p=9$, there is only one line in Figure \ref{fig_ca_compare_p9} for the position $x_1(t)$, force $u(t)$ and velocity $x_2(t)$. This confirms that indeed, when $p=9$, the worst case happens, and the corresponding $\epsilon=4.6053$ is equal to result of solving the \ref{rc} directly with $p=9$. For other $p_i \neq 9$, we can always find an feasible solution with a corresponding $T_i$, which will always be less than or equal to $4.6053$. 
+
+%Here, we take the result again  We take the result from solving OCP directly with with $p_i=0$, $p_i=5$, and $p_i=9$ known and the results from classical approach with $p_i=0$, $p_i=5$, and $p_i=9$, and compare the results. The comparsions for  $p_i=0$, $p_i=5$, and $p_i=9$ are shown in Figure \ref{fig_ca_compare_p0}, Figure \ref{fig_ca_compare_p5} and Figure \ref{fig_ca_compare_p9} respectively.
+%and we get t and $\epsilon$ which are conservative to all the $p_i \in \mathbb{P}$, and does not depend on any parameter $p$. 
+
+
+
+
+For each $(p_i, x(t;p_i), (t;p_i))$, we get one $T_i$, which we try to get maximum value, and meanwhile over the $T_i, i =0, 1, ..., n$, we would like to minimize $\epsilon$ ($\epsilon = \underset{i}{max} \ T_i$). In the end, we reach a worst $\epsilon$ over all $T_i, i =0, 1, ..., n$, and for each $i$, we get a trajectory $(p_i, x(t;p_i), (t;p_i))$. 
+
+In the actual implementation, we have take $n=40$, i.e. in total $40 \ p_i$ points ranging the whole uncertainty set $\mathbb{P}=[0,9]$. Nevertheless, we only show the result for $p_i=0, 1, 2, 3, 4, 5, 6, 7, 8, 9$ for the sake of readability. The final time $\epsilon$ and $T_i$  is shown in Figure \ref{fig_ca_result}, where $\epsilon = \underset{i}{max} \ T_i, i = 0, 1, 2, ..., 9$, and $\epsilon$ reaches the maximum value $4.6053$, when $p_i=9$. The differences in $T_i$ arise mainly because of the numerical errors, in our implementation, the number of subinterval is chosen as $500$ and the numerical error tolerance level is set $1e-6$. When we increase the number of subintervals and decrease the tolerance level, the $T_i$ of $p_i\neq 9$ should converge to $T_i$ of $p_i=9$. 
+
+
+The trajectories $(p_i, x(t;p_i), (t;p_i))$ for $p_i=0, 1, 2, 3, 4, 5, 6, 7, 8, 9$ are shown in Figure \ref{fig_ca_ut_pis}, Figure \ref{fig_ca_st_pis} and Figure \ref{fig_ca_vt_pis} respectively. In all the three Figures \ref{fig_ca_ut_pis}, \ref{fig_ca_st_pis} and \ref{fig_ca_vt_pis}, the standardized time $t \in [0,1]$ is used as x-axis. In Figure \ref{fig_ca_ut_pis}, the $u(t)$ acceleration/deceleration Force is shown for each $p_i=0, 1, 2, 3, 4, 5, 6, 7, 8, 9$; in Figure \ref{fig_ca_st_pis}, the position ($x_1(t)$) is shown for each $p_i=0, 1, 2, 3, 4, 5, 6, 7, 8, 9$; and in Figure \ref{fig_ca_vt_pis}, the velocity ($x_2(t)$) is shown for each $p_i=0, 1, 2, 3, 4, 5, 6, 7, 8, 9$. 
+
+We have explained in Section \ref{Sec:CA} about the classical appraoch. Within this section, we show the numerical results of applying the classical approach for the chosen rocket car case. 
+
+First we discretize the whole uncertainty set  $\mathbb{P}$ into multiple points in an increasing order $[p_0, p_1, ..., p_n] \subset \mathbb{P}$ so that $p_i, i =0, 1, ..., n$ can approximately representing the whole set $\mathbb{P}$ when $n$ is large enough. Here $p_0=p_l$ and $p_n= p_u$, with $[p_l, p_u] =[0,9]$, as shown in equation \ref{uncertainP}.  We solve the $minmax$ problem of the following form
+
+
+% Applying the classical approach to the rocket car case, the problem can be solved as follows. 
+
+%Because of the simplicity of the rocket car case, we can find the theoretical solution of the nominal/original problem for our case \ref{rc}. But for many real life problems, it is very difficult to find a direct solution to the original problem, and for some cases not feasible, due to the uncertainty in the parameter $p$. That is why in the paper \cite{MatSch22}, a classical (in the form $minmax$) approach and a training (in the form $maxmin$) approach have been discussed, and both approaches will lead to a conservative solution to the original problem. A conservative solution to the problem in the paper \cite{MatSch22}, or to general problems,  is a acceptable (or desired) result since less risk is taken and the result is more robust. 
+
+%For both the classical approach and the training approach, after the discretization of the uncertainty set, the problem to be solved becomes a normal optimal control problem and we can use the mutiple shooting and quasi Newton (in the SQP framework) method to solve. We are levaraging open source package Casadi\footnote{Please refer the website https://web.casadi.org for more details} and Gekko\footnote{Please refer the website https://gekko.readthedocs.io/en/latest/ for more information} to solve our problem. These two package can let the user choose different nonlinear programming solver and as well as different underlying numerical methods. In our case, we have chosen the mutiple shooting and sequential quadratic programming, together with Runge–Kutta RK4 method. We have also discretized $t \in [0,1]$ into $500$ subintervals $\mathbb{I}_j = [\tau_{j-1}, \tau_j]$, i.e. the discretizion points as $0 = t_0 =  < t_1 < ... < t_m = t_f =1 $, and an error tolerance level as $1e-6$. The numerical result from the classical approach and training approach will be discussed in the next two sections. 
+
+
+%In the next chapter, we discuss, in details, the classical approach and training approach for the rocket car problem. %After that, we focus on the quasi-Newton and multi shooting approach to the same problem.  
+
+% By ananlyzing the optimal strHere we discuss several strategies. First assume at the ve
+% and the ending state must be at a position larger than $10$ and velocity smaller than $0$. To reach the maximum velocity, from the starting state, we should accelerate as fast as possible until we reach the velocity of $x_2 =4$, and then keep the car running at this velocity until we need to decelerate as strongly as possible. The moment we start to decelerate is decided by how fast we can decelerate the velocity decreases to exact $0$ is just the moment that the position reaches
+%The proof is very tedious, but the idea is straightforward.
+
+%When $p$ takes fixed values, the OCP under uncertainty becomes a normal OCP problem and we can solve directly with the numerical methods discussed in Chapter \ref{Chapter2}, and no bilevel optimisation is needed. With $[0,1]$ discretized into $500$ subintervals $\mathbb{I}_j = [\tau_{j-1}, \tau_j]$, i.e. the discretizion points as $0 = t_0 =  < t_1 < ... < t_m = t_f =1 $, and an error tolerance level as $1e-6$, and Runge-Kutta RK4 method used,  the result from solving a normal OCP with $p=0$, $p=5$ and $p=9$ are shown in Figure \ref{fig1_org_u10_p0}, Figure \ref{fig1_org_u10_p5} and Figure \ref{fig1_org_u10_p9} respectively. 
+
+%Based on these three Figures \ref{fig1_org_u10_p0},  \ref{fig1_org_u10_p5} and \ref{fig1_org_u10_p9}, the results from $p=0$,  $p=5$,  and $p=9$ are consistent with that from the theoretical results in formulation \ref{eq_Theory_T} and \ref{eq_Theory_u}, as shown in Figure \ref{theory_T_diff_p} and Figure \ref{theory_ut_3p}. This confirms two points: first, the theoretical results are correct and second, the numerical methods we have chosen can solve our rocket car case with one chosen fixed $p$ value. These methods can, therefore, be used to solve general OCPs.
+
+%We can verify the correctness of the theoretical solution numerically as well. Firstly, we demonstrate the behavior of the theoretical solution for $T$ as $p$ varies over the entire uncertainty set $\mathbb{P}=[0,9]$, as depicted in Figure \ref{theory_T_diff_p}. Then, we eliminate the uncertainty by presenting the solution to the original problem \ref{rc} for several selected $p_i$ values, where $p_i \in [p_0, p_1, ..., p_n] \subset \mathbb{P} = [0,9]$. For illustrative purposes, we have chosen $p=0$, $p=5$, and $p=9$ as examples. The theoretical $T$ values and corresponding $u(t)$ values for these three $p$ values are demonstrated in Figure \ref{theory_ut_3p}.
+
+
+%We can also numerically verified that the theoretical solution is correct. First, we show the theoretical solution of $T$ against different $p$ values accross the whole uncertainty set $\subset \mathbb{P} = [0,9]$, as shown in Figure \ref{theory_T_diff_p}. Then, we remove the uncertainty by showing the solution to the original problem \ref{rc} for several chosen $p_i$ values, where $ p_i  \in [p_0, p_1, ..., p_n] \subset \mathbb{P} = [0,9]$. Here, we have chosen $p=0$,  $p=5$,  and $p=9$ as the example for illustration.  The $T$ values and the theoretical  $u(t)$ values corresponding to $p=0$,  $p=5$,  and $p=9$, are shown in Figure \ref{theory_ut_3p}. 
+
+This is a qualitative explanation why the solution from formulation \ref{eq_Theory_T} and \ref{eq_Theory_u} is correct. Now, we show that with $p=0$, the optimal time is indeed $T=2.9$. At the beginning $\tau_0 = 0$,  we should accelerate as much as possible until the real time $\tau_1=0.4$ (i.e. $t= \frac{\tau}{T} = 0.137931$). This number $\tau_1=0.4$ can be obtained by solving the partial differential equation \ref{rc_partial} with boundary conditions $x_2(\tau_0)=0$ and $x_2(\tau_1)=4$. At $\tau_1=0.4$, the car velocity reaches $4$, and it keeps running at this velocity $x_2=4$ till $\tau_2=2.5$. From $\tau=2.5$, the car starts to decelerate as strongly as possible, and at $T=\tau_3=2.9$, the velocity reaches $0$ and the total distance traveled is exactly $10$. Then all the contraints are satisfied, and the optimal time is $T=2.9$. 
+
+We can prove that $T=2.9$ is indeed the optimal solution when $p=0$ by using the method proof by contradiction. In the optimal strategy above, it has three stages $[\tau_0, \tau_1]$, $[\tau_1, \tau_2]$, and $[\tau_2, \tau_3]$, corresponding to acceleration, constant and deceleration stages. We assume there is another strategy that differs the one we have described above, yet leading to a less time while satisfying all the constraints. First, we assume the alternative strategy does not accelerate as strong as possible before $\tau_1$, this means within this alternative strategy, the velocity of the car is always less or equal to the velocity of our optimal strategy before $\tau_1=0.4$. This means that before $\tau_1=0.4$, the travel distance in the alternative strategy is less than our optimal strategy, and therefore, it will takes more time for car to cover the remaining distance in the alternative strategy. This alternative strategy, therefore, can not take less time compared to the optimal strategy. Similarly, we can prove that any modication to the optimal strategy will lead a bigger $T$ value. Therefore, by using the example of $p=0$, we have shown the solution \ref{eq_Theory_T} and \ref{eq_Theory_u} is indeed optimal with respect to different $p$ for all the $p$ in the uncertainty set $ \mathbb{P}=[p_l, p_u] =[0,9]$. The details of such proof can be found in paper \cite{MatSch22}. 
+
+
+%Our rocket car problem is a typical bang-bang control problem, its optimal solution is obtained when the trajectory takes the extreme points whenever possible. This means acceleration, velocity and deceleration take the maximum value whenever possible. A more theorectical proof of general bang-bang control problem needs background knowledge in calculus of variations, Hamilton–Jacobi–Bellman equation, and the Pontryagin Maximum Principle etc. The paper \cite{KM16} gives a proof and explanation of the solution to the bang bang problem within a bilevel OCP. We refrain from diving deep into these theories, readers can refer to papers \cite{EJ89}, \cite{RV99} and \cite{BD05} for more information. 
+
+The theoretical solution (equations \ref{eq_Theory_T} and \ref{eq_Theory_u}) to our problem \ref{rc} can also be obtained by solving the underlying partial differential equation \ref{rc_partial} directly, while taking the constraints into consideration. The proof are given in Appendix B of \cite{MatSch22}. The proof is tedious in detail, yet the underlying idea is simple and straightforward. Here we will briefly explain the idea behind the proof given in the paper \cite{MatSch22} and show with one example that the theoretical solution in formulation \ref{eq_Theory_T} and \ref{eq_Theory_u} is indeed correct. We take a fixed parameter value $p=0$ as an example for the explanation.
+
+Because the objective is to minimize the time between the starting state and ending state, then it is optimal to run at the maximum allowable velocity whenever possible, i.e with $x_2 =4$ as in the constraint \ref{rc_x2_tc}. Otherwise, time is wasted if a car is running at a velocity that is less than the maximum allowable velocity, i.e. $x_2=4$. Since the starting state is at position $0$ and velocity $0$, to reach the maximum allowable velocity as soon as possible, the car should be accelerated as strongly as possible at the begining until the velocity reaches $x_2 =4$. Then the car should be running at this maximum velocity for a certain period. After this period, the car should be decelerated as strongly as possible until the velocity decreases to $0$, and exactly at the moment that the velocity reaches $0$, the position should reach $10$. It is this moment that the optimal/smallest $T$ is achieved. How long the period should be running at maximum velocity, depends on the acceleration/deceleration distance, which in turn depends on  starting/ending position (in our case, it is $0$ and $10$ respectively) and starting/ending velocity (in our case, both are $0$). 
+
+
+%where $\mathbf{x}$ is a vector of decision variables, $f(\mathbf{x})$ is the objective function, and $\mathbf{a}$ and $\mathbf{b}$ are vectors of lower and upper bounds on the decision variables, respectively. BOBYQA is a derivative-free optimization algorithm that iteratively builds quadratic models of the objective function and seeks the next point to evaluate based on the predicted improvement of the model. It has been shown to be efficient and effective for optimizing complex, black-box functions subject to box constraints.
+
+%To use BOBYQA for this problem, the objective function $F_i$ needs to be evaluated for each $p_i$ value in $\mathbb{P}$, and the maximum value of $F_i$ needs to be found. For each evaluation of $F_i$, the lower-level optimization problem needs to be solved using BOBYQA algorithm. The decision variables $x(\cdot)$ and $u(\cdot)$ need to be treated as parameters for the upper-level optimization problem, and the derivative-free BOBYQA algorithm can be used to maximize the objective function over $p_i \in \mathbb{P}$.
+
+%The BOBYQA algorithm can solve the lower level OCP of the training approach \ref{maxmin} for a given $p$ because the lower level problem can be re-written into the form of \ref{DFO_bc} and the uncentainty set $\mathbb{P}$ is chosen to be box-shaped. With the BOBYQA algorithm computing local extrema, the upper level problem still needs to be solved globally. This is straightforward in our rocket car case, i.e. maximizing over all $p$.
+
+
+\begin{equation}
+	\begin{aligned}
+		\underset{p  \in   \mathbb{P}}{max} \ \underset{x(\cdot), u(\cdot)}{min} &  \ \ F(x(\cdot), u(\cdot), p)\\ 
+		s.t.\ \    &  \dot{x} (t) = f(x(t), u(t), p)\\ 
+		& x(t) \in \Omega \\
+		&  u(t) \in \mathbb{U}  \\
+		& p  \in   \mathbb{P}  \\
+		& t \in [t_0, t_f]
+	\end{aligned}
+	\label{maxmin}
+\end{equation}
+
+\begin{equation}
+	\begin{aligned}
+		\underset{p \in \mathbb{P}}{max} \ F(x^(p), u^(p), p)\\
+		s.t.\ \ & \dot{x} (t) = f(x(t), u(t), p)\\
+		& x(t) \in \Omega \\
+		& u(t) \in \mathbb{U} \\
+		& t \in [t_0, t_f]\\
+		& x^(p) = \underset{x(\cdot)}{argmin}\ \ F(x(\cdot), u^(p), p)\\
+		& u^(p) = \underset{u(\cdot)}{argmin}\ \ F(x^(p), u(\cdot), p)\\
+	\end{aligned}
+	\label{bilevel}
+\end{equation}
+Here, $x^(p)$ and $u^(p)$ represent the optimal solutions of the lower level problem, obtained by minimizing the objective function $F$ with respect to $x(\cdot)$ and $u(\cdot)$, respectively. The outer maximization problem seeks to find the optimal value of $p \in \mathbb{P}$ that maximizes the minimum objective function value of the inner minimization problem over $x(\cdot)$ and $u(\cdot)$. The state dynamics $\dot{x} (t) = f(x(t), u(t), p)$ and constraints on $x(t)$ and $u(t)$ are the same for both the inner and outer problems. The solution of the outer problem provides the optimal value of $p$ and the corresponding optimal solutions of the lower level problem $x^(p)$ and $u^(p)$.
+
+
+%the BOBYQA algorithm has limitations, with several strong assumptions being made. Firstly, it has been assumed that the uncertainty set is of moderate size and is box-shaped. Secondly, it has been assumed that there is only one local extremum, i.e., the lower level problem has only one solution for each $p \in \mathbb{P}$. In general, we cannot expect the second assumption to be valid. Although the BOBYQA algorithm is a gradient-free method with respect to the objective function $F(\cdot)$, it still utilizes the gradient of the approximation function $Q(\cdot)$ while updating the iteration. Therefore, this BOBYQA algorithm, or a general DFO approach, is still subject to numerical errors and computational costs while calculating the gradients of the approximation function $Q(\cdot)$  and updating them in each iteration.
+
+%The algorithm of SQP with line search and quasi Newton method for solving NLP with constraints can be summarized as follows 
+
+%\begin{algorithm}
+%	\caption{SQP algorithm}\label{alg:cap}
+%	\begin{algorithmic}
+	%		\Require Conduct a preliminary analyis of the problem and have a reasonable initialization for the variable $x, \lambda, \mu$ as $x_1, \lambda_1, \mu_1$. Evaluate the function $f, \nabla f, $
+	%		\Ensure $y = x^n$
+	%		\State $y \gets 1$
+	%		\State $X \gets x$
+	%		\State $N \gets n$
+	%		\While{$N \neq 0$}
+	%		\If{$N$ is even}
+	%		\State $X \gets X \times X$
+	%		\State $N \gets \frac{N}{2}$  \Comment{This is a comment}
+	%		\ElsIf{$N$ is odd}
+	%		\State $y \gets y \times X$
+	%		\State $N \gets N - 1$
+	%		\EndIf
+	%		\EndWhile
+	%	\end{algorithmic}
+% \end{algorithm}
+
+
+Multiple shooting combined with Newton-type methods is used for finding the numerical solution of the OCP. In this approach, a sequential programming approach is used to directly solve a subproblem with constraints. 
+
+%The max function ensures that the penalty term is only added if the constraint is violated. If the constraint is not violated, the penalty term is zero and has no effect on the cost function. By adding a penalty term to the cost function for each constraint violation, we can encourage the solver to find solutions that satisfy the constraints. The penality term can be defined in other forms as well. Nevertheless, for the numerical solution of the OCP, we have comabined the mutiple shooting with Newton type methods, within which a squential programming approach is used to solve a subproblem with constriants directly.  
+
 
 %To solve the OCP as in equation \ref{P2_OPM}, we first discretize the time horizon $ \in [t_0, t_f]$ into multiple subintervals $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$, the time grid will be the same for the control and state variables. Then we choose the support function for the control variables as a constant function, i.e. $ \psi_j(t;w_j)= w_j, t \in \mathbb{I}_j$. We choose a constant control value in each subinterval for two reasons: first, this is easy to implement; and second, we can still get the correct numerical solution fast for our chosen case. Since the control variable support function is chosen to be a constant value for each subinterval, we, therefore, need to introduce the initial guess for $x$ and $u$ in each subinterval, denoted as $x(\tau_j) = s_j$ and $u_j(t) = w_j, t \in \mathbb{I}_j = [\tau_j, \tau_{j+1}]$
 
