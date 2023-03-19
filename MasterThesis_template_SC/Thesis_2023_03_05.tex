@@ -123,7 +123,7 @@ Here $t$ is the independent variable (generally speaking, time), usually using $
 
 Generally speaking, there are three basic approaches to address optimal control problems: (a) dynamic programming; (b) indirect approaches; and (c) direct approaches (ref \cite{MHHP05}). This paper focuses on direct approaches, which transform the original infinite optimal control problem into a finite-dimensional nonlinear programming problem (NLP). This NLP can then solved by variants of numerical optimization methods, and the approach is therefore often sketched as "first discretize, then optimize."
 
-The multiple shooting method can be used in the "first discretize" part of the direct approach. The main idea is to transform the original optimal control problem into a nonlinear programming problem by coupling the control parameterization with a discretization of the state variables. The whole interval $[t_0, t_f]$ is, therefore discretized into $m$ subintervals, with $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$. In each subinterval $\mathbb{I}_j = [\tau_{j}, \tau_{j+1}]$, the control variables $u(t)$ can be approximated by piecewise functions, and the state variables $x(t)$ are solved numerically with an initial value of $x(\tau_j)=s_j$ at the shooting node $\tau_i$. The initial value $x(\tau_i)$ for the state variables at nodes $\tau_i$ must be guessed. Then in each subinterval, the state equations must be integrated individually from $\tau_i$ to $\tau_{i+1}$. In addition, the continuity conditions (matching conditions) must be satisfied, which require that on each differential node the values $x(\tau_{i+1})$ should equal the final value of the preceding subinterval.
+The multiple shooting method can be used in the "first discretize" part of the direct approach. The main idea is to transform the original optimal control problem into a nonlinear programming problem by coupling the control parameterization with a discretization of the state variables. The whole interval $[t_0, t_f]$ is, therefore discretized into $m$ subintervals, with $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$. In each subinterval $\mathbb{I}_j = [\tau_{j}, \tau_{j+1}]$, the control variables $u(t)$ can be approximated by piecewise functions, and the state variables $x(t)$ are solved numerically with an initial value of $x(\tau_j)=s_j$ at the shooting node $\tau_j$. The initial value $x(\tau_j)$ for the state variables at nodes $\tau_j$ must be guessed. Then in each subinterval, the state equations must be integrated individually from $\tau_j$ to $\tau_{j+1}$. In addition, the continuity conditions (matching conditions) must be satisfied, which require that on each node the values $x(\tau_{j+1})$ should equal the final value of the preceding subinterval.
 
 With multiple shooting methods applied, the optimal control problem is transformed into the NLP with constraints, which can be solved within Newton type framework. Newton type methods are iterative methods based on second order derivatives of the cost function (in the unconstrained case) or Lagrange function (in the constrained case). Newton type methods generally, but not always, converges faster than methods using first-order derivatives (e.g. gradient methods), with respect to computational time. The Newton method needs to calculate the second order derivatives, i.e. the Hessian matrix and its inverse in each iteration, which is very expensive to compute. Quasi Netwon methods employ an approximation to the original Hessian matrix and takes an efficient way to update the approximation matrix. Therefore, quasi Newton method is generally, but not always, faster than Newton method in computational time. For our constrained NLP, we use sequential quadratic programming (SQP), i.e. an iterative method for constrained nonlinear optimization. The SQP methods solve a sequence of optimization subproblems, each of which optimizes a quadratic model of the objective, subject to a linearization of the constraints.
 
@@ -147,7 +147,7 @@ Besides the control variables $u$ and state variables $x$, some optimal control 
 	\begin{aligned}
 	\underset{x(\cdot), u(\cdot)}{\text{min}}  \ &  F(x(\cdot), u(\cdot), p) \\
 	s.t.\ \  &  \dot{x} (t) = f(x(t), u(t),p)\\ 
-	& x(t;p) \in \Omega \\
+	& x(t) \in \Omega \\
 	& u(t) \in \mathbb{U}  \\
 	& p  \in   \mathbb{P}  \\
 	& t \in [t_0, t_f]
@@ -159,11 +159,14 @@ Besides the control variables $u$ and state variables $x$, some optimal control 
   
 The difference between equation \ref{P3_POP} and equation  \ref{P1_OPH}, is that the solution of equation \ref{P3_POP} depends on the $p$ from uncertainty set $ \mathbb{P}$, the solution here refers to the trajectory of $x(t)$ and $u(t)$ as well as the optimal function value $F^\star(p)$, as defined in equation \ref{Eq_optFp}.
 \begin{equation}
-	F^\star(p) = min \{ F(x(\cdot), u(\cdot), p) \}, \ s.t. \  all \ constraints
+	F^\star(p) = min \{ F(x(\cdot), u(\cdot), p) \ s.t. \  all \ constraints\},
 	\label{Eq_optFp}
 \end{equation}	
 
-Parametric optimal control problems are very difficult to solve due to the uncertainty in the parameter $p$. The parameter $p$ can take different values, so does the corresponding solution of $u(t), x(t)$ and $F^\star(p)$. Since $p$ is priori unknown, in real life problems, it usually makes sense to solve the parametric optimal control problems in a conservative way, so that a robust solution can be obtained. For example, in the paper \cite{MatSch22}, when modelling the therapy design of Cerebral Palsy (CP) for the patient, a conservative solution is a desirable result. Two different ways of solving the parametric optimal control problem will be discussed in details, i.e. the classical approach and the training approach. Both are in the form of a bilevel optimization problem, i.e. an optimization problem in which another optimization problem enters the constraints. Details about these two approaches will be discussed in Chapter \ref{Chapter3}. The approaches discussed above will be demonstrated with a case study in state constrained rocket car, with the description of the case and its numerical result given in Chapter \ref{Chapter4}.  
+Because of the uncertainty in the parameter $p$, parametric optimal control problems are extremely difficult to solve. The parameter $p$, as well as the corresponding solutions $u(t), x(t)$, and $F^\star(p)$, can have different values. Since $p$ is priori unknown, in real life problems, it usually makes sense to solve the parametric optimal control problems in a conservative way, so that a robust solution can be obtained. For example, in the paper \cite{MatSch22}, when modeling the therapy design of Cerebral Palsy (CP) for the patient, a conservative solution is a desirable result. Two different ways of solving the parametric optimal control problem will be discussed in detail, i.e., the classical approach and the training approach. Both are in the form of a bilevel optimization problem, i.e., an optimization problem in which another optimization problem enters the constraints. Details about these two approaches will be discussed in Chapter \ref{Chapter3}. The approaches discussed above will be demonstrated with a case study of a state-constrained rocket car, with the description of the case and its numerical result given in Chapter \ref{Chapter4}.
+
+
+%Parametric optimal control problems are very difficult to solve due to the uncertainty in the parameter $p$. The parameter $p$ can take different values, so does the corresponding solution of $u(t), x(t)$ and $F^\star(p)$. Since $p$ is priori unknown, in real life problems, it usually makes sense to solve the parametric optimal control problems in a conservative way, so that a robust solution can be obtained. For example, in the paper \cite{MatSch22}, when modelling the therapy design of Cerebral Palsy (CP) for the patient, a conservative solution is a desirable result. Two different ways of solving the parametric optimal control problem will be discussed in details, i.e. the classical approach and the training approach. Both are in the form of a bilevel optimization problem, i.e. an optimization problem in which another optimization problem enters the constraints. Details about these two approaches will be discussed in Chapter \ref{Chapter3}. The approaches discussed above will be demonstrated with a case study in state constrained rocket car, with the description of the case and its numerical result given in Chapter \ref{Chapter4}.  
 
 %of equation \ref{P3_POP}, i.e. $x(t)$, $u(t)$ and optimal function value 
 %objective function $F(\cdot)$. Then, the solution of \ref{P3_POP},  i.e. $min \  F(\cdot; p)$ can be regarded as a function of parameter $p$. One $p$ value corresponds to one solution, if such solution can be found.
@@ -206,91 +209,107 @@ Depending on the nature of the underlying optimal control problems, the mathemat
 Various methods exist for solving optimal control problems. The paper \cite{MHHP05} summarizes three general approaches to address optimal control problems: (a) dynamic programming, (b) indirect approaches, and (c) direct approaches. The optimality principle is used in dynamic programming to recursively compute a feedback control for all time $t$ and all time $x_0$. Indirect methods use the necessary conditions of optimality of the infinite problem to derive a boundary value problem (BVP) in ordinary differential equations.
 
 
-This paper focuses on direct approaches, which are one of the most widespread and successfully used techniques. Direct approaches transform the original infinite optimal control problem into a finite dimensional NLP. This NLP is then solved by variants of state-of-the-art numerical optimization methods, and this approach is therefore often sketched as "first discretize, then optimize." One of the most important advantages of direct approaches is that they can easily treat inequality constraints, e.g., the (inequality) path constraints as in equation \ref{P2_ec}. This is because structural changes in the active constraints during the optimization procedure are treated by well developed NLP methods, which can deal with inequality constraints and active set changes (ref \cite{MHHP05}).
+This paper highlights direct approaches as a widely-used and effective technique for solving optimal control problems. Direct approaches involve converting the infinite optimal control problem into a finite-dimensional NLP, which is then solved using numerical optimization methods. This approach is often summarized as "first discretize, then optimize." One of the primary advantages of direct approaches is their ability to handle inequality constraints, such as the path constraints presented in equation \ref{P2_ec}. NLP methods are equipped to handle structural changes in active constraints during the optimization process, making direct approaches suitable for addressing inequality constraints and active set changes (ref \cite{MHHP05}).
 
-In the text that follows, we first explain the multiple shooting method, which can be used in the "first discretize" part of the direct approach. Afterwards, we explain the KKT conditions, which can treat equality and inequality constraints in optimal control problems. With the background knowledge of multiple shooting methods and KKT conditions, we continue to explain the Newton type method and sequential quadratic programming. These methods, together, can serve as the "then optimize" part of the direct approach and solve the optimal control problems of the form as in equation \ref{P1_OPH}, or in more mathematical details as in equation \ref{P2_OPM}.
+The multiple shooting method is first explained as a technique that can be used in the "first discretize" step of the direct approach. Following that, the KKT conditions, which serve as necessary conditions for optimality in nonlinear programming problems, are explained. These conditions enable a way to verify the optimality of a solution obtained through an optimization algorithm, and inspire the use of the Newton type method in this paper for NLP solving. By solving the NLP, the original OCP of the form \ref{P1_OPH} or \ref{P2_OPM} is consequently solved.
+
+% which can treat equality and inequality constraints in optimal control problems. With the background knowledge of multiple shooting methods and KKT conditions, we continue to explain the Newton type method and sequential quadratic programming. These methods, together, can serve as the "then optimize" part of the direct approach and solve the optimal control problems of the form as in equation \ref{P1_OPH}, or in more mathematical details as in equation \ref{P2_OPM}.
 
 %%However, some modification is necessary so that the multiple shooting method can be applied to solve optimal control problem. I
 
 \section{Multiple shooting}
-The multiple shooting method was initially introduced to solve the boundary value problem (BVP) in differential equation scope (\cite{DJJ62} and \cite{Michael69}). This method, with some adjustment, is therefore well suited for solving optimal control problems with constraints in differential equations. The text that follows will first explain the main idea how to use multiple shooting to solve BVP in the differential equation scope. Following that, we explain how multiple shooting can be used to solve a general optimal control problem and specifically how it can be used to solve an optimal control problem of the form \ref{P2_OPM}. 
+The multiple shooting method was originally developed to address boundary value problems (BVPs) in the context of differential equations (\cite{DJJ62} and \cite{Michael69}). With some modifications, this method is well-suited to solve optimal control problems with constraints defined by differential equations. The upcoming text will first outline the main concept of using multiple shooting to solve BVPs in the differential equation context. Subsequently, we will describe how the multiple shooting method can be applied to solve a general optimal control problem, with a specific focus on solving the optimal control problem presented in form \ref{P2_OPM}.
 
-To illustrate the concept of the shooting method to solve the boundary value problem (BVP), we use the following example.
+
+We will illustrate the shooting method for solving a boundary value problem (BVP) using the following example:
 \begin{align*}
-	\dot{x} = x(t), t_0 \leq t \leq t_f 
+	\dot{x} = x(t), t_0 \leq t \leq t_f
 \end{align*}
-The analytical solution of above equation is 
+The analytical solution to this equation is given by:
 \begin{align*}
 	x(t) = x(t_0)e^{t - t_0}
 \end{align*}
-where $e$ is the exponential number. For a given value $b$, the initial condition $x(t_0) = x_0$ will be determined to satisfy $x(t_f) = b$. As a result, we get the equation $x(t_f)-b = 0$ or $x(t_0)e^{t_f - t_0}-b = 0$. This derivation is called the shooting method. Generally, the shooting method can be summarized as follows
+where $e$ denotes the exponential number. Suppose we want to find the initial condition $x(t_0) = x_0$ that satisfies $x(t_f) = b$ for a given value of $b$. We can express this condition as $x(t_f)-b = 0$ or equivalently $x(t_0)e^{t_f - t_0}-b = 0$. This procedure is known as the shooting method.
+
+The shooting method can be summarized as follows:
+
 \begin{description}
 	\item[shooting method] \
-	\begin{itemize}
-		\item Step 1, choose an initial value $x(t_0)=x_0$ 
-		\item Step 2, form a solution of the differential equation from $t_0$ to $t_f$
-		\item Step 3, define a cost function for the error at the boundary and evaluate such cost function, and if the cost function value is below a tolerance level, then stop, otherwise continue to Step 4 
-		\item Step 4, update the guess for $x(t_0)$ based on some updating schema, go to Step 2
-	\end{itemize}
+	\begin{enumerate}
+		\item Choose an initial value $x(t_0)=x_0$.
+		\item Use numerical integration (see appendix \ref{App1}) to obtain the solution $x(t), t \in [t_0, t_f]$ for the given initial condition $x(t_0)=x_0$.
+		\item Define a cost function for the error at the boundary and evaluate the cost function. If the cost function value is below a tolerance level (e.g., $1e-8$), then stop. Otherwise, continue to the next step.
+		\item Update the guess for $x(t_0)$ based on some updating schema and go back to step 2.
+	\end{enumerate}
 \end{description}
-In Step 2, with initial value $x(t_0)=x_0$, numerical integration (see appendix \ref{App1}) is used in practice to obtain the solution $x(t), t \in [t_0, t_f]$. The details of the numerical inegration method is given in appendix \ref{App1}. In Step 3, the cost function can be defined as $(x(t_f)-b)^2$, and the tolerance level is set as a reasonable small number, e.g. $1e-8$. The tolenrance level is set based on a balance of accuracy and computation cost (with respect to time). 
+In practice, we use numerical integration (see appendix \ref{App1}) to obtain the solution $x(t), t \in [t_0, t_f]$ in step 2. We define the cost function as $(x(t_f)-b)^2$ and set the tolerance level as a small number to balance accuracy and computation cost.
 
-In multiple shooting method, the "shooting" interval is partitioned into some short subintervals. We consider a differential equation with boundary value of the following form
+The multiple shooting method partitions the "shooting" interval into short subintervals and solves a differential equation with boundary value of the form:
 \begin{equation}\label{eqn:ori_dae}
 	\begin{aligned}
-		& \dot{y} = f(t, y) \\ 
-		& y(t_f) = y_f  \\
+		& \dot{y} = f(t, y) \
+		& y(t_f) = y_f \
 	\end{aligned}
 \end{equation}
-Where $y$ denotes the differential variables, $t \in [t_0, t_f]$, $y_f$ is the boundary value at $t_f$. With multiple shooting method, one chooses a suitable grid of multiple shooting nodes $\tau_j \in [t_0,t_f] $, where $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$, i.e. $m$ subintervals covering the whole interval. At the beginning of each subinterval, $[\tau_k, \tau_{k+1}], k = 0, 1, ..., m-1$, we have the initial guess of the starting value $\hat{y}_k$. Then in each subinterval, we have the initial value problem of the following form: 
+Here, $y$ represents the differential variables, $t \in [t_0, t_f]$, and $y_f$ is the boundary value at $t_f$. The method selects a suitable grid of multiple shooting nodes $\tau_j \in [t_0,t_f]$, where $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$, to create $m$ subintervals covering the entire interval. In each subinterval, the initial guess of the starting value $\hat{y}_j$ is given at $\tau_j$. An initial value problem of the following form is then solved:
 \begin{equation}\label{eqn:msh}
 	\begin{aligned}
-		& \dot{y} = f(t, y) , t \in [\tau_k, \tau_{k+1}], \ k = 0, 1, ..., m-1   \\ 
-		& y(\tau_k) = \hat{y}_k, k = 0, 1, ..., m-1  \\
+		& \dot{y} = f(t, y), \quad t \in [\tau_j, \tau_{j+1}], \quad j = 0, 1, ..., m-1  \\
+		& y(\tau_j) = \hat{y}_j, \quad j = 0, 1, ..., m-1 \
 	\end{aligned}
 \end{equation}
-In each subinterval, we introduce the new unknown parameter $\hat{y}_k$, we solve an initial value problem and will get a solution $y(t), t \in [\tau_k, \tau_{k+1}]$. The piecewise solution is not necessary continuous and also not necessarily satisfy the boundary condition $y(t_f) = y_f$. The continuity has to be enforced by additional matching conditions at each subinterval boundary, i.e. 
+The piecewise solution is not necessarily continuous and does not necessarily satisfy the boundary condition $y(t_f) = y_f$. Therefore, additional matching conditions at each subinterval boundary are enforced to ensure continuity.
 \begin{equation}\label{eqn:mc}
 	\begin{aligned}
-		& y(\tau_{k+1}; \hat{y}_k) = \hat{y}_{k+1}, \  k = 0, 1, ..., m-1  \\
-		& \hat{y}_{m} (i.e. \ \hat{y}_{\tau_m} = \hat{y}_{t_f}) =  y_f 
+		& y(\tau_{j+1}; \hat{y}_j) = \hat{y}{j+1}, \quad j = 0, 1, ..., m-1 \\
+		& \hat{y}_{m} \ (i.e. \ \hat{y}_{\tau_m} = \hat{y}_{t_f}) = y_f \
 	\end{aligned}
 \end{equation}
+
 
 The procedure of multiple shooting method can then be summarized as
 \begin{description}
 	\item[mutilple shooting method] \
 	\begin{itemize}
 		\item Step 1, choose multiple shooting nodes $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$ 
-		\item Step 2, choose initial guess for $\hat{y}_k, k = 0, 1, ..., m-1$ 
-		\item Step 3, form solutions of the differential equation in each subinterval $[\tau_k, \tau_{k+1}], k = 0, 1, ..., m-1$
-		\item Step 4, define a cost function for the errors at the boundaries of each subinterval. If such cost function value is below a tolerance level, then stop. Otherwise, continue to Step 5
-		\item Step 5, update the guess for $\hat{y}_k, k = 0, 1, ..., m-1$ based on some updating schema, go to Step 3
+		\item Step 2, select initial guesses for $\hat{y}_j, j = 0, 1, ..., m-1$ 
+		\item Step 3, form solutions to the differential equation in each subinterval $[\tau_j, \tau_{j+1}], j= 0, 1, ..., m-1$
+		\item Step 4, define a cost function for the sum of the error at the boundary of each subinterval. If such cost function value is below a tolerance level, stop; otherwise, move to Step 5
+		\item Step 5, update the guess for $\hat{y}_k, k = 0, 1, ..., m-1$ using some updating scheme, and go back to Step 3
 	\end{itemize}
 \end{description}
 In Step 4, the cost function can be defined as 
 \begin{equation}
-	\sum_{k=0}^{k=m-1}(y(\tau_{k+1}; \hat{y}_k) - \hat{y}_{k+1})^2
+	\sum_{j=0}^{j=m-1}(y(\tau_{j+1}; \hat{y}_j) - \hat{y}_{j+1})^2
 \end{equation}
 and the tolerance level is set as a reasonable small number, e.g. $1e-8$.
 
-We have summarized the main idea above on how the multiple shooting method can be used to solve a boundary value problem, yet the explanation falls short of mathematical rigor and completeness. In practice, there are many details to be decided when using (multiple) shooting methods. We will discuss these briefly without giving a comprehensive description. In Steps 1 \& 2, when choosing the shooting nodes and the initial guess $\hat{y}_k$, how they are chosen usually depends on the nature of the problem as well as a balance between accuracy and computational cost. For example, the nodes can be equally spaced and the $\hat{y}_k$ can be initialized with the same value, or they can be addressed based on our initial knowledge of the problem. In Step 3, polynomial functions can be used as the approximate solutions, leveraging the fact that Taylor expansion can be used to approximate any continuous function. In Step 4, the cost function is usually defined as the sum of quadratic errors, but it can take other forms as well. In Step 5, the "updating schema" can be defined so that the $\hat{y}_k$ can move in a direction that decreases the cost function. The (quasi) Newton method, for example, can be used as an updating method in Step 5.
+The main idea of using the multiple shooting method to solve a boundary value problem has been summarized above, but the explanation lacks mathematical rigor and completeness. Many details need to be decided in practice when using shooting methods. For instance, in Steps 1 and 2, the shooting nodes and initial guess $\hat{y}_k$ are usually selected based on the problem's nature and a balance between accuracy and computational cost. In Step 3, polynomial functions can approximate the solutions using Taylor expansion. In Step 4, the cost function typically measures the sum of quadratic errors, but other forms are possible. In Step 5, an updating schema moves $\hat{y}_k$ towards decreasing the cost function, such as the (quasi) Newton method.
 
 
-The multiple shooting method can be used for many problems. For example, it can also be applied to the second order differential system of the following form 
+The multiple shooting method is a versatile approach that can be applied to various problems. For instance, it can be used to solve the second-order differential system in the form of Equation \ref{eqn:tdode}. 
+
+
+
+
+%The multiple shooting method can be used for many problems. For example, it can also be applied to the second order differential system of the following form 
 \begin{equation}
 	y''(t) = f(t, y(t), y'(t))  \quad y(t_0) = y_0, \quad y(t_f) = y_f,  \quad t \in [t_0, t_f]
 	\label{eqn:tdode}
 \end{equation}
-The problem \ref{eqn:tdode} is similar to the problem \ref{eqn:ori_dae}. In each subinterval, a boundary value problem (BVP) is to be solved, and matching conditions at the boundary of each subinterval are to be enforced so that the final solution is continuous and applicable to the whole interval.
 
-In the examples above, no control variables exist, so only an initial guess $\hat{y}_k$ needs to be introduced for each subinterval. For optimal control problems, piecewise local support functions need to be introduced in the mutilphe shooting method to address the control variables, and initial guesses for the state variables need to be provided separately.
+This problem \ref{eqn:tdode}  is similar to the problem \ref{eqn:ori_dae}. Within this problem, a boundary value problem (BVP) needs to be solved in each subinterval, and the matching conditions at the boundary of each subinterval need to be enforced to ensure a continuous and valid solution for the entire interval.
+
+The examples discussed above do not consider control variables and only require an initial guess $\hat{y}_j$ for each subinterval. However, in optimal control problems, the multiple shooting method requires the introduction of piecewise local support functions to address control variables. In addition, separate initial guesses for the state and control variables need to be provided.
+
+
 
 \subsection{Mutiple shooting method for OCP}
 \label{Sec_MS_OCP}
-The multiple shooting method is well suited for solving optimal control problems of the form as in the equation \ref{P2_OPM}, as it can serve as the "first discretize" part of the direct approaches. For OCPs in the form of the equation \ref{P2_OPM}, we follow the same idea of how the multiple shooting method can be used to solve boundary value problems. For OCPs, there are both control variables and state variables; therefore, we need to discretize both the control and state variables. For simplicity, we choose the same discretization grid points for the control variables and the state variables. For the control variables in each subinterval, we introduce a 'local support' ansatz function. 
 
-Therefore, the first step remains the same, i.e., choosing the suitable time grid to discretize the whole interval $[t_0, t_f]$ into $m$ subintervals $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$, with the $i$-th subinterval as $\mathbb{I}_j = [\tau_j, \tau_{j+1}]$. In the second step, we define a local support function for the control variables. The local support function for the control variables in subinteval $\mathbb{I}_j$, which is denoted as  $u(t) \mid_{t \in \mathbb{I}_j} = \psi_j(t;w_j), t \in \mathbb{I}_j$  can be of the following type
+The multiple shooting method is a useful approach for solving optimal control problems of the form described in equation \ref{P2_OPM}. This method can serve as the "first discretize" step of the direct approaches. When dealing with optimal control problems, both control variables and state variables need to be discretized. To simplify the process, we choose the same discretization grid points for both variables. Additionally, we introduce a 'local support' ansatz function for the control variables in each subinterval.
+
+The first step in this approach remains the same, which is to choose the appropriate time grid to discretize the entire interval $[t_0, t_f]$ into $m$ subintervals $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$, where the $j$-th subinterval is denoted as $\mathbb{I}_j = [\tau_j, \tau_{j+1}]$. In the second step, we define a local support function for the control variables in each subinterval, which can be denoted as $u(t) \mid_{t \in \mathbb{I}_j} = \psi_j(t;w_j), t \in \mathbb{I}_j$. The local support function can take the following form
 
 
 \begin{enumerate}
@@ -305,25 +324,47 @@ Therefore, the first step remains the same, i.e., choosing the suitable time gr
 	\end{align} 
 \end{enumerate}
 
-where $w_j$ is an introduced variable of the control support function for subinterval $ \mathbb{I}_j$. For piecewise constant controls, $u(t)$ takes a constant value $w_j$ in the subinterval $\mathbb{I}_j$. For the piecewise linear controls, $u(t)$ takes the value from the linear interpolation between the left boundary $w_j^l$ and right boundary $w_j^r$ in the subinterval $\mathbb{I}_j$.  The continuity regarding the control variables can be enforced by additional equality 
+The introduced variable for the control support function in subinterval $\mathbb{I}_j$ is denoted as $w_j$. For piecewise constant controls, $u(t)$ takes a constant value of $w_j$ within the subinterval $\mathbb{I}_j$. For piecewise linear controls, $u(t)$ takes the value from the linear interpolation between the left boundary $w_j^l$ and right boundary $w_j^r$ in the subinterval $\mathbb{I}_j$. To ensure continuity of the control variables, an additional equality constraint is enforced as follows
 \begin{equation}
-	\psi_j(\tau_{j+1};w_j) =  \psi_{j+1}(\tau_{j+1};w_{j+1})
+	\psi_j(\tau_{j+1};w_j) =  \psi_{j+1}(\tau_{j+1};w_{j+1}).
 \end{equation}
 
+To solve the OCP described in equation \ref{P2_OPM}, we begin by dividing the time horizon $[t_0, t_f]$ into a set of subintervals with common grid points for both the control and state variables. These subintervals are defined by the points $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$. We choose the support function for the control variables to be constant over each subinterval, i.e. $\psi_j(t;w_j) = w_j$ for $t \in \mathbb{I}_j$. We do this for two reasons: first, it is easy to implement; and second, we can obtain accurate numerical solutions quickly for our chosen case study. Since the control variables are constant over each subinterval, we need to specify an initial guess for both $x$ and $u$ in each subinterval. We denote these initial guesses as $x(\tau_j) = s_j$ and $u_j(t) = w_j$ for $t \in \mathbb{I}_j = [\tau_j, \tau_{j+1}]$.
 
-
-To solve the OCP as in equation \ref{P2_OPM}, we first discretize the time horizon $ \in [t_0, t_f]$ into multiple subintervals $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$, the time grid will be the same for the control and state variables. Then we choose the support function for the control variables as a constant function, i.e. $ \psi_j(t;w_j)= w_j, t \in \mathbb{I}_j$. We choose a constant control value in each subinterval for two reasons: first, this is easy to implement; and second, we can still get the correct numerical solution fast for our chosen case. Since the control variable support function is chosen to be a constant value for each subinterval, we, therefore, need to introduce the initial guess for $x$ and $u$ in each subinterval, denoted as $x(\tau_j) = s_j$ and $u_j(t) = w_j, t \in \mathbb{I}_j = [\tau_j, \tau_{j+1}]$
 We can the follow the steps
-\begin{itemize}
-	\item Step 1, choose multiple shooting nodes $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$ 
-	\item Step 2, choose the initial guess $s_j$ and $w_j$ for each subinterval $\mathbb{I}_j$, with $x(\tau_j) = s_j, j = 0, 1, ..., m-1$ and $u_j(t) = w_j, t \in \mathbb{I}_j = [\tau_j, \tau_{j+1}], j =0, 1, ..., m-1$ 
-	\item Step 3,  we solve the dynamic system using the Runge–Kutta 4 method (see the appendix \ref{App1}), and obtain a solution $x(t; s_j, w_j), \ t  \in \mathbb{I}_j =[\tau_j, \tau_{j+1}]$  
-	\item Step 4, we check whether the solution is feasible (i.e., satisfying the constraints in each subinterval). If the solution is feasible. We compute a cost of the error for the subinterval $\mathbb{I}_j$, which is denoted as $F_j$. We define the cost function as the sum of $F_j$ over all the subintervals. If the solution is not feasible, we add a penalty term to the cost function for each violation of the constraint. 
-	\item Step 5, we compute the cost function value, and if this value is below some tolerance level, stop; otherwise, we update the guesses $s_j, w_j, j =0, 1, ..., m-1$ and go to Step 3.
-\end{itemize}
+
+\begin{enumerate}
+	\item Choose multiple shooting nodes $t_0 = \tau_0 < \tau_1 < \dots < \tau_m = t_f$.
+	\item Choose initial guesses $s_j$ and $w_j$ for each subinterval $\mathbb{I}_j$, with $x(\tau_j) = s_j$, $j=0,1,\dots,m-1$ and $u_j(t) = w_j$, $t \in \mathbb{I}_j = [\tau_j,\tau_{j+1}]$, $j=0,1,\dots,m-1$.
+	\item Solve the dynamic system using a numerical method such as Runge-Kutta 4 (see appendix \ref{App1}) to obtain a solution $x(t; s_j, w_j)$, $t\in\mathbb{I}_j = [\tau_j, \tau_{j+1}]$.
+	\item Check if the solution is feasible, i.e., satisfies the constraints in each subinterval. If the solution is feasible, compute a cost of the error for the subinterval $\mathbb{I}_j$, which is denoted as $F_j$ and defined as:
+	%$$F_j = \int_{\tau_j}^{\tau{j+1}} L(x(t;s_j,w_j), u(t;w_j)) dt$$ 
+	\begin{equation}\label{eq_PW_obj}
+		\begin{aligned}
+			F_j &= \int_{\tau_j}^{\tau{j+1}} L(x(t;s_j,w_j), u(t;w_j)) dt +  \left\Vert x(\tau_{j+1};s_j,w_j)-\psi(\tau_{j+1})\right\Vert^2  \ \    j= 0, 1, ..., m-2 \\ 
+			F_j  & = \int_{\tau_j}^{\tau{j+1}} L(x(t;s_j,w_j), u(t;w_j)) +  \left\Vert x(\tau_{j+1};s_j,w_j)-\psi(\tau_{j+1})\right\Vert^2 +  E (x(t_f))  \ \  j =m-1 
+		\end{aligned}
+	\end{equation}
+	where $L$ is the running cost function, $E$ is the terminal cost function, and $u$ and $x$ are the control and state variables, respectively. The term $\left\Vert x(\tau_{j+1};s_j,w_j)-\psi(\tau_{j+1})\right\Vert^2$ is the cost of the error at the bounary of each subinterval. If the solution is not feasible in a subinterval, add a penalty term to the cost function $F_j$ for each constraint violation in that subinterval. 
+	\item Compute the cost function value, which is the sum of $F_j$ over all subintervals:
+	$$F = \sum_{j=0}^{m-1} F_j$$
+	If the cost function value is below some tolerance level, stop. Otherwise, update the guesses $s_j$ and $w_j$ and go back to Step 3.
+\end{enumerate}
 
 
-In Step 3, the result from solving the dynamic system equation \ref{P2_sd} might be an infeasible solution, i.e., a solution that does not satisfy the constraints \ref{P2_ec}, \ref{P2_inc}, \ref{P2_final} and \ref{P2_box_u}. In this case, we can update $s_j$ and $w_j$ iteratively until feasible solutions are found and an optimal solution is reached. In Step 5, we can follow a Newton type method as the updating schema. The solution is optimal if a minimum cost function value in the subinterval $\mathbb{I}_j$  is obtained while satisfying all the constraints  \ref{P2_ec}, \ref{P2_inc}, \ref{P2_final} and \ref{P2_box_u}. In practice, we do not aim to find the optimal solution for each subinterval; instead, we aim to find the optimal solution for the whole interval, i.e., $min  \sum_{j=1}^{m} F_j $. With the matching condition added, the original OCP is transferred into NLP in the following form
+In Step 3, the result from solving the dynamic system equation \ref{P2_sd} might be an infeasible solution, i.e., a solution that does not satisfy the constraints \ref{P2_ec}, \ref{P2_inc}, \ref{P2_final} and \ref{P2_box_u}.
+Then, a penalty term is typically added to the cost function $F_j$ for each constraint violation within that subintervale.  For example, suppose we have a constraint that $g(x(t), u(t)) \leq 0$ for all $t\in\mathbb{I}_j = [\tau_j, \tau_{j+1}]$, but our computed solution violates this constraint at some point $t^*$. We can add a penalty term to the cost function as follows:
+
+$$F_j = F_j + \lambda \cdot \max\{0, g(x(t^*), u(t^*))\}$$
+
+where $\lambda$ is a positive constant that controls the strength of the penalty. The max function ensures that the penalty term is only added if the constraint is violated. If the constraint is not violated, the penalty term is zero and has no effect on the cost function. By adding a penalty term to the cost function for each constraint violation, we can encourage the solver to find solutions that satisfy the constraints.
+
+
+
+ In this case, a penaty term
+
+
+we can update $s_j$ and $w_j$ iteratively until feasible solutions are found and an optimal solution is reached. In Step 5, we can follow a Newton type method as the updating schema. The solution is optimal if a minimum cost function value in the subinterval $\mathbb{I}_j$  is obtained while satisfying all the constraints  \ref{P2_ec}, \ref{P2_inc}, \ref{P2_final} and \ref{P2_box_u}. In practice, we do not aim to find the optimal solution for each subinterval; instead, we aim to find the optimal solution for the whole interval, i.e., $min  \sum_{j=1}^{m} F_j $. With the matching condition added, the original OCP is transferred into NLP in the following form
 	\begin{subequations}
 	\begin{align}
 		\underset{w}{\text{min}}   \ &  \sum_{j=1}^{m} F_j   \label{P3_obj}   \\

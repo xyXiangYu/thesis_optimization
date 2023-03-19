@@ -1,4 +1,106 @@
 
+
+%To solve the OCP as in equation \ref{P2_OPM}, we first discretize the time horizon $ \in [t_0, t_f]$ into multiple subintervals $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$, the time grid will be the same for the control and state variables. Then we choose the support function for the control variables as a constant function, i.e. $ \psi_j(t;w_j)= w_j, t \in \mathbb{I}_j$. We choose a constant control value in each subinterval for two reasons: first, this is easy to implement; and second, we can still get the correct numerical solution fast for our chosen case. Since the control variable support function is chosen to be a constant value for each subinterval, we, therefore, need to introduce the initial guess for $x$ and $u$ in each subinterval, denoted as $x(\tau_j) = s_j$ and $u_j(t) = w_j, t \in \mathbb{I}_j = [\tau_j, \tau_{j+1}]$
+
+%\begin{itemize}
+\item Step 1, choose multiple shooting nodes $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$ 
+\item Step 2, choose an initial guess $s_j$ and $w_j$ for each subinterval $\mathbb{I}_j$, with $x(\tau_j) = s_j$ and $u_j(t) = w_j$ for $t \in \mathbb{I}_j = [\tau_j, \tau_{j+1}]$, where $j = 0, 1, ..., m-1$. 
+\item Step 3, solve the dynamic system using the numerical integration method (see appendix \ref{App1}) and obtain a solution $x(t; s_j, w_j)$ for $t \in \mathbb{I}_j = [\tau_j, \tau_{j+1}]$.
+\item Step 4, we need to check whether the solution obtained in Step 3 satisfies the constraints or not. If the solution satisfies the constraints, we can directly compute the cost of the error for the subinterval, denoted as $F_j$. However, if the solution violates any constraint, we need to add a penalty term to the cost function to account for the violation.
+$$ F_j = \int_{\tau_j}^{\tau_{j+1}} \mathcal{L}(t, x(t;s_j, w_j), u(t;w_j)) dt + \Phi(x(\tau_{j+1}), \tau_{j+1}) - \Phi(x(\tau_j), \tau_j) $$
+%we check whether the solution is feasible (i.e., satisfying the constraints in each subinterval). If the solution is feasible. We compute a cost of the error for the subinterval $\mathbb{I}_j$, which is denoted as $F_j$. We define the cost function as the sum of $F_j$ over all the subintervals. If the solution is not feasible, we add a penalty term to the cost function for each violation of the constraint. 
+\item Step 5, compute the cost function value, if such value  is below some tolerance level, stop; otherwise, update the guesses for the state and control variables in each subinterval and go back to Step3. %until the cost function value is below some tolerance level.
+%we compute the cost function value, and if this value is below some tolerance level, stop; otherwise, we update the guesses $s_j, w_j, j =0, 1, ..., m-1$ and go to Step 3.
+\end{itemize}
+
+% $$ F_j = \left\Vert x(\tau_{j+1};s_j,w_j)-\xi(\tau_{j+1})\right\Vert^2 $$
+%$$F_j = L(x(\tau_j), u_j(\tau_j)) \Delta t_j + \frac{1}{2}(x(\tau_{j+1})-s_{j+1})^TQ(x(\tau_{j+1})-s_{j+1})\Delta t_j + \frac{1}{2}(u_{j+1}(\tau_{j+1})-w_{j+1})^TR(u_{j+1}(\tau_{j+1})-w_{j+1})\Delta t_j$$
+%$$F_j = \int{\tau_j}^{\tau{j+1}} L(x(t;s_j,w_j), u(t;w_j)) dt + E(x(\tau_{j+1};s_j,w_j))$$
+%where $w_j$ is an introduced variable of the control support function for subinterval $ \mathbb{I}_j$. For piecewise constant controls, $u(t)$ takes a constant value $w_j$ in the subinterval $\mathbb{I}_j$. For the piecewise linear controls, $u(t)$ takes the value from the linear interpolation between the left boundary $w_j^l$ and right boundary $w_j^r$ in the subinterval $\mathbb{I}_j$.  The continuity regarding the control variables can be enforced by additional equality 
+\begin{equation}
+	\psi_j(\tau_{j+1};w_j) =  \psi_{j+1}(\tau_{j+1};w_{j+1})
+\end{equation}
+
+To illustrate the concept of the shooting method to solve the boundary value problem (BVP), we use the following example.
+\begin{align*}
+	\dot{x} = x(t), t_0 \leq t \leq t_f 
+\end{align*}
+The analytical solution of above equation is 
+\begin{align*}
+	x(t) = x(t_0)e^{t - t_0}
+\end{align*}
+where $e$ is the exponential number. For a given value $b$, the initial condition $x(t_0) = x_0$ will be determined to satisfy $x(t_f) = b$. As a result, we get the equation $x(t_f)-b = 0$ or $x(t_0)e^{t_f - t_0}-b = 0$. This derivation is called the shooting method. Generally, the shooting method can be summarized as follows
+\begin{description}
+	\item[shooting method] \
+	\begin{itemize}
+		\item Step 1, choose an initial value $x(t_0)=x_0$ 
+		\item Step 2, form a solution of the differential equation from $t_0$ to $t_f$
+		\item Step 3, define a cost function for the error at the boundary and evaluate such cost function, and if the cost function value is below a tolerance level, then stop, otherwise continue to Step 4 
+		\item Step 4, update the guess for $x(t_0)$ based on some updating schema, go to Step 2
+	\end{itemize}
+\end{description}
+In Step 2, with initial value $x(t_0)=x_0$, numerical integration (see appendix \ref{App1}) is used in practice to obtain the solution $x(t), t \in [t_0, t_f]$. The details of the numerical inegration method is given in appendix \ref{App1}. In Step 3, the cost function can be defined as $(x(t_f)-b)^2$, and the tolerance level is set as a reasonable small number, e.g. $1e-8$. The tolenrance level is set based on a balance of accuracy and computation cost (with respect to time). 
+
+
+In the multiple shooting method, the "shooting" interval is partitioned into short subintervals. We consider a differential equation with boundary value of the following form:
+\begin{equation}\label{eqn:ori_dae}
+	\begin{aligned}
+		& \dot{y} = f(t, y) \
+		& y(t_f) = y_f \
+	\end{aligned}
+\end{equation}
+Here, $y$ denotes the differential variables, $t \in [t_0, t_f]$, and $y_f$ is the boundary value at $t_f$. With the multiple shooting method, a suitable grid of multiple shooting nodes $\tau_j \in [t_0,t_f]$, where $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$, is chosen. There are $m$ subintervals covering the whole interval. At the beginning of each subinterval, $[\tau_j, \tau_{j+1}], j = 0, 1, ..., m-1$, we have the initial guess of the starting value $\hat{y}_j$. Then in each subinterval, we have the initial value problem of the following form:
+
+\begin{equation}\label{eqn:msh}
+	\begin{aligned}
+		& \dot{y} = f(t, y) , t \in [\tau_j, \tau_{j+1}], \ j = 0, 1, ..., m-1  \\
+		& y(\tau_j) = \hat{y}_j, \ j = 0, 1, ..., m-1 \
+	\end{aligned}
+\end{equation}
+
+In each subinterval, we introduce the new unknown parameter $\hat{y}_j$, solve an initial value problem, and obtain a solution $y(t), t \in [\tau_j, \tau_{j+1}]$. The piecewise solution is not necessarily continuous and does not necessarily satisfy the boundary condition $y(t_f) = y_f$. The continuity has to be enforced by additional matching conditions at each subinterval boundary, i.e.,
+
+\begin{equation}\label{eqn:mc}
+	\begin{aligned}
+		& y(\tau_{j+1}; \hat{y}j) = \hat{y}_{j+1}, \ j = 0, 1, ..., m-1  \\
+		& \hat{y}_{m} (i.e. \ \hat{y}_{\tau_m} = \hat{y}_{t_f}) =  y_f 
+	\end{aligned}
+\end{equation}
+
+
+
+%The multiple shooting method is well suited for solving optimal control problems of the form as in the equation \ref{P2_OPM}, as it can serve as the "first discretize" part of the direct approaches. For OCPs in the form of the equation \ref{P2_OPM}, we follow the same idea of how the multiple shooting method can be used to solve boundary value problems. For OCPs, there are both control variables and state variables; therefore, we need to discretize both the control and state variables. For simplicity, we choose the same discretization grid points for the control variables and the state variables. For the control variables in each subinterval, we introduce a 'local support' ansatz function. 
+
+%Therefore, the first step remains the same, i.e., choosing the suitable time grid to discretize the whole interval $[t_0, t_f]$ into $m$ subintervals $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$, with the $i$-th subinterval as $\mathbb{I}_j = [\tau_j, \tau_{j+1}]$. In the second step, we define a local support function for the control variables. The local support function for the control variables in subinteval $\mathbb{I}_j$, which is denoted as  $u(t) \mid_{t \in \mathbb{I}_j} = \psi_j(t;w_j), t \in \mathbb{I}_j$  can be of the following type
+
+
+%The problem \ref{eqn:tdode} is similar to the problem \ref{eqn:ori_dae}. In each subinterval, a boundary value problem (BVP) is to be solved, and matching conditions at the boundary of each subinterval are to be enforced so that the final solution is continuous and applicable to the whole interval.
+
+%In the examples above, no control variables exist, so only an initial guess $\hat{y}_k$ needs to be introduced for each subinterval. For optimal control problems, piecewise local support functions need to be introduced in the mutilphe shooting method to address the control variables, and initial guesses for the state variables need to be provided separately.
+
+In multiple shooting method, the "shooting" interval is partitioned into some short subintervals. We consider a differential equation with boundary value of the following form
+\begin{equation}\label{eqn:ori_dae}
+	\begin{aligned}
+		& \dot{y} = f(t, y) \\ 
+		& y(t_f) = y_f  \\
+	\end{aligned}
+\end{equation}
+Where $y$ denotes the differential variables, $t \in [t_0, t_f]$, $y_f$ is the boundary value at $t_f$. With multiple shooting method, one chooses a suitable grid of multiple shooting nodes $\tau_j \in [t_0,t_f] $, where $t_0 = \tau_0 < \tau_1 < ... < \tau_m = t_f$, i.e. $m$ subintervals covering the whole interval. At the beginning of each subinterval, $[\tau_k, \tau_{k+1}], k = 0, 1, ..., m-1$, we have the initial guess of the starting value $\hat{y}_k$. Then in each subinterval, we have the initial value problem of the following form: 
+\begin{equation}\label{eqn:msh}
+	\begin{aligned}
+		& \dot{y} = f(t, y) , t \in [\tau_k, \tau_{k+1}], \ k = 0, 1, ..., m-1   \\ 
+		& y(\tau_k) = \hat{y}_k, k = 0, 1, ..., m-1  \\
+	\end{aligned}
+\end{equation}
+In each subinterval, we introduce the new unknown parameter $\hat{y}_k$, we solve an initial value problem and will get a solution $y(t), t \in [\tau_k, \tau_{k+1}]$. The piecewise solution is not necessary continuous and also not necessarily satisfy the boundary condition $y(t_f) = y_f$. The continuity has to be enforced by additional matching conditions at each subinterval boundary, i.e. 
+\begin{equation}\label{eqn:mc}
+	\begin{aligned}
+		& y(\tau_{k+1}; \hat{y}_k) = \hat{y}_{k+1}, \  k = 0, 1, ..., m-1  \\
+		& \hat{y}_{m} (i.e. \ \hat{y}_{\tau_m} = \hat{y}_{t_f}) =  y_f 
+	\end{aligned}
+\end{equation}
+
+
 %Nevertheless, the BOBYQA algorithm has limitations with several strong assumptions being made. Firstly, it has been assumed the uncertainty set is of moderate size and is box-shaped. Secondly, it has been assumed that there is only one local extrema, i.e. the lower level problem has only one solution for each $p \in \mathbb{P}$. In general, we cannot expect the second assumption to be valid. The BOBYQA algorithm is a gradient-free method with repect to the objective function $F(\cdot)$, it still utilizes the gradient of the approximation function $Q(\cdot)$ while updating the iteration. Therefore, this BOBYQA algorithm, or a general DFO approach, is still subject to the numerical errors and computational costs while calculating the gradients of the approximation function $Q(\cdot)$  and updating them in each iteration.  
 
 
