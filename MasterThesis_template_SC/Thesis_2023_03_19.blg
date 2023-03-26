@@ -1,0 +1,70 @@
+This is BibTeX, Version 0.99d (TeX Live 2022)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: Thesis_2023_03_19.aux
+A level-1 auxiliary file: titlepages.aux
+The style file: plainnat.bst
+A level-1 auxiliary file: deposition.aux
+Database file #1: references.bib
+Too many commas in name 1 of "Moritz Diehl, Hans Georg Bock, Holger Diedam, Pierre-Brice Wieber" for entry MHHP05
+while executing---line 1347 of file plainnat.bst
+Too many commas in name 1 of "Moritz Diehl, Hans Georg Bock, Holger Diedam, Pierre-Brice Wieber" for entry MHHP05
+while executing---line 1347 of file plainnat.bst
+Warning--empty journal in ANP91
+Warning--empty journal in BD05
+Warning--empty journal in DJJ62
+Warning--empty journal in WilDav59
+Warning--empty journal in FlePow63
+Warning--empty journal in RV99
+Warning--empty journal in JorSte06
+Warning--empty journal in KM16
+Warning--empty journal in EJ89
+Too many commas in name 1 of "Moritz Diehl, Hans Georg Bock, Holger Diedam, Pierre-Brice Wieber" for entry MHHP05
+while executing---line 1429 of file plainnat.bst
+Too many commas in name 1 of "Moritz Diehl, Hans Georg Bock, Holger Diedam, Pierre-Brice Wieber" for entry MHHP05
+while executing---line 1429 of file plainnat.bst
+Warning--empty journal in Michael69
+Warning--empty journal in MatSch22
+Warning--empty journal in Mas14
+Warning--empty journal in Wood50
+You've used 15 entries,
+            2773 wiz_defined-function locations,
+            670 strings with 6573 characters,
+and the built_in function-call counts, 4490 in all, are:
+= -- 377
+> -- 150
+< -- 15
++ -- 60
+- -- 45
+* -- 227
+:= -- 732
+add.period$ -- 45
+call.type$ -- 15
+change.case$ -- 60
+chr.to.int$ -- 15
+cite$ -- 43
+duplicate$ -- 285
+empty$ -- 451
+format.name$ -- 60
+if$ -- 918
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 15
+newline$ -- 83
+num.names$ -- 60
+pop$ -- 161
+preamble$ -- 1
+purify$ -- 45
+quote$ -- 0
+skip$ -- 196
+stack$ -- 0
+substring$ -- 30
+swap$ -- 2
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 165
+warning$ -- 13
+while$ -- 45
+width$ -- 0
+write$ -- 174
+(There were 4 error messages)
